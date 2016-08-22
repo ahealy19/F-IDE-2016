@@ -10,5 +10,5 @@ by the solver to return the result.
 
 - `data` : this folder contains a subfolder for each file in the examples repository. Each folder contains:
  - `<name>.mlw` the WhyML file sent to Why3
- - `<name>.json` a JSON dictionary with the following schema:
-   - { <name of file>: { <theories in file> : { <goals in theory> : {   } } } 
+ - `<name>.json` a JSON dictionary containing timings and results for various timeout values
+ - `stats.json` the syntacic features statically extracted from `<name>.mlw`  (used as independent variables for prediction)
