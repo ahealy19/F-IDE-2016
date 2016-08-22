@@ -6,7 +6,9 @@
 
 This repository contains data measuring 8 SMT solvers' performance on the
 [Why3](http://why3.lri.fr/) examples dataset. We record the result returned by [Alt-Ergo](https://alt-ergo.ocamlpro.com/) (versions 0.95.2 and 1.01), [CVC3](http://www.cs.nyu.edu/acsys/cvc3/), [CVC4](http://cvc4.cs.nyu.edu/web/), [veriT](http://www.verit-solver.org/), [Yices](http://yices.csl.sri.com/), and [Z3](https://github.com/Z3Prover/z3) (versions 4.3.2 and 4.4.1). We also measure the time taken
-by the solver to return the result. The Python libraries I use: [Pandas](), [Numpy](), [Sci-kit Learn](), [Matplotlib](). All Python files can be run on the command line in the usual way: eg `python <filename.py>`
+by the solver to return the result.
+
+Python libraries we use: [Pandas](), [Numpy](), [Sci-kit Learn](), [Matplotlib](). All Python files can be run on the command line in the usual way: eg `python <filename.py>`
 
 #### `paper/`
 Folder containing latex source files and images for the paper itself
@@ -22,3 +24,6 @@ Python script to collect data from the JSON files. Results printed for Table 1 a
 
 #### `make_fig1.py`
 Make the first figure (stacked barcharts - 60 second timeout). Uses `fig1_data.csv`. Renders `barcharts.pdf` to `paper` folder
+
+#### `create_stats_df.py`
+Collect data from the JSON files and combine it with the syntax metrics. Save the data as `whygoal_stats.csv`
