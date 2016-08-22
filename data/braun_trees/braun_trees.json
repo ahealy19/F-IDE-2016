@@ -1,0 +1,1266 @@
+{
+    "braun_trees.mlw": {
+        "BraunHeaps": {
+            "WP_parameter empty": {
+                "Alt-Ergo-1.01": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.13470262234328365,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.1284516386190476,
+                    "10secs": "Valid"
+                },
+                "veriT": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.10315314152112676,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.08693377020000001,
+                    "10secs": "Valid"
+                },
+                "Yices": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.10857370179999999,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.09211027759999998,
+                    "10secs": "Valid"
+                },
+                "Alt-Ergo-0.95.2": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.13410178496969696,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.12336196342857143,
+                    "10secs": "Valid"
+                },
+                "CVC4": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.14757284344,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.121313783,
+                    "10secs": "Valid"
+                },
+                "CVC3": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.11491384439999999,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.11148525466666669,
+                    "10secs": "Valid"
+                },
+                "Z3-4.4.1": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.14080275394252872,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.13223282361904762,
+                    "10secs": "Valid"
+                },
+                "Z3-4.3.2": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.14160903806557373,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.11269876380000002,
+                    "10secs": "Valid"
+                }
+            },
+            "WP_parameter add": {
+                "Alt-Ergo-1.01": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 1.11941113,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.9274715396,
+                    "10secs": "Valid"
+                },
+                "veriT": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.095918115,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.08839048320001,
+                    "10secs": "Timeout"
+                },
+                "Yices": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.1073206664,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.079686728599995,
+                    "10secs": "Timeout"
+                },
+                "Alt-Ergo-0.95.2": {
+                    "60secs": "Valid",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 11.114726492399999,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 35.17260138179999,
+                    "10secs": "Timeout"
+                },
+                "CVC4": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.1620953418,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 61.096557700999995,
+                    "10secs": "Timeout"
+                },
+                "CVC3": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.114284307,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.0770972374,
+                    "10secs": "Timeout"
+                },
+                "Z3-4.4.1": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.1234660968,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.0983683598,
+                    "10secs": "Timeout"
+                },
+                "Z3-4.3.2": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.125104003599999,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.105421238999995,
+                    "10secs": "Timeout"
+                }
+            },
+            "WP_parameter root_is_min": {
+                "Alt-Ergo-1.01": {
+                    "60secs": "Unknown",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Unknown",
+                    "time10": 10.1267149196,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 23.067581456199996,
+                    "10secs": "Timeout"
+                },
+                "veriT": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.093130042799999,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.080386191799995,
+                    "10secs": "Timeout"
+                },
+                "Yices": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.0992327684,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.0680349098,
+                    "10secs": "Timeout"
+                },
+                "Alt-Ergo-0.95.2": {
+                    "60secs": "Unknown",
+                    "20secs": "Unknown",
+                    "15secs": "Unknown",
+                    "30secs": "Unknown",
+                    "time10": 0.7431416041428571,
+                    "25secs": "Unknown",
+                    "5secs": "Unknown",
+                    "time60": 0.6005449844,
+                    "10secs": "Unknown"
+                },
+                "CVC4": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.3017571762222222,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.25215371528571423,
+                    "10secs": "Valid"
+                },
+                "CVC3": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 1.5303478624999998,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 1.2328477984,
+                    "10secs": "Valid"
+                },
+                "Z3-4.4.1": {
+                    "60secs": "Valid",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Valid",
+                    "time10": 10.12482679,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 24.990910446599997,
+                    "10secs": "Timeout"
+                },
+                "Z3-4.3.2": {
+                    "60secs": "Valid",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Valid",
+                    "time10": 10.110165934999998,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 25.077587666800003,
+                    "10secs": "Timeout"
+                }
+            },
+            "WP_parameter size": {
+                "Alt-Ergo-1.01": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.13910664165151515,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.11982432933333333,
+                    "10secs": "Valid"
+                },
+                "veriT": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.09264414,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.09421912911940296,
+                    "10secs": "Valid"
+                },
+                "Yices": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.11017537311904761,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.09688772655555555,
+                    "10secs": "Valid"
+                },
+                "Alt-Ergo-0.95.2": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.13062013233333336,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.128534569375,
+                    "10secs": "Valid"
+                },
+                "CVC4": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.13222038178125,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.12086146769565219,
+                    "10secs": "Valid"
+                },
+                "CVC3": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.0987844804,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.0978966625128205,
+                    "10secs": "Valid"
+                },
+                "Z3-4.4.1": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.13515823614,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.11923352120689654,
+                    "10secs": "Valid"
+                },
+                "Z3-4.3.2": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.11648622559999999,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.12054674456521741,
+                    "10secs": "Valid"
+                }
+            },
+            "WP_parameter get_min": {
+                "Alt-Ergo-1.01": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.14070048154166667,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.12378485166666668,
+                    "10secs": "Valid"
+                },
+                "veriT": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.1011637075263158,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.09150903092857145,
+                    "10secs": "Valid"
+                },
+                "Yices": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.11869603590526315,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.10862506381249999,
+                    "10secs": "Valid"
+                },
+                "Alt-Ergo-0.95.2": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.1385581049883721,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.12299939168571426,
+                    "10secs": "Valid"
+                },
+                "CVC4": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.15501930816666662,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.13315209663636365,
+                    "10secs": "Valid"
+                },
+                "CVC3": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.12576084135294116,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.1083398442631579,
+                    "10secs": "Valid"
+                },
+                "Z3-4.4.1": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.13379241351111112,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.11692761119999999,
+                    "10secs": "Valid"
+                },
+                "Z3-4.3.2": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.13539173629577467,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.1356535196,
+                    "10secs": "Valid"
+                }
+            },
+            "WP_parameter fast_size": {
+                "Alt-Ergo-1.01": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.1583363543043478,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.1421814536,
+                    "10secs": "Valid"
+                },
+                "veriT": {
+                    "60secs": "Unknown",
+                    "20secs": "Unknown",
+                    "15secs": "Unknown",
+                    "30secs": "Unknown",
+                    "time10": 0.10807064899999999,
+                    "25secs": "Unknown",
+                    "5secs": "Unknown",
+                    "time60": 0.11555358220930233,
+                    "10secs": "Unknown"
+                },
+                "Yices": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.1346899766716418,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.11067597817777776,
+                    "10secs": "Valid"
+                },
+                "Alt-Ergo-0.95.2": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.1649706974,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.15006592464285712,
+                    "10secs": "Valid"
+                },
+                "CVC4": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.1697060915151515,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.14529909138095237,
+                    "10secs": "Valid"
+                },
+                "CVC3": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.15011499817910448,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.12208425233333334,
+                    "10secs": "Valid"
+                },
+                "Z3-4.4.1": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.14713256296296295,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.129039713,
+                    "10secs": "Valid"
+                },
+                "Z3-4.3.2": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.15408658408433737,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.13732492338888888,
+                    "10secs": "Valid"
+                }
+            },
+            "WP_parameter extract": {
+                "Alt-Ergo-1.01": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.7830093457972973,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.6445405528,
+                    "10secs": "Valid"
+                },
+                "veriT": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.0940820416,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.0810129384,
+                    "10secs": "Timeout"
+                },
+                "Yices": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.1059199166,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.077824760400006,
+                    "10secs": "Timeout"
+                },
+                "Alt-Ergo-0.95.2": {
+                    "60secs": "Valid",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 11.1053612066,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 55.684769807399995,
+                    "10secs": "Timeout"
+                },
+                "CVC4": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 2.5818180508,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 2.0855791341999996,
+                    "10secs": "Valid"
+                },
+                "CVC3": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 2.5626199571800004,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 2.0606381186,
+                    "10secs": "Valid"
+                },
+                "Z3-4.4.1": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.122023679199998,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.093688758199995,
+                    "10secs": "Timeout"
+                },
+                "Z3-4.3.2": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.1138242762,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.0858415444,
+                    "10secs": "Timeout"
+                }
+            },
+            "WP_parameter merge": {
+                "Alt-Ergo-1.01": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 8.090561413193548,
+                    "25secs": "Valid",
+                    "5secs": "Timeout",
+                    "time60": 6.6169024472,
+                    "10secs": "Valid"
+                },
+                "veriT": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.1026872666,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.065201066600004,
+                    "10secs": "Timeout"
+                },
+                "Yices": {
+                    "60secs": "Failure",
+                    "20secs": "Failure",
+                    "15secs": "Failure",
+                    "30secs": "Failure",
+                    "time10": 5.1142327046,
+                    "25secs": "Failure",
+                    "5secs": "Failure",
+                    "time60": 4.393891930000001,
+                    "10secs": "Failure"
+                },
+                "Alt-Ergo-0.95.2": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 11.1075383282,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 61.07892900840001,
+                    "10secs": "Timeout"
+                },
+                "CVC4": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.1633845484,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 61.099095386,
+                    "10secs": "Timeout"
+                },
+                "CVC3": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.105970341799999,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.080394032799994,
+                    "10secs": "Timeout"
+                },
+                "Z3-4.4.1": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.1231692894,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.0942145984,
+                    "10secs": "Timeout"
+                },
+                "Z3-4.3.2": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.130984021199998,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.09775497540001,
+                    "10secs": "Timeout"
+                }
+            },
+            "WP_parameter replace_min": {
+                "Alt-Ergo-1.01": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 6.038748024999999,
+                    "25secs": "Valid",
+                    "5secs": "Timeout",
+                    "time60": 5.100304825,
+                    "10secs": "Valid"
+                },
+                "veriT": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.1067901364,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.075110863999996,
+                    "10secs": "Timeout"
+                },
+                "Yices": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.106849113600001,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.08079406,
+                    "10secs": "Timeout"
+                },
+                "Alt-Ergo-0.95.2": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 11.107647048799999,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 61.088945809200005,
+                    "10secs": "Timeout"
+                },
+                "CVC4": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.1853375356,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.1977997994,
+                    "10secs": "Timeout"
+                },
+                "CVC3": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.1062330046,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.0696234558,
+                    "10secs": "Timeout"
+                },
+                "Z3-4.4.1": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.121691881,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.1016434238,
+                    "10secs": "Timeout"
+                },
+                "Z3-4.3.2": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.132182826800001,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.10048480820001,
+                    "10secs": "Timeout"
+                }
+            },
+            "WP_parameter remove_min": {
+                "Alt-Ergo-1.01": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.165482814109375,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.14743079445454546,
+                    "10secs": "Valid"
+                },
+                "veriT": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.10389044979999999,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.10603261284615385,
+                    "10secs": "Valid"
+                },
+                "Yices": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.12378014010465117,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.10208420665,
+                    "10secs": "Valid"
+                },
+                "Alt-Ergo-0.95.2": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.18197172376470586,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.16093922985714282,
+                    "10secs": "Valid"
+                },
+                "CVC4": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.16504983085714287,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.1418882132173913,
+                    "10secs": "Valid"
+                },
+                "CVC3": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.15154827180769231,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.12510733596428572,
+                    "10secs": "Valid"
+                },
+                "Z3-4.4.1": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 1.9565864552857144,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 1.6074730344,
+                    "10secs": "Valid"
+                },
+                "Z3-4.3.2": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 1.9507385415999998,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 1.5840620904,
+                    "10secs": "Valid"
+                }
+            },
+            "WP_parameter inv_height": {
+                "Alt-Ergo-1.01": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.558360994,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.4688195298,
+                    "10secs": "Valid"
+                },
+                "veriT": {
+                    "60secs": "Unknown",
+                    "20secs": "Unknown",
+                    "15secs": "Unknown",
+                    "30secs": "Unknown",
+                    "time10": 0.16953418061904763,
+                    "25secs": "Unknown",
+                    "5secs": "Unknown",
+                    "time60": 0.15707001173913043,
+                    "10secs": "Unknown"
+                },
+                "Yices": {
+                    "60secs": "Unknown",
+                    "20secs": "Unknown",
+                    "15secs": "Unknown",
+                    "30secs": "Unknown",
+                    "time10": 0.15045933718367346,
+                    "25secs": "Unknown",
+                    "5secs": "Unknown",
+                    "time60": 0.12164616905714286,
+                    "10secs": "Unknown"
+                },
+                "Alt-Ergo-0.95.2": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 11.121522922,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 61.086471358199994,
+                    "10secs": "Timeout"
+                },
+                "CVC4": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.29364924825714284,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.2252693704,
+                    "10secs": "Valid"
+                },
+                "CVC3": {
+                    "60secs": "Unknown",
+                    "20secs": "Unknown",
+                    "15secs": "Unknown",
+                    "30secs": "Unknown",
+                    "time10": 0.543817627875,
+                    "25secs": "Unknown",
+                    "5secs": "Unknown",
+                    "time60": 0.45170223719999997,
+                    "10secs": "Unknown"
+                },
+                "Z3-4.4.1": {
+                    "60secs": "Failure",
+                    "20secs": "Failure",
+                    "15secs": "Failure",
+                    "30secs": "Failure",
+                    "time10": 8.568769464799999,
+                    "25secs": "Failure",
+                    "5secs": "Timeout",
+                    "time60": 7.7019439156,
+                    "10secs": "Failure"
+                },
+                "Z3-4.3.2": {
+                    "60secs": "Failure",
+                    "20secs": "Failure",
+                    "15secs": "Failure",
+                    "30secs": "Failure",
+                    "time10": 8.521509480066666,
+                    "25secs": "Failure",
+                    "5secs": "Timeout",
+                    "time60": 7.5833719886,
+                    "10secs": "Failure"
+                }
+            },
+            "WP_parameter is_empty": {
+                "Alt-Ergo-1.01": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.13773016815151515,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.11587251679999999,
+                    "10secs": "Valid"
+                },
+                "veriT": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.10161215328571428,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.09793075335897435,
+                    "10secs": "Valid"
+                },
+                "Yices": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.11260471661,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.10145026223728813,
+                    "10secs": "Valid"
+                },
+                "Alt-Ergo-0.95.2": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.1381702274090909,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.11185663900000001,
+                    "10secs": "Valid"
+                },
+                "CVC4": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.14773085827586208,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.12818027972727272,
+                    "10secs": "Valid"
+                },
+                "CVC3": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.11779000403999998,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.0932917858,
+                    "10secs": "Valid"
+                },
+                "Z3-4.4.1": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.14031149105,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.13120741314285714,
+                    "10secs": "Valid"
+                },
+                "Z3-4.3.2": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.15120973754285716,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.11820275716666667,
+                    "10secs": "Valid"
+                }
+            },
+            "WP_parameter size_height": {
+                "Alt-Ergo-1.01": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.3472022297857143,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.2720103278,
+                    "10secs": "Valid"
+                },
+                "veriT": {
+                    "60secs": "Unknown",
+                    "20secs": "Unknown",
+                    "15secs": "Unknown",
+                    "30secs": "Unknown",
+                    "time10": 0.12293846024074073,
+                    "25secs": "Unknown",
+                    "5secs": "Unknown",
+                    "time60": 0.11530667407500002,
+                    "10secs": "Unknown"
+                },
+                "Yices": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.14245014389473684,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.113102692,
+                    "10secs": "Valid"
+                },
+                "Alt-Ergo-0.95.2": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 1.5701147486666667,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 1.3402266356,
+                    "10secs": "Valid"
+                },
+                "CVC4": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.1932693117692308,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.16645684253846152,
+                    "10secs": "Valid"
+                },
+                "CVC3": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.3871843460833333,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.3111310842222222,
+                    "10secs": "Valid"
+                },
+                "Z3-4.4.1": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.18515586924418606,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.15408609575,
+                    "10secs": "Valid"
+                },
+                "Z3-4.3.2": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.15326030699999998,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.1430868988181818,
+                    "10secs": "Valid"
+                }
+            },
+            "WP_parameter diff": {
+                "Alt-Ergo-1.01": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.6012089402222223,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.5108486824,
+                    "10secs": "Valid"
+                },
+                "veriT": {
+                    "60secs": "Unknown",
+                    "20secs": "Unknown",
+                    "15secs": "Unknown",
+                    "30secs": "Unknown",
+                    "time10": 1.0528758329999999,
+                    "25secs": "Unknown",
+                    "5secs": "Unknown",
+                    "time60": 0.9135823208,
+                    "10secs": "Unknown"
+                },
+                "Yices": {
+                    "60secs": "Timeout",
+                    "20secs": "Timeout",
+                    "15secs": "Timeout",
+                    "30secs": "Timeout",
+                    "time10": 10.109409776,
+                    "25secs": "Timeout",
+                    "5secs": "Timeout",
+                    "time60": 60.1113512086,
+                    "10secs": "Timeout"
+                },
+                "Alt-Ergo-0.95.2": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 2.3627325336,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 2.019999912,
+                    "10secs": "Valid"
+                },
+                "CVC4": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.18793865060869566,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.173777554,
+                    "10secs": "Valid"
+                },
+                "CVC3": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.5473832998181817,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.42668766939999997,
+                    "10secs": "Valid"
+                },
+                "Z3-4.4.1": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.15447033954794517,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.13969834975,
+                    "10secs": "Valid"
+                },
+                "Z3-4.3.2": {
+                    "60secs": "Valid",
+                    "20secs": "Valid",
+                    "15secs": "Valid",
+                    "30secs": "Valid",
+                    "time10": 0.1551555163142857,
+                    "25secs": "Valid",
+                    "5secs": "Valid",
+                    "time60": 0.143090317862069,
+                    "10secs": "Valid"
+                }
+            }
+        }
+    }
+}

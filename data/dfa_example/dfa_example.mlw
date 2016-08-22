@@ -1,0 +1,95 @@
+
+module DfaExample
+
+  (** regular expressions on alphabet {0,1} *)
+
+  type char = Zero | One
+
+  clone import regexp.Regexp with type char = char
+
+  (** mutable input stream *)
+
+  use import option.Option
+
+  type stream model { mutable state: list char }
+
+  val input: stream
+
+  use import list.Length
+
+  val get () : option char writes {input}
+    ensures { match old input.state with
+    | Cons c l -> input.state = l /\ result = Some c
+    | Nil -> old input.state = input.state = Nil /\ result = None end }
+
+  (** 2-state DFA to recognize words ending with a 1, that is (0|1)*1
+
+               --------- 1 -------->
+      +- state 1                    state 2-------+
+      |    ^   <-------- 0 ---------   ^          |
+      +-0--/                           \----- 1 --+
+  *)
+
+  constant r0 : regexp = Star (Alt (Char Zero) (Char One))
+  constant r1 : regexp = Concat r0 (Char One)
+  constant r2 : regexp = Alt Epsilon r1
+
+  lemma nil_notin_r1: not (mem Nil r1)
+
+  let rec lemma all_in_r0 (w: list char)
+    variant { w }
+    ensures { mem w r0 }
+  = match w with
+    | Nil -> ()
+    | Cons c r ->
+      assert { w = (Cons c Nil) ++ r } ;
+      all_in_r0 r
+    end
+
+  lemma words_in_r1_end_with_one:
+    forall w: list char.
+    mem w r1 <-> exists w': list char. w = w' ++ Cons One Nil
+
+  let lemma words_in_r1_suffix_in_r1 (c c':char) (w: list char)
+    requires { mem (Cons c (Cons c' w)) r1 }
+    ensures  { mem (Cons c' w) r1 }
+  = assert { exists w'. (Cons c (Cons c' w))  = w' ++ Cons One Nil }
+
+  let lemma zero_w_in_r1 (w: list char)
+    ensures { mem w r1 <-> mem (Cons Zero w) r1 }
+  = assert { mem (Cons Zero w) r1 ->
+             exists w'. (Cons Zero w)  = w' ++ Cons One Nil }
+
+  let lemma one_w_in_r1 (w: list char)
+    ensures { mem w r2 <-> mem (Cons One w) r1 }
+  = match w with
+    | Nil -> ()
+    | Cons c r ->
+      assert { mem w r2 -> mem w r1 };
+      assert { mem (Cons One (Cons c r)) r1 -> mem w r1 }
+    end
+
+  lemma zero_w_in_r2: forall w: list char. mem w r1 <-> mem (Cons Zero w) r2
+  lemma one_w_in_r2: forall w: list char. mem w r2 <-> mem (Cons One w) r2
+
+  let rec astate1 () : bool
+    variant { length input.state }
+    ensures { result = True <-> input.state = Nil /\ mem (old input.state) r1 }
+    =
+    match get () with
+    | None      -> False
+    | Some Zero -> astate1 ()
+    | Some One  -> astate2 ()
+    end
+
+  with astate2 () : bool
+    variant { length input.state }
+    ensures { result = True <-> input.state = Nil /\ mem (old input.state) r2 }
+    =
+    match get () with
+    | None      -> True
+    | Some Zero -> astate1 ()
+    | Some One  -> astate2 ()
+    end
+
+end

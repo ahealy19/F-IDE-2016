@@ -1,0 +1,62 @@
+(***
+
+Algorithm 65
+
+C. A. R. Hoare
+Elliott Brothers Ltd., Hertfordshire, England, U.K.
+
+Communications of the ACM  archive
+Volume 4 ,  Issue 7  (July 1961) table of contents
+Pages: 321 - 322
+
+***)
+
+module Algo65
+
+  use import int.Int
+  use import ref.Ref
+  use import array.Array
+  use import array.ArrayPermut
+
+  (* algorithm 63 *)
+
+  val partition (a:array int) (m n: int) (i j: ref int) (ghost x: ref int) :
+    unit
+    requires { 0 <= m < n < length a }
+    writes   { a, i, j }
+    ensures  { m <= !j < !i <= n }
+    ensures  { permut_sub (old a) a m (n+1) }
+    ensures  { forall r:int. m <= r <= !j -> a[r] <= !x }
+    ensures  { forall r:int. !j < r < !i -> a[r] = !x }
+    ensures  { forall r:int. !i <= r <= n -> a[r] >= !x }
+
+  (* Algorithm 65 (fixed version) *)
+
+  let rec find (a:array int) (m n:int) (k:int) : unit
+    requires { 0 <= m <= k <= n < length a }
+    variant  { n - m }
+    ensures  { permut_sub (old a) a m (n+1) }
+    ensures  { forall r:int. m <= r <= k -> a[r] <= a[k] }
+    ensures  { forall r:int. k <= r <= n -> a[k] <= a[r] }
+  = if m < n then begin
+      let i = ref 0 in
+      let j = ref 0 in
+      let ghost x = ref 42 in
+      partition a m n i j x;
+'L1:
+      if k <= !j then find a m !j k;
+      assert { permut_sub (at a 'L1) a m (n+1) };
+      assert { forall r:int. !j < r <= n -> a[r] = (at a 'L1)[r] };
+      assert { forall r:int. m <= r <= !j ->
+        (exists s:int. m <= s <= !j /\ a[r] = (at a 'L1)[s]) &&
+        a[r] <= a[!j+1] };
+'L2:
+      if !i <= k then find a !i n k;
+      assert { permut_sub (at a 'L2) a m (n+1) };
+      assert { forall r:int. m <= r < !i -> a[r] = (at a 'L2)[r] };
+      assert { forall r:int. !i <= r <= n ->
+        (exists s:int. !i <= s <= n /\ a[r] = (at a 'L2)[s]) &&
+        a[r] >= a[!i-1] }
+    end
+
+end

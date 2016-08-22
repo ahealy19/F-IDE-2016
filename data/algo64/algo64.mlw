@@ -1,0 +1,63 @@
+(***
+
+Algorithm 64
+
+C. A. R. Hoare
+Elliott Brothers Ltd., Hertfordshire, England, U.K.
+
+Communications of the ACM  archive
+Volume 4 ,  Issue 7  (July 1961) table of contents
+Pages: 321 - 322
+
+***)
+
+module Algo64
+
+  use import int.Int
+  use import ref.Ref
+  use import array.Array
+  use import array.ArrayPermut
+  use import array.IntArraySorted
+
+  (* Algorithm 63 *)
+
+  val partition (a: array int) (m n: int) (i j: ref int) (ghost x: ref int) :
+    unit
+    requires { 0 <= m < n < length a }
+    writes   { a, i, j}
+    ensures  { m <= !j < !i <= n }
+    ensures  { permut_sub (old a) a m (n+1) }
+    ensures  { forall r:int. m <= r <= !j -> a[r] <= !x }
+    ensures  { forall r:int. !j < r < !i -> a[r] = !x }
+    ensures  { forall r:int. !i <= r <= n -> a[r] >= !x }
+
+  (* Algorithm 64 *)
+
+  predicate qs_partition (t1 t2: array int) (m n i j: int) (x: int) =
+    permut_sub t1 t2 m (n+1) /\
+    (forall k:int. m <= k <= j  -> t2[k] <= x) /\
+    (forall k:int. j <  k <  i  -> t2[k] =  x) /\
+    (forall k:int. i <= k <= n ->  t2[k] >= x)
+
+  let rec quicksort (a:array int) (m n:int) : unit
+    requires { 0 <= m <= n < length a }
+    variant  { n - m }
+    ensures  { permut_sub (old a) a m (n+1) }
+    ensures  { sorted_sub a m (n+1) }
+  = if m < n then begin
+      let i = ref 0 in
+      let j = ref 0 in
+      let ghost x = ref 42 in
+      partition a m n i j x;
+'L1:  quicksort a m !j;
+      assert { qs_partition (at a 'L1) a m n !i !j !x };
+'L2:  quicksort a !i n;
+      assert { qs_partition (at a 'L2) a m n !i !j !x }
+    end
+
+  let qs (a:array int) : unit
+    ensures  { permut_all (old a) a }
+    ensures  { sorted a }
+  = if length a > 0 then quicksort a 0 (length a - 1)
+
+end

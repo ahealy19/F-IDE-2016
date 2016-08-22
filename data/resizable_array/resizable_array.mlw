@@ -1,0 +1,161 @@
+
+module ResizableArraySpec
+
+  use import int.Int
+  use import map.Map
+  use map.Const
+
+  type rarray 'a model { mutable length: int; mutable data: map int 'a }
+
+  function ([]) (r: rarray 'a) (i: int) : 'a = Map.get r.data i
+  function ([<-]) (r: rarray 'a) (i: int) (v: 'a) : rarray 'a =
+    { r with data = Map.set r.data i v }
+
+  val make (len: int) (dummy: 'a) : rarray 'a
+    requires { 0 <= len }
+    ensures  { result.length = len }
+    ensures  { result.data = Const.const dummy }
+    (* ensures  { forall i: int. 0 <= i < len -> result[i] = dummy } *)
+
+  val length (r: rarray 'a) : int
+    ensures { result = r.length }
+
+  val ([]) (r: rarray 'a) (i: int) : 'a
+    requires { 0 <= i < r.length } ensures { result = r[i] }
+
+  val ([]<-) (r: rarray 'a) (i: int) (v: 'a) : unit
+    requires { 0 <= i < r.length } ensures { r = (old r)[i <- v] }
+
+  val resize (r: rarray 'a) (len: int) : unit
+    requires { 0 <= len }
+    ensures  { r.length = len }
+    ensures  { forall i: int.
+               0 <= i < old r.length -> i < len -> r[i] = (old r)[i] }
+
+  val append (r1: rarray 'a) (r2: rarray 'a) : unit
+    ensures { r1.length = old r1.length + r2.length }
+    ensures { forall i: int. 0 <= i < r1.length ->
+               (i < old r1.length  -> r1[i] = (old r1)[i]) /\
+               (old r1.length <= i -> r1[i] = r2[i - old r1.length]) }
+
+end
+
+module ResizableArrayImplem (* : ResizableArraySpec *)
+
+  use import int.Int
+  use import int.MinMax
+  use array.Array as A
+
+  type rarray 'a =
+    { dummy: 'a; mutable length: int; mutable data: A.array 'a }
+    invariant { 0 <= self.length <= A.length self.data }
+    invariant { forall i: int. self.length <= i < A.length self.data ->
+                  A.get self.data i = self.dummy }
+
+  function ([]) (r: rarray 'a) (i: int) : 'a = A.get r.data i
+  function ([<-]) (r: rarray 'a) (i: int) (v: 'a) : rarray 'a =
+    { r with data = A.set r.data i v }
+
+(*
+function make (len: int) (dummy: 'a) : rarray 'a =
+    { dummy = dummy; length = len; data = A.make len dummy }
+*)
+
+  let make (len: int) (dummy: 'a) : rarray 'a
+    requires { 0 <= len }
+    ensures { result.dummy = dummy }
+    ensures { result.length = len }
+    ensures { forall i:int. 0 <= i < len -> A.get result.data i = dummy }
+    =
+    { dummy = dummy; length = len; data = A.make len dummy }
+
+  let ([]) (r: rarray 'a) (i: int) : 'a
+    requires { 0 <= i < r.length } ensures { result = r[i] }
+    =
+    A.([]) r.data i
+
+  let ([]<-) (r: rarray 'a) (i: int) (v: 'a) : unit
+    requires { 0 <= i < r.length } ensures { r = (old r)[i <- v] }
+    =
+    A.([]<-) r.data i v
+
+  let resize (r: rarray 'a) (len: int) : unit
+    requires { 0 <= len }
+    ensures  { r.length = len }
+    ensures  { forall i: int.
+                 0 <= i < old r.length -> i < len -> r[i] = (old r)[i] }
+    =
+    let n = A.length r.data in
+    if len > n then begin
+      let a = A.make (max len (2 * n)) r.dummy in
+      A.blit r.data 0 a 0 n;
+      r.data <- a
+    end else begin
+      A.fill r.data len (n - len) r.dummy
+    end;
+    r.length <- len
+
+  let append (r1: rarray 'a) (r2: rarray 'a) : unit
+    ensures { r1.length = old r1.length + r2.length }
+    ensures { forall i: int. 0 <= i < r1.length ->
+               (i < old r1.length  -> r1[i] = (old r1)[i]) /\
+               (old r1.length <= i -> r1[i] = r2[i - old r1.length]) }
+    =
+    let n1 = length r1 in
+    resize r1 (length r1 + length r2);
+    A.blit r2.data 0 r1.data n1 (length r2)
+
+  (* sanity checks for WhyML typing system *)
+
+(*
+  let test_reset1 (r: rarray) =
+    let a = A.make 10 dummy in
+    r.data <- a;
+    A.([]) a 0 (* <-- we cannot access array a anymore *)
+
+  let test_reset2 (r: rarray) =
+     let b = r.data in
+     r.data <- A.make 10 dummy;
+     let x = A.([]) r.data 0 in (* <-- this is accepted *)
+     let y = A.([]) b      0 in (* <-- but we cannot access array b anymore *)
+     ()
+
+  (* the same, using resize *)
+  let test_reset3 (r: rarray) =
+     let c = r.data in
+     resize r 10;
+     let x = A.([]) r.data 0 in (* <-- this is accepted *)
+     let y = A.([]) c      0 in (* <-- but we cannot access array c anymore *)
+     ()
+*)
+
+end
+
+module Test
+
+  use import int.Int
+  use import ResizableArrayImplem
+
+  let test1 () =
+    let r = make 10 0 in
+    assert { r.length = 10 };
+    r[0] <- 17;
+    resize r 7;
+    assert { r[0] = 17 };
+    assert { r.length = 7 }
+
+  let test2 () =
+    let r1 = make 10 0 in
+    r1[0] <- 17;
+    let r2 = make 10 0 in
+    r2[0] <- 42;
+    append r1 r2;
+    assert { r1.length = 20 };
+    assert { r1[0] = 17 };
+    let x = r1[10] in
+    assert { x = 42 };
+    let y = r2[0] in
+    assert { y = 42 };
+    ()
+
+end
