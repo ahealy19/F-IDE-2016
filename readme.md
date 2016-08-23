@@ -8,7 +8,7 @@ This repository contains data measuring 8 SMT solvers' performance on the
 [Why3](http://why3.lri.fr/) examples dataset. We record the result returned by [Alt-Ergo](https://alt-ergo.ocamlpro.com/) (versions 0.95.2 and 1.01), [CVC3](http://www.cs.nyu.edu/acsys/cvc3/), [CVC4](http://cvc4.cs.nyu.edu/web/), [veriT](http://www.verit-solver.org/), [Yices](http://yices.csl.sri.com/), and [Z3](https://github.com/Z3Prover/z3) (versions 4.3.2 and 4.4.1). We also measure the time taken
 by the solver to return the result.
 
-Python libraries we use: [Pandas](), [Numpy](), [Sci-kit Learn](), [Matplotlib](). All Python files can be run on the command line in the usual way: eg `python <filename.py>`
+Python libraries we use: [Pandas](http://pandas.pydata.org/), [Numpy](http://www.numpy.org/), [Sci-kit Learn](http://scikit-learn.org/dev/index.html), [Matplotlib](http://matplotlib.org/). All Python files can be run on the command line in the usual way: eg `python <filename.py>`
 
 #### `paper/`
 Folder containing latex source files and images for the paper itself
@@ -48,7 +48,7 @@ Outputs several data files used in the Evaluation section:
 - `forest.json`: a JSON representation of the trained random forest - suitable for use when compiling the OCaml binary
 - `data_for_second_barchart.csv`: results for each prover and strategy for the test goals
 - `data_for_second_linegraph.csv`: how long each strategy took to return a Valid/Invalid answer for the test set
-- `feature_importances.txt`: how important the input variables are to the Random Forest when making decisions
+- `feature_importances.txt`: These relevance metrics are computed by Sci-kit Learn's Random Forest implementation: they describe the proportion of decisions based on each input variable across all decision trees in Where4's random forest.
 
 #### `barchart2.py`
 Renders `barcharts2.pdf` to the `paper` folder. Similar to `make_fig1.py` but reads from `data_for_second_barchart.csv` and includes theoretical strategies and Where4 results (result of choosing the __first__ solver in each ranking).
