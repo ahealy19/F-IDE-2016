@@ -7,7 +7,6 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.tree import DecisionTreeRegressor
 from subprocess import call
 import matplotlib.pyplot as plt
-import compare_regressors as cr
 
 """
 Outputs a number of files for evaluation
@@ -89,6 +88,14 @@ test = DataFrame.from_csv('whygoal_test.csv').fillna(0)
 X_test = test.drop(common.IGNORE, axis=1)
 y_test = {}
 
+# what is each solver's score on the test data?
+for p in common.PROVERS:
+	y_test[p] = test.apply(lambda x: 
+				common.new_score_func_single(x[p+' result'], x[p+' time'], 10.0), 
+				axis=1)
+	test[p] = y_test[p]
+
+y_test = DataFrame(y_test)
 # save the cost predictions for each goal
 test = pd.concat([ test, 
 					DataFrame(rf.predict(X_test), 
@@ -159,12 +166,6 @@ results.to_csv('data_for_second_barchart.csv')
 print results
 
 ############## data_for_second_linegraph.csv #################
-
-table = {'Best' : cr.evaluate(actual, actual, test),
-		'Worst' : cr.evaluate(worst, actual, test),
-		'Where4' : cr.evaluate(pred_ranks, actual, test)}
-
-table['Where4']['score'] = metrics.r2_score(y_test, predictions, multioutput='uniform_average')
 
 s = 'aAzZ34vy'
 N = len(s)
