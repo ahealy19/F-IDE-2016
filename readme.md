@@ -1,4 +1,4 @@
-# Predicting SMT Performance for Software Verification
+# Predicting SMT Solver Performance for Software Verification
 ## Andrew Healy, Rosemary Monahan, James, F. Power
 ### [Principles of Programming](http://www.cs.nuim.ie/research/pop/) Research Group, Dept. of Computer Science, Maynooth University, Ireland
 
@@ -41,4 +41,11 @@ Disjoint partitions of `whygoal_stats.csv` for testing (25%) and training/valida
 Perform KFold cross-validation on the training set to compare a number of regressor implementations from Sci-kit Learn. Renders `compare_regressors.pdf` which is the full version of Table 2 in the paper.
 
 #### `permute_rankings.py`
-Find values for the 'Random' strategy by averaging values for all possible rankings. Is slow because it has 8! rankings to get through.
+Find values for the 'Random' strategy (either train or test) by averaging values for all possible rankings. Is slow because it has 8! rankings to get through.
+
+#### `output_eval_files.py`
+Outputs several data files used in the Evvaluation section:
+- `forest.json`: a JSON representation of the trained random forest - suitable for use when compiling the OCaml binary
+- `data_for_second_barchart.csv`: results for each prover and strategy for the test goals
+- `data_for_second_linegraph.csv`: how long each strategy took to return a Valid/Invalid answer for the test set
+- `feature_importances.txt`: how important the input variables are to the Random Forest when making decisions
