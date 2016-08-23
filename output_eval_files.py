@@ -16,7 +16,11 @@ Andrew Healy, Aug. 2016
 """
 
 def tree_from_sklearn(dt, features, outputs):
-
+	"""
+	Turning an sklearn tree into a dictionary of my own
+	before printing to a json file. The schema is designed to be 
+	legible for easy manipulation
+	"""
 	t = dt.tree_
 
 	nodes = [	{'index': i,
@@ -39,7 +43,7 @@ def tree_from_sklearn(dt, features, outputs):
 	return nodes
 
 def forest_from_sklearn(rf, features, outputs):
-
+	# a forest is just an array of trees....
 	return [ tree_from_sklearn(dt, features, outputs)
 				for dt in rf.estimators_ ]
 
@@ -56,6 +60,9 @@ for p in common.PROVERS:
 y = DataFrame(y)
 rf.fit(X, y)
 
+
+########### feature_importances.txt ##################
+
 important = Series(rf.feature_importances_, index=X.columns).sort_values(ascending=False)
 # attribute to tell how important the input variables are
 # to the Random Forest when making decisions
@@ -63,27 +70,24 @@ print important
 with open('feature_importances.txt','w') as out:
 	out.write(str(important))
 
+########################################################
+
+########### forest.json ################################
+
 f = forest_from_sklearn(rf, X.columns, y.columns)
 
 with open('forest.json', 'w') as jfile:
 	json.dump(f, jfile, indent=4, separators=(',',': '))
 print('forest written')
 
+########################################################
+
+# now for testing stuff
+
 test = DataFrame.from_csv('whygoal_test.csv').fillna(0)
 
 X_test = test.drop(common.IGNORE, axis=1)
 y_test = {}
-# how do the 8 solvers do on the test set?
-for p in common.PROVERS:
-	y_test[p] = test.apply(lambda x: 
-				common.new_score_func_single(x[p+' result'], x[p+' time'], 10.0), 
-				axis=1)
-	test[p] = y_test[p]
-	print 'avg time for {}: {}'.format(p,test[p+' time'].mean())
-
-y_test = DataFrame(y_test)
-num_provable = test.apply(common.provable, axis=1).sum()
-print '{}/{} are provable'.format(num_provable, test.shape[0])
 
 # save the cost predictions for each goal
 test = pd.concat([ test, 
@@ -104,11 +108,13 @@ output = {	'Valid':common.is_valid,
 			'Timeout':common.is_timeout,
 			'Failure':common.is_error} 
 
+# count the results for each prover/goal
 results = {p : 
 			{o: test.apply(lambda ser: fun(ser[p+' result']), axis=1).sum()
 			for o, fun in output.iteritems() }  
 		for p in common.PROVERS }
 
+# how many of each are there?
 print('files: {}\ntheories: {}\ngoals: {}'.format(
 	len(test['file'].unique()),
 	len(test['theory'].unique()),
@@ -120,6 +126,7 @@ test['rf'] = pred_ranks
 test['best'] = actual
 test['worst'] = worst
 
+# add results and times for strategies and where4
 for x in ['rf', 'best', 'worst']:
 
 	test[x+' time'] = test.apply(lambda ser: common.time_to_valid( ser[x], 
@@ -127,12 +134,10 @@ for x in ['rf', 'best', 'worst']:
 	test[x+' result'] = test.apply(lambda ser: common.best_result_from_rank( ser[x], 
 				test.ix[ser['key'], common.RESULTS ] ), axis=1 )
 
-
-results['Where4 Forest'] = {o : test.apply(lambda ser: 
+# before counting their results
+results['Where4'] = {o : test.apply(lambda ser: 
 	fun( test.ix[ser['key'], common.REV_MAP[ser['rf'][0]]+' result'] ), axis=1).sum()
 	for o, fun in output.iteritems()}
-
-
 
 results['Best'] = {o : test.apply(lambda ser: 
 	fun( test.ix[ser['key'], common.REV_MAP[ser['best'][0]]+' result'] ), axis=1).sum()
@@ -147,6 +152,13 @@ results['Random'] = {o: test.apply(lambda ser:
 	fun( common.avg_result(ser[common.RESULTS]) ), axis=1).sum()
 	for o, fun in output.iteritems()}
 
+############## data_for_second_barchar.csv ###################
+
+results = DataFrame(results)
+results.to_csv('data_for_second_barchart.csv')
+print results
+
+############## data_for_second_linegraph.csv #################
 
 table = {'Best' : cr.evaluate(actual, actual, test),
 		'Worst' : cr.evaluate(worst, actual, test),
@@ -154,15 +166,9 @@ table = {'Best' : cr.evaluate(actual, actual, test),
 
 table['Where4']['score'] = metrics.r2_score(y_test, predictions, multioutput='uniform_average')
 
-results = DataFrame(results)
-results.to_csv('data_for_second_barchart.csv')
-print results
-
-#Be careful! don't want to overwrite the csv file below mistakenly
-
-# s = 'aAzZ34vy'
-# N = len(s)
-# all_orders = [''.join(rand) for rand in itertools.permutations(s, r=N)]
+s = 'aAzZ34vy'
+N = len(s)
+all_orders = [''.join(rand) for rand in itertools.permutations(s, r=N)]
 
 # this one takes a while: find the average time for every permutation
 # to return a Valid/Invalid answer on the test set
@@ -171,4 +177,6 @@ print results
 #			test.ix[ser['key'], common.TIMES+common.RESULTS] ) 
 #			for rand in all_orders]), axis=1 )
 
+
+# Be careful! don't want to overwrite the csv file below mistakenly
 #test.to_csv('data_for_second_linegraph.csv')
