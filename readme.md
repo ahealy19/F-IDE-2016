@@ -55,4 +55,8 @@ Renders `barcharts2.pdf` to the `paper` folder. Similar to `make_fig1.py` but re
 
 #### `plot_second_linegraph.py`
 The cumulative time taken for the three theoretical strategies and Where
-to find an answer to the goals in the test dataset. Uses data stored in `data_for_second_linegraph.csv` - particularly important for the time-consuming 'Random' cacluations. Renders `line_graph_eval_provers.pdf` to the `paper` folder. Also prints the average times File/Theory/Goal times used in Table 3.
+to find an answer to the goals in the test dataset. Uses data stored in `data_for_second_linegraph.csv` - particularly important for the time-consuming 'Random' calculations. Renders `line_graph_eval_provers.pdf` to the `paper` folder. Also prints the average times File/Theory/Goal times used in Table 3.
+
+#### `thresholds.py`
+Parameterise Where4's performance by using a threshold, reading data from `data_for_second_linegraph.csv`. Renders `thresholds.pdf` to `paper` folder.
+These plots show the effect of the threshold on the time taken for a response (top) and number of goals which can be proved (bottom).
