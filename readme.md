@@ -52,3 +52,7 @@ Outputs several data files used in the Evaluation section:
 
 #### `barchart2.py`
 Renders `barcharts2.pdf` to the `paper` folder. Similar to `make_fig1.py` but reads from `data_for_second_barchart.csv` and includes theoretical strategies and Where4 results (result of choosing the __first__ solver in each ranking).
+
+#### `plot_second_linegraph.py`
+The cumulative time taken for the three theoretical strategies and Where
+to find an answer to the goals in the test dataset. Uses data stored in `data_for_second_linegraph.csv` - particularly important for the time-consuming 'Random' cacluations. Renders `line_graph_eval_provers.pdf` to the `paper` folder. Also prints the average times File/Theory/Goal times used in Table 3.
