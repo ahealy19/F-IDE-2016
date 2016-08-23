@@ -44,8 +44,11 @@ Perform KFold cross-validation on the training set to compare a number of regres
 Find values for the 'Random' strategy (either train or test) by averaging values for all possible rankings. Is slow because it has 8! rankings to get through.
 
 #### `output_eval_files.py`
-Outputs several data files used in the Evvaluation section:
+Outputs several data files used in the Evaluation section:
 - `forest.json`: a JSON representation of the trained random forest - suitable for use when compiling the OCaml binary
 - `data_for_second_barchart.csv`: results for each prover and strategy for the test goals
 - `data_for_second_linegraph.csv`: how long each strategy took to return a Valid/Invalid answer for the test set
 - `feature_importances.txt`: how important the input variables are to the Random Forest when making decisions
+
+#### `barchart2.py`
+Renders `barcharts2.pdf` to the `paper` folder. Similar to `make_fig1.py` but reads from `data_for_second_barchart.csv` and includes theoretical strategies and Where4 results (result of choosing the __first__ solver in each ranking).
