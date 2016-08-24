@@ -17,7 +17,7 @@ t_provable = [[u'add_list.mlw', u'AddListImp'], [u'add_list.mlw', u'AddListRec']
 
 total = {}
 fig = plt.figure()
-fig.set_size_inches(12, 8, forward=True)
+fig.set_size_inches(9, 5, forward=True)
 
 ax = fig.add_subplot(1,1,1)
 
