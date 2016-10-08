@@ -18,6 +18,10 @@ This folder contains a subfolder for each file in the examples repository. Each 
  - `<name>.mlw` the WhyML file sent to Why3
  - `<name>.json` a JSON dictionary containing timings and results for various timeout values
  - `stats.json` the syntacic features statically extracted from `<name>.mlw`  (used as independent variables for prediction)
+ - `split/` folder containing the resultant goals after applying the Why3 transformation `split_goal_wp` to each file `.mlw`. file. Created by `split_goal.py`  
+
+#### `benchexec/`
+Python interface to the [Benchexec](https://github.com/sosy-lab/benchexec) measurement framework. See `LICENCE_benchexec.txt` for licence.
 
 #### `common.py`
 A collection of short, commonly-used constants and functions used by many of the other Python scripts.
@@ -60,3 +64,9 @@ to find an answer to the goals in the test dataset. Uses data stored in `data_fo
 #### `thresholds.py`
 Parameterise Where4's performance by using a threshold, reading data from `data_for_second_linegraph.csv`. Renders `thresholds.pdf` to `paper` folder.
 These plots show the effect of the threshold on the time taken for a response (top) and number of goals which can be proved (bottom).
+
+#### `test_time.py`
+An example of how the Benchexec framework is used to measure the CPU time consumed by each SMT solver.
+
+#### `split_goal.py`
+An application of the Why3 transformation `split_goal_wp` applied to every `.mlw` in order to count the number of simplified goals which could be created by this tactic. 
