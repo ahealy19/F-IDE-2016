@@ -1,0 +1,112 @@
+theory Task
+(* use why3.BuiltIn.BuiltIn *)
+
+type bool =
+  | True
+  | False
+
+(* use why3.Bool.Bool *)
+
+type tuple0 =
+  | Tuple0
+
+(* use why3.Tuple0.Tuple01 *)
+
+type unit = tuple0
+
+(* use why3.Unit.Unit *)
+
+(* use why3.Prelude.Prelude *)
+
+type term =
+  | S
+  | K
+  | App term term
+
+predicate is_value (t:term) =
+  match t with
+  | K | S -> true
+  | App K v | App S v -> is_value v
+  | App (App S v1) v2 -> is_value v1 /\ is_value v2
+  | _ -> false
+  end
+
+type context =
+  | Hole
+  | Left context term
+  | Right term context
+
+predicate is_context (c:context) =
+  match c with
+  | Hole -> true
+  | Left c1 _ -> is_context c1
+  | Right v c1 -> ("asym_split" is_value v) && is_context c1
+  end
+
+function subst (c:context) (t:term) : term =
+  match c with
+  | Hole -> t
+  | Left c1 t2 -> App (subst c1 t) t2
+  | Right v1 c2 -> App v1 (subst c2 t)
+  end
+
+inductive infix_mnmngt term term =
+  | red_K : forall c:context. is_context c -> (forall v1:term, v2:term.
+      is_value v1 -> is_value v2 -> infix_mnmngt (subst c (App (App K v1)
+      v2)) (subst c v1))
+  | red_S : forall c:context. is_context c -> (forall v1:term, v2:term, v3:
+      term. is_value v1 -> is_value v2 -> is_value v3 -> infix_mnmngt (subst
+      c (App (App (App S v1) v2) v3)) (subst c (App (App v1 v3) (App v2
+      v3))))
+
+axiom red_left : forall t1:term, t2:term, t:term. infix_mnmngt t1 t2 ->
+  infix_mnmngt (App t1 t) (App t2 t)
+
+axiom red_right : forall v:term, t1:term, t2:term. is_value v -> infix_mnmngt
+  t1 t2 -> infix_mnmngt (App v t1) (App v t2)
+
+(* clone relations.EndoRelation with type t = term,
+  predicate rel = infix_mnmngt,  *)
+
+inductive relTR term term =
+  | BaseTransRefl : forall x:term. relTR x x
+  | StepTransRefl : forall x:term, y:term, z:term. relTR x y -> infix_mnmngt
+      y z -> relTR x z
+
+axiom relTR_transitive : forall x:term, y:term, z:term. relTR x y -> relTR y
+  z -> relTR x z
+
+(* clone relations.ReflTransClosure with type t1 = term,
+  predicate relTR1 = relTR, predicate rel1 = infix_mnmngt,
+  prop relTR_transitive1 = relTR_transitive,
+  prop StepTransRefl1 = StepTransRefl, prop BaseTransRefl1 = BaseTransRefl *)
+
+predicate infix_mnmngtas (t1:term) (t2:term) = relTR t1 t2
+
+axiom red_star_left : forall t1:term, t2:term, t:term. infix_mnmngtas t1
+  t2 -> infix_mnmngtas (App t1 t) (App t2 t)
+
+axiom red_star_right : forall v:term, t1:term, t2:term. is_value v ->
+  infix_mnmngtas t1 t2 -> infix_mnmngtas (App v t1) (App v t2)
+
+function i : term = App (App S K) K
+
+type tuple2 'a 'a1 =
+  | Tuple2 'a 'a1
+
+(* use why3.Tuple2.Tuple21 *)
+
+axiom reducible_or_value : forall t:term. (exists tqt:term. infix_mnmngt t
+  tqt) \/ is_value t
+
+predicate irreducible (t:term) = forall tqt:term. not infix_mnmngt t tqt
+
+(* meta syntax_type type int, "int", 0 *)
+
+(* meta syntax_type type real, "real", 0 *)
+
+(* meta syntax_logic predicate infix_eq, "(%1 = %2)", 0 *)
+
+goal irreducible_is_value : forall t:term. irreducible t -> is_value t
+
+end

@@ -1,0 +1,462 @@
+theory Task
+(* use why3.BuiltIn.BuiltIn *)
+
+type bool =
+  | True
+  | False
+
+(* use why3.Bool.Bool *)
+
+type tuple0 =
+  | Tuple0
+
+(* use why3.Tuple0.Tuple01 *)
+
+type unit = tuple0
+
+(* use why3.Unit.Unit *)
+
+(* use why3.Prelude.Prelude *)
+
+function zero : int = 0
+
+function one : int = 1
+
+predicate infix_ls int int
+
+predicate infix_gt (x:int) (y:int) = infix_ls y x
+
+predicate infix_lseq (x:int) (y:int) = infix_ls x y \/ (x = y)
+
+function infix_pl int int : int
+
+function prefix_mn int : int
+
+function infix_as int int : int
+
+axiom Assoc : forall x:int, y:int, z:int. (infix_pl (infix_pl x y)
+  z = infix_pl x (infix_pl y z))
+
+(* clone algebra.Assoc with type t = int, function op = infix_pl,
+  prop Assoc1 = Assoc *)
+
+axiom Unit_def_l : forall x:int. (infix_pl zero x = x)
+
+axiom Unit_def_r : forall x:int. (infix_pl x zero = x)
+
+(* clone algebra.Monoid with type t1 = int, function unit = zero,
+  function op1 = infix_pl, prop Unit_def_r1 = Unit_def_r,
+  prop Unit_def_l1 = Unit_def_l, prop Assoc2 = Assoc *)
+
+axiom Inv_def_l : forall x:int. (infix_pl (prefix_mn x) x = zero)
+
+axiom Inv_def_r : forall x:int. (infix_pl x (prefix_mn x) = zero)
+
+(* clone algebra.Group with type t2 = int, function inv = prefix_mn,
+  function unit1 = zero, function op2 = infix_pl,
+  prop Inv_def_r1 = Inv_def_r, prop Inv_def_l1 = Inv_def_l,
+  prop Unit_def_r2 = Unit_def_r, prop Unit_def_l2 = Unit_def_l,
+  prop Assoc3 = Assoc *)
+
+axiom Comm : forall x:int, y:int. (infix_pl x y = infix_pl y x)
+
+(* clone algebra.Comm with type t3 = int, function op3 = infix_pl,
+  prop Comm1 = Comm *)
+
+(* meta AC function infix_pl *)
+
+(* clone algebra.CommutativeGroup with type t4 = int,
+  function inv1 = prefix_mn, function unit2 = zero, function op4 = infix_pl,
+  prop Comm2 = Comm, prop Inv_def_r2 = Inv_def_r,
+  prop Inv_def_l2 = Inv_def_l, prop Unit_def_r3 = Unit_def_r,
+  prop Unit_def_l3 = Unit_def_l, prop Assoc4 = Assoc *)
+
+axiom Assoc5 : forall x:int, y:int, z:int. (infix_as (infix_as x y)
+  z = infix_as x (infix_as y z))
+
+(* clone algebra.Assoc with type t = int, function op = infix_as,
+  prop Assoc1 = Assoc5 *)
+
+axiom Mul_distr_l : forall x:int, y:int, z:int. (infix_as x (infix_pl y
+  z) = infix_pl (infix_as x y) (infix_as x z))
+
+axiom Mul_distr_r : forall x:int, y:int, z:int. (infix_as (infix_pl y z)
+  x = infix_pl (infix_as y x) (infix_as z x))
+
+function infix_mn (x:int) (y:int) : int = infix_pl x (prefix_mn y)
+
+(* clone algebra.Ring with type t5 = int, function infix_mn1 = infix_mn,
+  function infix_as1 = infix_as, function prefix_mn1 = prefix_mn,
+  function infix_pl1 = infix_pl, function zero1 = zero,
+  prop Mul_distr_r1 = Mul_distr_r, prop Mul_distr_l1 = Mul_distr_l,
+  prop Assoc6 = Assoc5, prop Comm3 = Comm, prop Inv_def_r3 = Inv_def_r,
+  prop Inv_def_l3 = Inv_def_l, prop Unit_def_r4 = Unit_def_r,
+  prop Unit_def_l4 = Unit_def_l, prop Assoc7 = Assoc *)
+
+axiom Comm4 : forall x:int, y:int. (infix_as x y = infix_as y x)
+
+(* clone algebra.Comm with type t3 = int, function op3 = infix_as,
+  prop Comm1 = Comm4 *)
+
+(* meta AC function infix_as *)
+
+(* clone algebra.CommutativeRing with type t6 = int,
+  function infix_mn2 = infix_mn, function infix_as2 = infix_as,
+  function prefix_mn2 = prefix_mn, function infix_pl2 = infix_pl,
+  function zero2 = zero, prop Comm5 = Comm4, prop Mul_distr_r2 = Mul_distr_r,
+  prop Mul_distr_l2 = Mul_distr_l, prop Assoc8 = Assoc5, prop Comm6 = Comm,
+  prop Inv_def_r4 = Inv_def_r, prop Inv_def_l4 = Inv_def_l,
+  prop Unit_def_r5 = Unit_def_r, prop Unit_def_l5 = Unit_def_l,
+  prop Assoc9 = Assoc *)
+
+axiom Unitary : forall x:int. (infix_as one x = x)
+
+axiom NonTrivialRing : not (zero = one)
+
+(* clone algebra.UnitaryCommutativeRing with type t7 = int,
+  function one1 = one, function infix_mn3 = infix_mn,
+  function infix_as3 = infix_as, function prefix_mn3 = prefix_mn,
+  function infix_pl3 = infix_pl, function zero3 = zero,
+  prop NonTrivialRing1 = NonTrivialRing, prop Unitary1 = Unitary,
+  prop Comm7 = Comm4, prop Mul_distr_r3 = Mul_distr_r,
+  prop Mul_distr_l3 = Mul_distr_l, prop Assoc10 = Assoc5, prop Comm8 = Comm,
+  prop Inv_def_r5 = Inv_def_r, prop Inv_def_l5 = Inv_def_l,
+  prop Unit_def_r6 = Unit_def_r, prop Unit_def_l6 = Unit_def_l,
+  prop Assoc11 = Assoc *)
+
+predicate infix_gteq (x:int) (y:int) = infix_lseq y x
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Refl : forall x:int. infix_lseq x x
+
+(* clone relations.Reflexive with type t9 = int, predicate rel1 = infix_lseq,
+  prop Refl1 = Refl *)
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Trans : forall x:int, y:int, z:int. infix_lseq x y -> infix_lseq y z ->
+  infix_lseq x z
+
+(* clone relations.Transitive with type t10 = int,
+  predicate rel2 = infix_lseq, prop Trans1 = Trans *)
+
+(* clone relations.PreOrder with type t11 = int, predicate rel3 = infix_lseq,
+  prop Trans2 = Trans, prop Refl2 = Refl *)
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Antisymm : forall x:int, y:int. infix_lseq x y -> infix_lseq y x ->
+  (x = y)
+
+(* clone relations.Antisymmetric with type t12 = int,
+  predicate rel4 = infix_lseq, prop Antisymm1 = Antisymm *)
+
+(* clone relations.PartialOrder with type t13 = int,
+  predicate rel5 = infix_lseq, prop Antisymm2 = Antisymm,
+  prop Trans3 = Trans, prop Refl3 = Refl *)
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Total : forall x:int, y:int. infix_lseq x y \/ infix_lseq y x
+
+(* clone relations.Total with type t14 = int, predicate rel6 = infix_lseq,
+  prop Total1 = Total *)
+
+(* clone relations.TotalOrder with type t15 = int,
+  predicate rel7 = infix_lseq, prop Total2 = Total,
+  prop Antisymm3 = Antisymm, prop Trans4 = Trans, prop Refl4 = Refl *)
+
+axiom ZeroLessOne : infix_lseq zero one
+
+axiom CompatOrderAdd : forall x:int, y:int, z:int. infix_lseq x y ->
+  infix_lseq (infix_pl x z) (infix_pl y z)
+
+axiom CompatOrderMult : forall x:int, y:int, z:int. infix_lseq x y ->
+  infix_lseq zero z -> infix_lseq (infix_as x z) (infix_as y z)
+
+(* clone algebra.OrderedUnitaryCommutativeRing with type t16 = int,
+  predicate infix_gteq1 = infix_gteq, predicate infix_lseq1 = infix_lseq,
+  function one2 = one, function infix_mn4 = infix_mn,
+  function infix_as4 = infix_as, function prefix_mn4 = prefix_mn,
+  function infix_pl4 = infix_pl, function zero4 = zero,
+  prop CompatOrderMult1 = CompatOrderMult,
+  prop CompatOrderAdd1 = CompatOrderAdd, prop ZeroLessOne1 = ZeroLessOne,
+  prop Total3 = Total, prop Antisymm4 = Antisymm, prop Trans5 = Trans,
+  prop Refl5 = Refl, prop NonTrivialRing2 = NonTrivialRing,
+  prop Unitary2 = Unitary, prop Comm9 = Comm4,
+  prop Mul_distr_r4 = Mul_distr_r, prop Mul_distr_l4 = Mul_distr_l,
+  prop Assoc12 = Assoc5, prop Comm10 = Comm, prop Inv_def_r6 = Inv_def_r,
+  prop Inv_def_l6 = Inv_def_l, prop Unit_def_r7 = Unit_def_r,
+  prop Unit_def_l7 = Unit_def_l, prop Assoc13 = Assoc *)
+
+(* use int.Int *)
+
+function abs (x:int) : int = if infix_gteq x 0 then x else prefix_mn x
+
+axiom Abs_le : forall x:int, y:int. infix_lseq (abs x) y <-> infix_lseq
+  (prefix_mn y) x /\ infix_lseq x y
+
+axiom Abs_pos : forall x:int. infix_gteq (abs x) 0
+
+(* use int.Abs *)
+
+function div int int : int
+
+function mod int int : int
+
+axiom Div_mod : forall x:int, y:int. not (y = 0) -> (x = infix_pl (infix_as y
+  (div x y)) (mod x y))
+
+axiom Div_bound : forall x:int, y:int. infix_gteq x 0 /\ infix_gt y 0 ->
+  infix_lseq 0 (div x y) /\ infix_lseq (div x y) x
+
+axiom Mod_bound : forall x:int, y:int. not (y = 0) -> infix_ls (prefix_mn
+  (abs y)) (mod x y) /\ infix_ls (mod x y) (abs y)
+
+axiom Div_sign_pos : forall x:int, y:int. infix_gteq x 0 /\ infix_gt y 0 ->
+  infix_gteq (div x y) 0
+
+axiom Div_sign_neg : forall x:int, y:int. infix_lseq x 0 /\ infix_gt y 0 ->
+  infix_lseq (div x y) 0
+
+axiom Mod_sign_pos : forall x:int, y:int. infix_gteq x 0 /\ not (y = 0) ->
+  infix_gteq (mod x y) 0
+
+axiom Mod_sign_neg : forall x:int, y:int. infix_lseq x 0 /\ not (y = 0) ->
+  infix_lseq (mod x y) 0
+
+axiom Rounds_toward_zero : forall x:int, y:int. not (y = 0) -> infix_lseq
+  (abs (infix_as (div x y) y)) (abs x)
+
+axiom Div_1 : forall x:int. (div x 1 = x)
+
+axiom Mod_1 : forall x:int. (mod x 1 = 0)
+
+axiom Div_inf : forall x:int, y:int. infix_lseq 0 x /\ infix_ls x y -> (div x
+  y = 0)
+
+axiom Mod_inf : forall x:int, y:int. infix_lseq 0 x /\ infix_ls x y -> (mod x
+  y = x)
+
+axiom Div_mult : forall x:int, y:int, z:int [div (infix_pl (infix_as x y) z)
+  x]. infix_gt x 0 /\ infix_gteq y 0 /\ infix_gteq z 0 -> (div (infix_pl
+  (infix_as x y) z) x = infix_pl y (div z x))
+
+axiom Mod_mult : forall x:int, y:int, z:int [mod (infix_pl (infix_as x y) z)
+  x]. infix_gt x 0 /\ infix_gteq y 0 /\ infix_gteq z 0 -> (mod (infix_pl
+  (infix_as x y) z) x = mod z x)
+
+(* use int.ComputerDivision *)
+
+(* clone algebra.Assoc with type t = int, function op = infix_as,
+  prop Assoc1 = Assoc14 *)
+
+(* clone algebra.Monoid with type t1 = int, function unit = one,
+  function op1 = infix_as, prop Unit_def_r1 = Unit_def_r8,
+  prop Unit_def_l1 = Unit_def_l8, prop Assoc2 = Assoc14 *)
+
+(* clone algebra.Comm with type t3 = int, function op3 = infix_as,
+  prop Comm1 = Comm11 *)
+
+(* meta AC function infix_as *)
+
+(* clone algebra.CommutativeMonoid with type t17 = int, function unit3 = one,
+  function op5 = infix_as, prop Comm12 = Comm11,
+  prop Unit_def_r9 = Unit_def_r8, prop Unit_def_l9 = Unit_def_l8,
+  prop Assoc15 = Assoc14 *)
+
+function power int int : int
+
+axiom Power_0 : forall x:int. (power x 0 = one)
+
+axiom Power_s : forall x:int, n:int. infix_gteq n 0 -> (power x (infix_pl n
+  1) = infix_as x (power x n))
+
+axiom Power_s_alt : forall x:int, n:int. infix_gt n 0 -> (power x
+  n = infix_as x (power x (infix_mn n 1)))
+
+axiom Power_1 : forall x:int. (power x 1 = x)
+
+axiom Power_sum : forall x:int, n:int, m:int. infix_lseq 0 n -> infix_lseq 0
+  m -> (power x (infix_pl n m) = infix_as (power x n) (power x m))
+
+axiom Power_mult : forall x:int, n:int, m:int. infix_lseq 0 n -> infix_lseq 0
+  m -> (power x (infix_as n m) = power (power x n) m)
+
+axiom Power_mult2 : forall x:int, y:int, n:int. infix_lseq 0 n -> (power
+  (infix_as x y) n = infix_as (power x n) (power y n))
+
+(* clone int.Exponentiation with type t18 = int, function power1 = power,
+  function infix_as5 = infix_as, function one3 = one,
+  prop Power_mult21 = Power_mult2, prop Power_mult1 = Power_mult,
+  prop Power_sum1 = Power_sum, prop Power_11 = Power_1,
+  prop Power_s_alt1 = Power_s_alt, prop Power_s1 = Power_s,
+  prop Power_01 = Power_0, prop Comm13 = Comm11,
+  prop Unit_def_r10 = Unit_def_r8, prop Unit_def_l10 = Unit_def_l8,
+  prop Assoc16 = Assoc14 *)
+
+axiom Power_non_neg : forall x:int, y:int. infix_gteq x 0 /\ infix_gteq y
+  0 -> infix_gteq (power x y) 0
+
+axiom Power_monotonic : forall x:int, n:int, m:int. infix_ls 0 x /\
+  infix_lseq 0 n /\ infix_lseq n m -> infix_lseq (power x n) (power x m)
+
+(* use int.Power *)
+
+type map 'a 'b
+
+(* meta material_type_arg type map, 1 *)
+
+function get (map 'a 'b) 'a : 'b
+
+function set (map 'a 'b) 'a 'b : map 'a 'b
+
+function mixfix_lbrb (a:map 'a 'b) (i:'a) : 'b = get a i
+
+function mixfix_lblsmnrb (a:map 'a 'b) (i:'a) (v:'b) : map 'a 'b = set a i v
+
+axiom Select_eq : forall m:map 'a 'b. forall a1:'a, a2:'a. forall b:'b
+  [mixfix_lbrb (mixfix_lblsmnrb m a1 b) a2]. (a1 = a2) -> (mixfix_lbrb
+  (mixfix_lblsmnrb m a1 b) a2 = b)
+
+axiom Select_neq : forall m:map 'a 'b. forall a1:'a, a2:'a. forall b:'b
+  [mixfix_lbrb (mixfix_lblsmnrb m a1 b) a2]. not (a1 = a2) -> (mixfix_lbrb
+  (mixfix_lblsmnrb m a1 b) a2 = mixfix_lbrb m a2)
+
+(* use map.Map *)
+
+type array 'a =
+  | Mk_array (length:int) (elts:map int 'a)
+
+function get1 (a:array 'a) (i:int) : 'a = get (elts a) i
+
+function set1 (a:array 'a) (i:int) (v:'a) : array 'a = Mk_array (length a)
+  (set (elts a) i v)
+
+function mixfix_lbrb1 (a:array 'a) (i:int) : 'a = get1 a i
+
+function mixfix_lblsmnrb1 (a:array 'a) (i:int) (v:'a) : array 'a = set1 a i v
+
+(* use array.Array *)
+
+type container = map int int
+
+function sum (map int int) int int : int
+
+axiom Sum_def_empty : forall c:map int int, i:int, j:int. infix_lseq j i ->
+  (sum c i j = 0)
+
+axiom Sum_def_non_empty : forall c:map int int, i:int, j:int. infix_ls i j ->
+  (sum c i j = infix_pl (get c i) (sum c (infix_pl i 1) j))
+
+axiom Sum_right_extension : forall c:map int int, i:int, j:int. infix_ls i
+  j -> (sum c i j = infix_pl (sum c i (infix_mn j 1)) (get c (infix_mn j 1)))
+
+axiom Sum_transitivity : forall c:map int int, i:int, k:int, j:int.
+  infix_lseq i k /\ infix_lseq k j -> (sum c i j = infix_pl (sum c i k) (sum
+  c k j))
+
+axiom Sum_eq : forall c1:map int int, c2:map int int, i:int, j:int.
+  (forall k:int. infix_lseq i k /\ infix_ls k j -> (get c1 k = get c2 k)) ->
+  (sum c1 i j = sum c2 i j)
+
+(* clone sum.Sum with type container1 = container, function sum1 = sum,
+  function f = get, prop Sum_eq1 = Sum_eq,
+  prop Sum_transitivity1 = Sum_transitivity,
+  prop Sum_right_extension1 = Sum_right_extension,
+  prop Sum_def_non_empty1 = Sum_def_non_empty,
+  prop Sum_def_empty1 = Sum_def_empty *)
+
+(* use map.MapSum *)
+
+function sum2 (a:array int) (l:int) (h:int) : int = sum (elts a) l h
+
+(* use array.ArraySum *)
+
+axiom Div_mod_2 : forall x:int. infix_gteq x 0 -> infix_gteq x (infix_as 2
+  (div x 2)) /\ infix_gteq (infix_as 2 (div x 2)) (infix_mn x 1)
+
+predicate is_power_of_2 (x:int) = exists k:int. infix_gteq k 0 /\ (x = power
+  2 k)
+
+axiom is_power_of_2_1 : forall x:int. is_power_of_2 x -> infix_gt x 1 ->
+  (infix_as 2 (div x 2) = x)
+
+function go_left (left:int) (right:int) : int =
+  let space = infix_mn right left in infix_mn left (div space 2)
+
+function go_right (left:int) (right:int) : int =
+  let space = infix_mn right left in infix_mn right (div space 2)
+
+inductive phase1 int int (array int) (array int) =
+  | Leaf : forall left:int, right:int, a0:array int, a:array int.
+      (right = infix_pl left 1) -> (mixfix_lbrb1 a left = mixfix_lbrb1 a0
+      left) -> phase1 left right a0 a
+  | Node : forall left:int, right:int, a0:array int, a:array int. infix_gt
+      right (infix_pl left 1) -> phase1 (go_left left right) left a0 a ->
+      phase1 (go_right left right) right a0 a -> (mixfix_lbrb1 a left = sum2
+      a0 (infix_pl (infix_mn left (infix_mn right left)) 1) (infix_pl left
+      1)) -> phase1 left right a0 a
+
+axiom phase1_frame "why3:lemma" : forall left:int, right:int, a0:array int,
+  a:array int, aqt:array int. ("asym_split" (("stop_split"
+  "expl:type invariant" infix_lseq 0 (length a0)) /\ ("stop_split"
+  "expl:type invariant" infix_lseq 0 (length a))) /\ ("stop_split"
+  "expl:type invariant" infix_lseq 0 (length aqt))) &&
+  ("stop_split" forall i:int. infix_ls (infix_mn left (infix_mn right left))
+  i /\ infix_ls i right -> (mixfix_lbrb1 a i = mixfix_lbrb1 aqt i)) /\
+  ("stop_split" phase1 left right a0 a) -> ("stop_split" phase1 left right a0
+  aqt)
+
+axiom phase1_frame2 "why3:lemma" : forall left:int, right:int, a0:array int,
+  a0qt:array int, a:array int. ("asym_split" (("stop_split"
+  "expl:type invariant" infix_lseq 0 (length a0)) /\ ("stop_split"
+  "expl:type invariant" infix_lseq 0 (length a0qt))) /\ ("stop_split"
+  "expl:type invariant" infix_lseq 0 (length a))) && ("stop_split" forall i:
+  int. infix_ls (infix_mn left (infix_mn right left)) i /\ infix_ls i
+  right -> (mixfix_lbrb1 a0 i = mixfix_lbrb1 a0qt i)) /\ ("stop_split" phase1
+  left right a0 a) -> ("stop_split" phase1 left right a0qt a)
+
+(* meta syntax_type type int, "int", 0 *)
+
+(* meta syntax_type type real, "real", 0 *)
+
+(* meta syntax_logic predicate infix_eq, "(%1 = %2)", 0 *)
+
+goal WP_parameter_upsweep "expl:VC for upsweep" : forall left:int, right:int,
+  a:int, a1:map int int. let a2 = Mk_array a a1 in ("asym_split" "stop_split"
+  "expl:type invariant" infix_lseq 0 a) && ("stop_split" infix_lseq 0 left /\
+  infix_ls left right /\ infix_ls right a) /\ ("stop_split" infix_lseq
+  (prefix_mn 1) (infix_mn left (infix_mn right left))) /\
+  ("stop_split" is_power_of_2 (infix_mn right left)) ->
+  (let space = infix_mn right left in infix_gt right (infix_pl left 1) ->
+  (let o = infix_mn left (div space 2) in ("asym_split" ("stop_split"
+  "expl:precondition" infix_lseq 0 o /\ infix_ls o left /\ infix_ls left
+  a) /\ ("stop_split" "expl:precondition" infix_lseq (prefix_mn 1) (infix_mn
+  o (infix_mn left o))) /\ ("stop_split" "expl:precondition" is_power_of_2
+  (infix_mn left o))) -> (forall a3:map int int. let a4 = Mk_array a a3 in
+  ("asym_split" "stop_split" "expl:type invariant" infix_lseq 0 a) &&
+  ("stop_split" phase1 o left a2 a4) /\
+  ("stop_split" let space1 = infix_mn left o in (get a3 left = sum a1
+  (infix_pl (infix_mn o space1) 1) (infix_pl left 1)) /\ (forall i:int.
+  infix_lseq i (infix_mn o space1) -> (get a3 i = get a1 i)) /\ (forall i:
+  int. infix_gt i left -> (get a3 i = get a1 i))) ->
+  (let o1 = infix_mn right (div space 2) in ("asym_split" ("stop_split"
+  "expl:precondition" infix_lseq 0 o1 /\ infix_ls o1 right /\ infix_ls right
+  a) /\ ("stop_split" "expl:precondition" infix_lseq (prefix_mn 1) (infix_mn
+  o1 (infix_mn right o1))) /\ ("stop_split" "expl:precondition" is_power_of_2
+  (infix_mn right o1))) -> (forall a5:map int int. let a6 = Mk_array a a5 in
+  ("asym_split" "stop_split" "expl:type invariant" infix_lseq 0 a) &&
+  ("stop_split" phase1 o1 right a4 a6) /\
+  ("stop_split" let space1 = infix_mn right o1 in (get a5 right = sum a3
+  (infix_pl (infix_mn o1 space1) 1) (infix_pl right 1)) /\ (forall i:int.
+  infix_lseq i (infix_mn o1 space1) -> (get a5 i = get a3 i)) /\ (forall i:
+  int. infix_gt i right -> (get a5 i = get a3 i))) -> ("asym_split"
+  "expl:assertion" phase1 (infix_mn left (div space 2)) left a2 a6))))))
+
+end

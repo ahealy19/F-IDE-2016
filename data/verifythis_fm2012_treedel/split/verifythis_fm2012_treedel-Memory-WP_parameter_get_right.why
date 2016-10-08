@@ -1,0 +1,68 @@
+theory Task
+(* use why3.BuiltIn.BuiltIn *)
+
+type bool =
+  | True
+  | False
+
+(* use why3.Bool.Bool *)
+
+type tuple0 =
+  | Tuple0
+
+(* use why3.Tuple0.Tuple01 *)
+
+type unit = tuple0
+
+(* use why3.Unit.Unit *)
+
+(* use why3.Prelude.Prelude *)
+
+type map 'a 'b
+
+(* meta material_type_arg type map, 1 *)
+
+function get (map 'a 'b) 'a : 'b
+
+function set (map 'a 'b) 'a 'b : map 'a 'b
+
+function mixfix_lbrb (a:map 'a 'b) (i:'a) : 'b = get a i
+
+function mixfix_lblsmnrb (a:map 'a 'b) (i:'a) (v:'b) : map 'a 'b = set a i v
+
+axiom Select_eq : forall m:map 'a 'b. forall a1:'a, a2:'a. forall b:'b
+  [mixfix_lbrb (mixfix_lblsmnrb m a1 b) a2]. (a1 = a2) -> (mixfix_lbrb
+  (mixfix_lblsmnrb m a1 b) a2 = b)
+
+axiom Select_neq : forall m:map 'a 'b. forall a1:'a, a2:'a. forall b:'b
+  [mixfix_lbrb (mixfix_lblsmnrb m a1 b) a2]. not (a1 = a2) -> (mixfix_lbrb
+  (mixfix_lblsmnrb m a1 b) a2 = mixfix_lbrb m a2)
+
+(* use map.Map *)
+
+type ref 'a =
+  | Mk_ref (contents:'a)
+
+function prefix_ex (x:ref 'a) : 'a = contents x
+
+(* use ref.Ref *)
+
+type loc
+
+function null : loc
+
+type node =
+  | Mk_node (left:loc) (right:loc) (data:int)
+
+type memory = map loc node
+
+(* meta syntax_type type int, "int", 0 *)
+
+(* meta syntax_type type real, "real", 0 *)
+
+(* meta syntax_logic predicate infix_eq, "(%1 = %2)", 0 *)
+
+goal WP_parameter_get_right
+  "expl:VC for get_right" : "expl:postcondition" true
+
+end

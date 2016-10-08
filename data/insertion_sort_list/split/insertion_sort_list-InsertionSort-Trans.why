@@ -1,0 +1,68 @@
+theory Task
+(* use why3.BuiltIn.BuiltIn *)
+
+type bool =
+  | True
+  | False
+
+(* use why3.Bool.Bool *)
+
+type tuple0 =
+  | Tuple0
+
+(* use why3.Tuple0.Tuple01 *)
+
+type unit = tuple0
+
+(* use why3.Unit.Unit *)
+
+(* use why3.Prelude.Prelude *)
+
+type elt
+
+predicate le elt elt
+
+(* clone relations.EndoRelation with type t = elt, predicate rel = le,  *)
+
+axiom Refl : forall x:elt. le x x
+
+(* clone relations.Reflexive with type t1 = elt, predicate rel1 = le,
+  prop Refl1 = Refl *)
+
+(* clone relations.EndoRelation with type t = elt, predicate rel = le,  *)
+
+axiom Trans : forall x:elt, y:elt, z:elt. le x y -> le y z -> le x z
+
+(* clone relations.Transitive with type t2 = elt, predicate rel2 = le,
+  prop Trans1 = Trans *)
+
+(* clone relations.PreOrder with type t3 = elt, predicate rel3 = le,
+  prop Trans2 = Trans, prop Refl2 = Refl *)
+
+(* clone relations.EndoRelation with type t = elt, predicate rel = le,  *)
+
+axiom Total : forall x:elt, y:elt. le x y \/ le y x
+
+(* clone relations.Total with type t4 = elt, predicate rel4 = le,
+  prop Total1 = Total *)
+
+(* clone relations.TotalPreOrder with type t5 = elt, predicate rel5 = le,
+  prop Total2 = Total, prop Trans3 = Trans, prop Refl3 = Refl *)
+
+type list 'a =
+  | Nil
+  | Cons 'a (list 'a)
+
+(* use list.List *)
+
+(* clone relations.EndoRelation with type t = elt, predicate rel = le,  *)
+
+(* meta syntax_type type int, "int", 0 *)
+
+(* meta syntax_type type real, "real", 0 *)
+
+(* meta syntax_logic predicate infix_eq, "(%1 = %2)", 0 *)
+
+goal Trans4 : forall x:elt, y:elt, z:elt. le x y -> le y z -> le x z
+
+end

@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: typeinst.aux
+The style file: splncs03.bst
+Database file #1: predicting.bib
+You've used 35 entries,
+            2785 wiz_defined-function locations,
+            840 strings with 11680 characters,
+and the built_in function-call counts, 23382 in all, are:
+= -- 1986
+> -- 830
+< -- 39
++ -- 347
+- -- 304
+* -- 1528
+:= -- 2976
+add.period$ -- 66
+call.type$ -- 35
+change.case$ -- 291
+chr.to.int$ -- 0
+cite$ -- 35
+duplicate$ -- 1986
+empty$ -- 1978
+format.name$ -- 333
+if$ -- 5124
+int.to.chr$ -- 0
+int.to.str$ -- 35
+missing$ -- 414
+newline$ -- 110
+num.names$ -- 70
+pop$ -- 762
+preamble$ -- 1
+purify$ -- 222
+quote$ -- 0
+skip$ -- 614
+stack$ -- 0
+substring$ -- 1412
+swap$ -- 1127
+text.length$ -- 39
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 136
+warning$ -- 0
+while$ -- 183
+width$ -- 37
+write$ -- 362

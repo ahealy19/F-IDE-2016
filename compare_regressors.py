@@ -126,7 +126,8 @@ if __name__ == '__main__':
 	for p in common.PROVERS:
 		y[p] = test.apply(lambda x:
 					# calculate each solver's cost given result, time and timeout 
-					common.new_score_func_single(x[p+' result'], x[p+' time'], 10.0), 
+					#common.new_score_func_single(x[p+' result'], x[p+' time'], 10.0), 
+					common.twice_delta_score_func(x[p+' result'], x[p+' time'], 10.0),
 					axis=1)
 		test[p] = y[p]
 
@@ -192,8 +193,8 @@ if __name__ == '__main__':
 
 		table['Random'] =  {'ndcg' : 0.355384223121,
 						 'MAE' : 2.625,
-						 'cum time': 18.2576461313,
-						 'score diff': 43.8084432576,
+						 'cum time': 19.057453462,
+						 'score diff': 50.765591532,
 						 'score': 0.0
 						 # computed by permute_rankings.py
 	 					}

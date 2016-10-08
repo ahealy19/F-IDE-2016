@@ -66,10 +66,10 @@
 % their surnames. This ensures that the names appear correctly in
 % the running heads and the author index.
 %
-\author{Andrew Healy 
+\author{Andrew Healy%\footnote{This project is being carried out with funding provided by Science Foundation Ireland under grant number 11/RFP.1/CMS/3068} 
 \and Rosemary Monahan \and James F. Power}
 %
-%\authorrunning{Lecture Notes in Computer Science: Authors' Instructions}
+\authorrunning{Andrew Healy	\and Rosemary Monahan \and James F. Power}
 % (feature abused for this document to repeat the title also on left hand pages)
 
 % the affiliations are given next; don't give your e-mail address
@@ -107,7 +107,7 @@ These two aspects of the program are then typically translated into the logical 
 \textsf{\textsf{Why3}} \cite{why:shephard} was developed as an attempt to make use of the wide spectrum of interactive and automated theorem proving tools and overcome the limitations of systems which rely on a single SMT solver. It provides a driver-based, extensible architecture to perform the necessary translations into the input formats of two dozen provers. With a wide choice of theorem-proving tools now available to the software engineer, the question of choosing the most appropriate tool for the task at hand becomes important. It is this question that \textsf{Where4} answers.
 
 As motivation for our approach, Table \ref{table:avgtimes} presents the results from running the \textsf{Why3} tool over the example programs included in the \textsf{Why3} distribution (version 0.87.1), using eight SMT solvers at the back-end.  
-Each \textsf{Why3} file contains a number of theories requiring proof, and these in turn are  broken down into a number of goals for the SMT solver; for the data in Table \ref{table:avgtimes} we had 128 example programs, generating 289 theories, in turn generating 1048 goals.  In Table \ref{table:avgtimes} each row presents the data for a single SMT solver, and the three main data columns give data totalled on a per-file, per-theory and per-goal basis.  Each of these three columns is further broken down to show the number of programs/theories/goals that were successfully solved, their percentage of the total, and the average time taken in seconds for each solver to return such a result.
+Each \textsf{Why3} file contains a number of theories requiring proof, and these in turn are  broken down into a number of goals for the SMT solver; for the data in Table \ref{table:avgtimes} we had 128 example programs, generating 289 theories, in turn generating 1048 goals.  In Table \ref{table:avgtimes} each row presents the data for a single SMT solver, and the three main data columns give data totalled on a per-file, per-theory and per-goal basis. Each of these three columns is further broken down to show the number of programs/theories/goals that were successfully solved, their percentage of the total, and the average time taken in seconds for each solver to return such a result. Program verification by modularisation construct is particularly relevant to the use of \textsf{Why3} on the command line as opposed to through the IDE.
 
 Table \ref{table:avgtimes} also has a row for an imaginary ``theoretical'' solver, $\mathcal{TS}$, which corresponds to choosing the best (fastest) solver for each individual program, theory or goal.  This solver performs significantly better than any individual solver, and gives an indication of the maximum improvement that could be achieved \textit{if it was possible to predict in advance which solver was the best for a given program, theory or goal}.  In general, the method of choosing from a range of solvers on an individual goal basis is called \textit{portfolio-solving}. This technique has been successfully implemented in the SAT solver domain by SATzilla \cite{Satzilla} and for model-checkers \cite{DPVZ15:CAV}\cite{MUX}. \textsf{Why3} presents a unique opportunity to use a common input language to develop a portfolio SMT solver specifically designed for software verification.  
 
@@ -181,7 +181,7 @@ Section \ref{sec:overview} describes how the data was gathered and discusses iss
 Due to the diverse range of input languages used by software verification systems, a standardised benchmark repository of verification programs does not yet exist \cite{Dagstuhl}.
 For our study we chose the 128 example programs included in the \textsf{Why3} distribution (version 0.87.1) as our corpus for training and testing purposes. The programs in this repository are written in WhyML, a dialect of ML with added specification syntax and verified libraries. Many of the programs are solutions to problems posed at software verification competitions such as VerifyThis \cite{verifythis}, VSTTE \cite{Klebanov2011} and COST \cite{bormer:hal-00789525}. Other programs are implementations of benchmarks proposed by the VACID-0 \cite{Leino10vacid-0:verification} initiative.   It is our assumption that these programs are a representative software verification workload. Alternatives to this dataset are discussed in Section \ref{sec:related}. 
     
-We used six current, general-purpose SMT solvers supported by \textsf{Why3}: Alt-Ergo \cite{AltErgo}, CVC3 \cite{CVC3}, CVC4 \cite{CVC4}, veriT\footnote{The most recent version - 201506 - is not officially supported by \textit{\textsf{Why3}} but is the only version available} \cite{veriT}, Yices\footnote{We did not use Yices2 as its lack of support for quantifiers makes it unsuitable for software verification} \cite{Yices}, and Z3 \cite{Z3}. We expanded the range of solvers to eight by also recording the results for two of the most recent major versions of two popular solvers - Alt-Ergo and Z3.
+We used six current, general-purpose SMT solvers supported by \textsf{Why3}: Alt-Ergo \cite{AltErgo} versions 0.95.2 and 4.4.1, CVC3 \cite{CVC3} v. 2.4.1, CVC4 \cite{CVC4} v. 1.4, veriT \cite{veriT}, v. 201506\footnote{The most recent version - 201506 - is not officially supported by \textit{\textsf{Why3}} but is the only version available}, Yices \cite{Yices} v. 1.0.38\footnote{We did not use Yices2 as its lack of support for quantifiers makes it unsuitable for software verification}, and Z3 \cite{Z3} v. 4.3.2 and v. 4.4.1. We expanded the range of solvers to eight by recording the results for two of the most recent major versions of two popular solvers - Alt-Ergo and Z3.
 
 
 \begin{figure}
@@ -193,13 +193,18 @@ We used six current, general-purpose SMT solvers supported by \textsf{Why3}: Alt
     
 When a solver is sent a goal by \textsf{Why3} it returns one of the five possible answers \textit{Valid},  \textit{Invalid},  \textit{Unknown},  \textit{Timeout} or  \textit{Failure}. As can be seen from Table \ref{table:avgtimes} and Fig. \ref{fig:barcharts}, not all goals can be proved Valid or Invalid. Such goals usually require the use of an interactive theorem prover to discharge goals that require reasoning by induction. Sometimes a splitting transformation needs to be applied to simplify the goals before they are sent to the solver. Our tool does not perform any transformations to goals other than those defined by the solver's \textsf{Why3} driver file. In other cases, more time or memory resources need to be allocated in order to return a conclusive result. We address the issue of resource allocation in Section \ref{sec:independant}.     
 
+% Performing such a transformation would have the benefit of increasing the number of proof obligations in our suite: from 1048 to XXX through the use of the \texttt{split\_all\_wp} transform, for example. A future direction for this work could be the identification of the appropriate transformations which need to be applied in order for the proof obligation to be tractable by an SMT solver. 
+
 \subsection{Problem Quantification: predictor and response variables}
 
 Two sets of data need to be gathered in supervised machine learning \cite{Mitchell}: the independent/predictor variables which are used as input for both training and testing phases, and the dependent/response variables which correspond to ground truths during training. Of the 128 programs in our dataset, 25\% were held back for system evaluation (Section \ref{sec:eval}). The remaining 75\% (corresponding to 96 WhyML programs, 768 goals) were used for training and 4-Fold cross-validation.
 
 \subsubsection{Independent/Predictor Variables}
 \label{sec:independant}
-Fig. \ref{fig:types} lists the predictor variables that were used in our study.  All of these are (integer-valued) metrics that can be calculated by analysing the \textsf{Why3} goal statement, and are similar to the \textit{Syntax} metadata category for proof obligations written in the TPTP format \cite{TPTP}. To construct a feature vector from each task sent to the solvers, we traverse the abstract syntax tree (AST) for each goal and lemma, counting the number of each syntactic feature we find on the way. We ignore the other contextual features such as axiom and predicate definitions as these are not sent to the solver. 
+Fig. \ref{fig:types} lists the predictor variables that were used in our study.  All of these are (integer-valued) metrics that can be calculated by analysing a \textsf{Why3} proof obligation, and are similar to the \textit{Syntax} metadata category for proof obligations written in the TPTP format \cite{TPTP}.
+To construct a feature vector from each task sent to the solvers, we traverse the abstract syntax tree (AST) for each goal and lemma, counting the number of each syntactic feature we find on the way. We 
+focus on goals and lemma as they produce proof obligations, with axioms and predicates providing a logical context.
+%ignore the other contextual features such as axiom and predicate definitions as these are not sent to the solver. 
 
 Our feature extraction algorithm has similarities in this respect to the method used by \textsf{Why3} for computing goal ``shapes'' \cite{why:preserving}. These shape strings are used internally by \textsf{Why3} as an identifying fingerprint. Across proof sessions, their use can limit the amount of goals in a file which need to be re-proved.   
 
@@ -316,17 +321,23 @@ Our evaluation of the performance of a solver depends on two factors: the time t
 
 In order to accurately measure the time each solver takes to return an answer, we used a measurement framework specifically designed for use in competitive environments. The BenchExec \cite{benchexec} framework was developed by the organisers of the SVCOMP \cite{SVCOMP} software verification competition to reliably measure CPU time, wall-clock time and memory usage of software verification tools. We recorded the time spent on CPU by each SMT solver for each proof obligation. To account for random errors in measurement introduced at each execution, we used the methodology described by Lilja \cite{LiljaJ} to obtain an approximation of the true mean time. A 90\% confidence interval was used with an allowed error of $\pm$3.5\%.   
 
-By inspecting our data, we saw that most \textit{Valid} and \textit{Invalid} answers returned very quickly, with \textit{Unknown} answers taking slightly longer, and \textit{Failure/Timeout} responses taking longest. We took the relative utility of responses to be $Valid >$ $Invalid>Unknown>Timeout>Failure$ which can be read as ``it is better for a solver to return a \textit{Valid} response than \textit{Timeout}'', etc. A simple function allocates a cost to each solver $S$'s response to each goal $G$:
+By inspecting our data, we saw that most \textit{Valid} and \textit{Invalid} answers returned very quickly, with \textit{Unknown} answers taking slightly longer, and \textit{Failure/Timeout} responses taking longest. We took the relative utility of responses to be $\lbrace Valid, Invalid\rbrace>Unknown>\lbrace Timeout,Failure\rbrace$ which can be read as ``it is better for a solver to return a \textit{Valid} response than \textit{Timeout}'', etc. A simple function allocates a cost to each solver $S$'s response to each goal $G$:
 \[\small
 	cost(S,G) = 
 	\begin{cases}
 		time_{S,G}, \text{ if answer}_{S,G} \in \lbrace Valid, Invalid \rbrace \\
 		time_{S,G} + \text{timeout}, \text{ if answer}_{S,G} = Unknown \\
-		dist((time_{S,G},\text{timeout}), (0,0)), \text{if answer}_{S,G} \in \lbrace Timeout, Failure \rbrace
+		time_{S,G} + (\text{timeout} \times 2), \text{ if answer}_{S,G} \in \lbrace Timeout, Failure \rbrace
+		%dist((time_{S,G},\text{timeout}), (0,0)), \text{if answer}_{S,G} \in \lbrace Timeout, Failure \rbrace
 	\end{cases}
 \]
 
-Thus, to penalise the solvers that return an \textit{Unknown} result, the timeout limit is added to the time taken, while solvers returning \textit{Timeout} or \textit{Failure} are further penalised by taking the Euclidean distance from $(0,0)$ to the point defined by the (time taken, time limit value). This function ensures the best-performing solvers always have the lowest costs. A ranking of solvers for each goal in order of decreasing relevance is obtained by sorting the solvers by ascending cost.
+Thus, to penalise the solvers that return an \textit{Unknown} result, the timeout limit is added to the time taken, while solvers returning \textit{Timeout} or \textit{Failure} are further penalised by 
+adding double the timeout limit to the time taken.
+A response of \textit{Failure} refers to an error with the backend solver and usually means a required logical theory is not supported. 
+%For a solver to return \textit{Failure}, either the goal an error in the logical  
+%taking the Euclidean distance from $(0,0)$ to the point defined by the (time taken, time limit value). 
+This function ensures the best-performing solvers always have the lowest costs. A ranking of solvers for each goal in order of decreasing relevance is obtained by sorting the solvers by ascending cost.
 
 Since our cost model depends on the time limit value chosen, we need to choose a value that does not favour any one solver.  To establish a realistic time limit value, we find each solver's ``Peter Principle Point'' \cite{Sutcliffe200139}. In resource allocation for theorem proving terms, this point can be defined as the time limit at which more resources will not lead to a significant increase in the number of goals the solver can prove. 
 
@@ -351,6 +362,7 @@ Given a \textsf{Why3} goal, a ranking of solvers can be obtained by sorting the 
 Seven regression models were evaluated\footnote{We used the Python Sci-kit Learn \cite{sklearn} implementations of these models}: Linear Regression, Ridge Regression, K-Nearest Neighbours, Decision Trees, Random Forests (with and without discretisation) and the regression variant of Support Vector Machines. Table \ref{table:truncated} shows the results for some of the best-performing models. Most models were evaluated with and without a weighting function applied to the training samples. Weighting is standard practice in supervised machine learning: each sample's weight was defined as the standard deviation of solver costs. This function was designed to give more importance to instances where there was a large difference in performance among the solvers. 
 
 Table \ref{table:truncated} also shows three theoretical strategies in order to provide bounds for the prediction models. \textit{Best} always chooses the best ranking of solvers and \textit{Worst} always chooses the worst ranking (which is the reverse ordering to \textit{Best}). \textit{Random} is the average result of choosing every permutation of the eight solvers for each instance in the training set.  We use this strategy to represent the user selecting SMT solvers at random without any consideration for goal characterisation or solver capabilities. 
+A comparison to a \textit{fixed} ordering of solvers for each goal is not made as any such ordering would be arbitrarily determined. 
 
 We note that the \textit{Best} theoretical strategy of Table \ref{table:truncated} is not directly comparable with the theoretical solver $\mathcal{TS}$ from Table \ref{table:avgtimes}.  The two tables' average time columns are measuring different results: in contrast to $\mathcal{TS}$, \textit{Best} will call each solver in turn, as will all the other models in Table \ref{table:truncated}, until a \textit{Valid/Invalid} result is recorded (which it may never be).  Thus Table \ref{table:truncated}'s \textit{Time} column shows the average \textit{cumulative} time of each such sequence of calls, rather than the average time taken by the single \textit{best} solver called by $\mathcal{TS}$. 
 
@@ -359,7 +371,7 @@ We note that the \textit{Best} theoretical strategy of Table \ref{table:truncate
 Table \ref{table:truncated}'s \textit{Time} column provides an overall estimate of the effectiveness of each prediction model.  We can see that the discretised Random Forest method provides the best overall results for the solvers, yielding an average time of 14.53 seconds.
 
 The second numeric column of Table \ref{table:truncated} shows the 
-Normalised Discounted Cumulative Gain (\textit{\textbf{nDCG}}), which is commonly used to evaluate the accuracy of rankings in the search engine and recommender system domains \cite{NDCG}. Here, emphasis is placed on correctly predicting items higher in the ranking. For a general ranking of length $p$, it is formulated as:
+Normalised Discounted Cumulative Gain (\textit{\textbf{nDCG}}), which is commonly used to evaluate the accuracy of rankings in the search engine and e-commerce recommender system domains \cite{NDCG}. Here, emphasis is placed on correctly predicting items higher in the ranking. For a general ranking of length $p$, it is formulated as:
 \[\small
 	nDCG_p = \frac{DCG_p}{IDCG_p}
     \quad\text{ where }\quad
@@ -379,16 +391,16 @@ the mean regression error (\textit{Reg. error}) which measures the mean absolute
  & \textbf{Time (secs)} &  \textbf{nDCG} &  $ R^2 $  &  \textbf{MAE} &  \textbf{Reg. error} \\
 \midrule
 \textit{\textbf{Best}}    &     12.63 &  1.00 &   - & 0.00 &        0.00 \\
-\textit{\textbf{Random}}     &   19.06 &  0.36 &  - & 2.62 &       27.51 \\
-\textit{\textbf{Worst}}  &     30.26 &  0.00 &   - & 4.00 &       41.19 \\
+\textit{\textbf{Random}}     &   19.06 &  0.36 &  - & 2.63 &       50.77 \\
+\textit{\textbf{Worst}}  &     30.26 &  0.00 &   - & 4.00 &       94.65 \\
 \midrule
-Random Forest        &    14.61 &  0.46 &   \textbf{0.28} & 2.22 &       \textbf{16.36} \\
- Random Forest (discretised)    &  \textbf{14.53} &  0.44 &  -0.37 & 2.36 &       16.96 \\
-Decision Tree         &    15.76 &  0.49 &   0.08 & 2.13 &       19.06 \\
-K-Nearest Neighbours  &  15.86 &  \textbf{0.50} &   0.18 & \textbf{2.08} &       19.11 \\
-Support Vector Regressor   & 15.20 &  0.42 &   0.15 & 2.39 &       19.22 \\
-Linear Regression       &   15.04 &  0.38 &  -0.16 & 2.62 &       20.91 \\
-Ridge      &   15.00 &  0.38 &  -0.14 & 2.62 &       20.89 \\
+Random Forest        &    15.02 &  0.48 &   \textbf{0.28} & 2.08 &       \textbf{38.91} \\
+ Random Forest (discretised)    &  \textbf{14.92} &  0.48 &  -0.18 & 2.13 &       39.19 \\
+Decision Tree         &    15.80 &  0.50 &   0.11 & 2.06 &       43.12 \\
+K-Nearest Neighbours  &  15.93 &  \textbf{0.53} &   0.16 & \textbf{2.00} &       43.41 \\
+Support Vector Regressor   & 15.57 &  0.47 &   0.14 & 2.26 &       47.45 \\
+Linear Regression       &   15.17 &  0.42 &  -0.16 & 2.45 &       49.25 \\
+Ridge      &   15.11 &  0.42 &  -0.15 & 2.45 &       49.09 \\
 \bottomrule
 \end{tabularx}
 \label{table:truncated}
@@ -513,17 +525,22 @@ The imitation of an orthodox solver to interact with \textsf{Why3} is more costl
 \label{sec:internal}
 
 The main threat to our work's internal validity is selection bias. All of our training and test samples are taken from the same source. We took care to split the data for training and testing purposes on a \textit{per file} basis. This ensured that \textsf{Where4} was not trained on a goal belonging to the same theory or file as any goal used for testing. 
-The results of running the solvers on our dataset are imbalanced. There were far more \textit{Valid} responses than any other response. No goal in our dataset returned an answer of \textit{Invalid} on any of the 8 solvers. This is a serious problem as \textsf{Where4} would not be able to recognize such a goal in real-world use. In future work we hope to use the TPTP benchmark library to remedy these issues. The benchmarks in this library come from a diverse range of contributors working in numerous problem domains \cite{Sutcliffe200139}. Although not as specific to software verification as the \textsf{Why3} suite of examples, each problem's origin and expected result is well annotated --- a feature we hope to exploit.   
+The results of running the solvers on our dataset are imbalanced. There were far more \textit{Valid} responses than any other response. No goal in our dataset returned an answer of \textit{Invalid} on any of the 8 solvers. This is a serious problem as \textsf{Where4} would not be able to recognize such a goal in real-world use. In future work we hope to use the TPTP benchmark library to remedy these issues. The benchmarks in this library come from a diverse range of contributors working in numerous problem domains \cite{Sutcliffe200139} and are
+%. Although 
+not as specific to software verification as the \textsf{Why3} suite of examples.
+%, each problem's origin and expected result is well annotated --- a feature we hope to exploit.   
 
-Use of an independent dataset is likely to influence the performance of the solvers. Alt-Ergo was designed for use with the \textsf{Why3} platform --- its input language is a previous version of the Why logic language. It is natural that the developers of the \textsf{Why3} examples would write programs which Alt-Ergo in particular would be able to prove. Due to the syntactic similarities in input format, it is likely that Alt-Ergo would perform well with any \textsf{Why3} dataset. We would hope, however, that the gulf between it and other solvers would narrow.
+Use of an independent dataset is likely to influence the performance of the solvers. Alt-Ergo was designed for use with the \textsf{Why3} platform --- its input language is a previous version of the Why logic language. It is natural that the developers of the \textsf{Why3} examples would write programs which Alt-Ergo in particular would be able to prove. Due to the syntactic similarities in input format and logical similarities such as support for type polymorphism, it is likely that Alt-Ergo would perform well with any \textsf{Why3} dataset. We would hope, however, that the gulf between it and other solvers would narrow.
 
-There may be confounding effects in a solver's results that are not related to the independent variables we used (Sec. \ref{sec:independant}). We were limited in the tools available to extract features from the Why domain-specific logic language (in contrast to related work on model checkers which use the C language \cite{DPVZ15:CAV}\cite{MUX}). We made the decision to keep the choice of independent variables simple in order to increase generalisability to other formalisms such as Microsoft's Boogie \cite{Boogie} intermediate language.  
+There may be confounding effects in a solver's results that are not related to the independent variables we used (Sec. \ref{sec:independant}). We were limited in the tools available to extract features from the domain-specific Why logic language (in contrast to related work on model checkers which use the general-purpose C language \cite{DPVZ15:CAV}\cite{MUX}). We made the decision to keep the choice of independent variables simple in order to increase generalisability to other formalisms such as Microsoft's Boogie \cite{Boogie} intermediate language.  
 
 \subsubsection{External}
 
 The generalisability of our results is limited by the fact that all dependent variables were measured on a single machine.\footnote{All data collection was conducted on a 64-bit machine running Ubuntu 14.04 with a dual-core Intel i5-4250U CPU and 16GB of RAM.} We believe that the number of each response for each solver would not vary dramatically on a different machine of similar specifications. By inspecting the results when each solver was given a timeout of 60 seconds (Fig. \ref{fig:line_graph}), the rate of increase for \textit{Valid/Invalid} results was much lower than that of \textit{Unknown/Failure} results. The former set of results are more important when computing the cost value for each solver-goal pair.
 
-Timings of individual goals are likely to vary widely (even across independent executions on the same machine). Locally, we used a statistically-accurate mean timing based on a 90\% confidence interval (see Sec. \ref{sec:dependant}). It is our assumption that although the actual timed values would be quite different on any other machine, the \textit{ranking} of their timings would stay relatively stable.   A mid-range CPU was deliberately chosen to increase the generalisability of our results as much as possible.
+Timings of individual goals are likely to vary widely (even across independent executions on the same machine).
+% Locally, we used a statistically-accurate mean timing based on a 90\% confidence interval (see Sec. \ref{sec:dependant}). 
+It is our assumption that although the actual timed values would be quite different on any other machine, the \textit{ranking} of their timings would stay relatively stable.
 
 A ``typical'' software development scenario might involve a user verifying a single file with a small number of resultant goals: certainly much smaller than the size of our test set (263 goals). In such a setting, the productivity gains associated with using \textsf{Where4} would be minor. \textsf{Where4} is more suited therefore to large-scale software verification.
 
@@ -535,7 +552,10 @@ A ``typical'' software development scenario might involve a user verifying a sin
 \textit{Portfolio solvers:} Portfolio-solving approaches have been implemented successfully in the SAT domain by SATzilla \cite{Satzilla} and numerous studies \cite{MUX}\cite{DPVZ15:CAV} have used the SVCOMP \cite{SVCOMP} benchmark suite of C programs for model checkers. These particular studies have been predicated on the use of Support Vector Machines (SVM) with only a cursory use of linear regression \cite{MUX}. In this respect, our project represents a more wide-ranging treatment of the various prediction models available for portfolio solving. The need for a strategy to delegate \textsf{Why3} goals to appropriate SMT solvers is stated in recent work looking at verification systems on cloud infrastructures \cite{rodinplugin}.
 
 \textit{Machine Learning in Formal Methods:} 
-The FlySpec \cite{Flyspec} corpus of proofs has been the basis for a growing number of tools integrating interactive theorem provers with machine-learning based fact-selection. The MaSh engine in Sledgehammer \cite{Sledgehammer} is a related example. It uses a Naive Bayes algorithm and clustering to select facts based on syntactic similarity. ML4PG (Machine Learning for Proof General) \cite{ML4PG} also uses clustering techniques to guide the user for interactive theorem proving.
+The FlySpec \cite{Flyspec} corpus of proofs has been the basis for a growing number of tools integrating interactive theorem provers with machine-learning based fact-selection. The MaSh engine in Sledgehammer \cite{Sledgehammer} is a related example. It uses a Naive Bayes algorithm and clustering to select facts based on syntactic similarity. 
+Unlike \textsf{Where4}, MaSh uses a number of metrics to measure the \textit{shape} of goal formul\ae as features. 
+The weighting of features uses an inverse document frequency (IDF) algorithm.
+ML4PG (Machine Learning for Proof General) \cite{ML4PG} also uses clustering techniques to guide the user for interactive theorem proving.
 
 Our work adds to the literature by applying a portfolio-solving approach to SMT solvers. We conduct a wider comparison of learning algorithms than other studies which mostly use either SVMs or clustering. Unlike the interactive theorem proving tools mentioned above, \textsf{Where4} is specifically suited to software verification through its integration with the \textsf{Why3} system.
 
@@ -543,9 +563,10 @@ Our work adds to the literature by applying a portfolio-solving approach to SMT 
 
 We have presented a strategy to choose appropriate SMT solvers based on \textsf{Why3} syntactic features. Users without any knowledge of SMT solvers can prove a greater number of goals in a shorter amount of time by delegating to \textsf{Where4} than by choosing solvers at random. Although some of \textsf{Where4}'s results are disappointing, we believe that the \textsf{Why3} platform has great potential for machine-learning based portfolio-solving. We are encouraged by the performance of a theoretical \textit{Best} strategy and the convenience that such a tool would give \textsf{Why3} users.
 
-As discussed in Sec. \ref{sec:internal}, a future direction for this project could be the use of larger and more generic datasets. The TPTP repository in particular represents a large source of proof obligations which can be translated into the Why logic language. The number of goals provable by \textsf{Where4} could be increased by identifying which goals need to be simplified. Such goals could have a splitting transformation applied before being sent to the SMT solver. Also, we will continue to improve the efficiency of \textsf{Where4} when used as a \textsf{Why3} solver.  
+The number of potential directions for this work is large: parallel solving, the use of an initial solver to filter trivial instances before feature extraction, larger and more generic datasets, etc. 
+The TPTP repository represents a large source of proof obligations which can be translated into the Why logic language. The number of goals provable by \textsf{Where4} could be increased by identifying which goals need to be simplified in order to be tractable for an SMT solver: from 1048 to 7489 through the use of the \texttt{split\_goal\_wp} transform, for example.  An interesting direction for this work could be the identification of the appropriate transformations. Also, we will continue to improve the efficiency of \textsf{Where4} when used as a \textsf{Why3} solver and investigate the use of a minimal benchmark suite which can be used to train the model using new SMT solvers and theorem provers installed locally.  
 
-Data related to this paper is hosted at \texttt{github.com/ahealy19/F-IDE-2016}
+Data related to this paper is hosted at \texttt{github.com/ahealy19/F-IDE-2016}. \textsf{Where4} is hosted at \texttt{github.com/ahealy19/Where4}. 
 
 \subsubsection*{Acknowledgments.}This project is being carried out with funding provided by Science Foundation Ireland under grant number 11/RFP.1/CMS/3068
 

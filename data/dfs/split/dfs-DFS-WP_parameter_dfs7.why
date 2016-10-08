@@ -1,0 +1,143 @@
+theory Task
+(* use why3.BuiltIn.BuiltIn *)
+
+type bool =
+  | True
+  | False
+
+(* use why3.Bool.Bool *)
+
+type tuple0 =
+  | Tuple0
+
+(* use why3.Tuple0.Tuple01 *)
+
+type unit = tuple0
+
+(* use why3.Unit.Unit *)
+
+(* use why3.Prelude.Prelude *)
+
+function andb (x:bool) (y:bool) : bool =
+  match x with
+  | True -> y
+  | False -> False
+  end
+
+function orb (x:bool) (y:bool) : bool =
+  match x with
+  | False -> y
+  | True -> True
+  end
+
+function notb (x:bool) : bool = match x with
+  | False -> True
+  | True -> False
+  end
+
+function xorb (x:bool) (y:bool) : bool =
+  match x with
+  | False -> y
+  | True -> notb y
+  end
+
+function implb (x:bool) (y:bool) : bool =
+  match x with
+  | False -> True
+  | True -> y
+  end
+
+(* use bool.Bool1 *)
+
+type map 'a 'b
+
+(* meta material_type_arg type map, 1 *)
+
+function get (map 'a 'b) 'a : 'b
+
+function set (map 'a 'b) 'a 'b : map 'a 'b
+
+function mixfix_lbrb (a:map 'a 'b) (i:'a) : 'b = get a i
+
+function mixfix_lblsmnrb (a:map 'a 'b) (i:'a) (v:'b) : map 'a 'b = set a i v
+
+axiom Select_eq : forall m:map 'a 'b. forall a1:'a, a2:'a. forall b:'b
+  [mixfix_lbrb (mixfix_lblsmnrb m a1 b) a2]. (a1 = a2) -> (mixfix_lbrb
+  (mixfix_lblsmnrb m a1 b) a2 = b)
+
+axiom Select_neq : forall m:map 'a 'b. forall a1:'a, a2:'a. forall b:'b
+  [mixfix_lbrb (mixfix_lblsmnrb m a1 b) a2]. not (a1 = a2) -> (mixfix_lbrb
+  (mixfix_lblsmnrb m a1 b) a2 = mixfix_lbrb m a2)
+
+(* use map.Map *)
+
+type ref 'a =
+  | Mk_ref (contents:'a)
+
+function prefix_ex (x:ref 'a) : 'a = contents x
+
+(* use ref.Ref *)
+
+type loc
+
+function null : loc
+
+function root : loc
+
+function left loc : loc
+
+function right loc : loc
+
+type marks = map loc bool
+
+predicate edge (x:loc) (y:loc) = ("asym_split" not (x = null)) &&
+  (("asym_split" (left x = y)) || (right x = y))
+
+inductive path loc loc =
+  | path_nil : forall x:loc. path x x
+  | path_cons : forall x:loc, y:loc, z:loc. path x y -> edge y z -> path x z
+
+predicate only_descendants_are_marked (marked:map loc bool) = forall x:loc.
+  ("asym_split" not (x = null)) && (mixfix_lbrb marked x = True) -> path root
+  x
+
+predicate well_colored (marked:map loc bool) (busy:map loc bool) = forall x:
+  loc, y:loc. edge x y -> not (y = null) -> ("asym_split" (mixfix_lbrb busy
+  x = True)) || ((mixfix_lbrb marked x = True) -> (mixfix_lbrb marked
+  y = True))
+
+(* meta syntax_type type int, "int", 0 *)
+
+(* meta syntax_type type real, "real", 0 *)
+
+(* meta syntax_logic predicate infix_eq, "(%1 = %2)", 0 *)
+
+goal WP_parameter_dfs "expl:VC for dfs" : forall c:loc. forall busy:map loc
+  bool, marked:map loc bool. ("stop_split" well_colored marked busy) /\
+  ("stop_split" only_descendants_are_marked marked) /\ ("stop_split" path
+  root c) -> not (c = null) -> not (get marked c = True) -> (forall busy1:map
+  loc bool. ("stop_split" (busy1 = set busy c True)) -> (forall marked1:map
+  loc bool. ("stop_split" (marked1 = set marked c True)) ->
+  (let o = left c in ("asym_split" ("stop_split"
+  "expl:precondition" well_colored marked1 busy1) /\ ("stop_split"
+  "expl:precondition" only_descendants_are_marked marked1) /\ ("stop_split"
+  "expl:precondition" path root o)) -> (forall busy2:map loc bool, marked2:
+  map loc bool. ("stop_split" well_colored marked2 busy2) /\
+  ("stop_split" forall x:loc. (get marked1 x = True) -> (get marked2
+  x = True)) /\ ("stop_split" not (o = null) -> (get marked2 o = True)) /\
+  ("stop_split" forall x:loc. (get busy2 x = True) -> (get busy1
+  x = True)) /\ ("stop_split" only_descendants_are_marked marked2) ->
+  (let o1 = right c in ("asym_split" ("stop_split"
+  "expl:precondition" well_colored marked2 busy2) /\ ("stop_split"
+  "expl:precondition" only_descendants_are_marked marked2) /\ ("stop_split"
+  "expl:precondition" path root o1)) -> (forall busy3:map loc bool, marked3:
+  map loc bool. ("stop_split" well_colored marked3 busy3) /\
+  ("stop_split" forall x:loc. (get marked2 x = True) -> (get marked3
+  x = True)) /\ ("stop_split" not (o1 = null) -> (get marked3 o1 = True)) /\
+  ("stop_split" forall x:loc. (get busy3 x = True) -> (get busy2
+  x = True)) /\ ("stop_split" only_descendants_are_marked marked3) ->
+  (forall busy4:map loc bool. ("stop_split" (busy4 = set busy3 c False)) ->
+  ("expl:postcondition" forall x:loc. (get marked x = True) -> (get marked3
+  x = True)))))))))
+
+end

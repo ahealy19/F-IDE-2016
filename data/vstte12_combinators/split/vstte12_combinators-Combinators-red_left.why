@@ -1,0 +1,71 @@
+theory Task
+(* use why3.BuiltIn.BuiltIn *)
+
+type bool =
+  | True
+  | False
+
+(* use why3.Bool.Bool *)
+
+type tuple0 =
+  | Tuple0
+
+(* use why3.Tuple0.Tuple01 *)
+
+type unit = tuple0
+
+(* use why3.Unit.Unit *)
+
+(* use why3.Prelude.Prelude *)
+
+type term =
+  | S
+  | K
+  | App term term
+
+predicate is_value (t:term) =
+  match t with
+  | K | S -> true
+  | App K v | App S v -> is_value v
+  | App (App S v1) v2 -> is_value v1 /\ is_value v2
+  | _ -> false
+  end
+
+type context =
+  | Hole
+  | Left context term
+  | Right term context
+
+predicate is_context (c:context) =
+  match c with
+  | Hole -> true
+  | Left c1 _ -> is_context c1
+  | Right v c1 -> ("asym_split" is_value v) && is_context c1
+  end
+
+function subst (c:context) (t:term) : term =
+  match c with
+  | Hole -> t
+  | Left c1 t2 -> App (subst c1 t) t2
+  | Right v1 c2 -> App v1 (subst c2 t)
+  end
+
+inductive infix_mnmngt term term =
+  | red_K : forall c:context. is_context c -> (forall v1:term, v2:term.
+      is_value v1 -> is_value v2 -> infix_mnmngt (subst c (App (App K v1)
+      v2)) (subst c v1))
+  | red_S : forall c:context. is_context c -> (forall v1:term, v2:term, v3:
+      term. is_value v1 -> is_value v2 -> is_value v3 -> infix_mnmngt (subst
+      c (App (App (App S v1) v2) v3)) (subst c (App (App v1 v3) (App v2
+      v3))))
+
+(* meta syntax_type type int, "int", 0 *)
+
+(* meta syntax_type type real, "real", 0 *)
+
+(* meta syntax_logic predicate infix_eq, "(%1 = %2)", 0 *)
+
+goal red_left : forall t1:term, t2:term, t:term. infix_mnmngt t1 t2 ->
+  infix_mnmngt (App t1 t) (App t2 t)
+
+end

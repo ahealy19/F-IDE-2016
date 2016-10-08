@@ -67,7 +67,19 @@ for p in provers:
 	# uncomment this line to draw red lines for the 99 percentiles
 	#ax.plot((percentile99,percentile99),(0,total[p].quantile(0.99)),'r-')
 	ax.plot(total[p].index, total[p].values, styles[p],  label=p)
+
 	
+
+	if p == 'Z3-4.4.1':
+		num1, num2 = 0, 0
+		for i in times.index:
+			if num1 <= 0.125:
+				num1 = i
+			if num2 <= 0.25:
+				num2 = i
+		print times[num1]
+		print times[num2]	
+
 # the dotted vertical line
 ax.plot((10,10),(0,800),'k:')
 # to show more detail for very fast results

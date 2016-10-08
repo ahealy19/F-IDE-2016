@@ -1,0 +1,671 @@
+theory Task
+(* use why3.BuiltIn.BuiltIn *)
+
+type bool =
+  | True
+  | False
+
+(* use why3.Bool.Bool *)
+
+type tuple0 =
+  | Tuple0
+
+(* use why3.Tuple0.Tuple01 *)
+
+type unit = tuple0
+
+(* use why3.Unit.Unit *)
+
+(* use why3.Prelude.Prelude *)
+
+type map 'a 'b
+
+(* meta material_type_arg type map, 1 *)
+
+function get (map 'a 'b) 'a : 'b
+
+function set (map 'a 'b) 'a 'b : map 'a 'b
+
+function mixfix_lbrb (a:map 'a 'b) (i:'a) : 'b = get a i
+
+function mixfix_lblsmnrb (a:map 'a 'b) (i:'a) (v:'b) : map 'a 'b = set a i v
+
+axiom Select_eq : forall m:map 'a 'b. forall a1:'a, a2:'a. forall b:'b
+  [mixfix_lbrb (mixfix_lblsmnrb m a1 b) a2]. (a1 = a2) -> (mixfix_lbrb
+  (mixfix_lblsmnrb m a1 b) a2 = b)
+
+axiom Select_neq : forall m:map 'a 'b. forall a1:'a, a2:'a. forall b:'b
+  [mixfix_lbrb (mixfix_lblsmnrb m a1 b) a2]. not (a1 = a2) -> (mixfix_lbrb
+  (mixfix_lblsmnrb m a1 b) a2 = mixfix_lbrb m a2)
+
+(* use map.Map *)
+
+function const 'b : map 'a 'b
+
+axiom Const : forall b:'b, a:'a. (mixfix_lbrb (const b:map 'a 'b) a = b)
+
+(* use map.Const *)
+
+type list 'a =
+  | Nil
+  | Cons 'a (list 'a)
+
+(* use list.List *)
+
+function infix_plpl (l1:list 'a) (l2:list 'a) : list 'a =
+  match l1 with
+  | Nil -> l2
+  | Cons x1 r1 -> Cons x1 (infix_plpl r1 l2)
+  end
+
+axiom Append_assoc : forall l1:list 'a, l2:list 'a, l3:list 'a. (infix_plpl
+  l1 (infix_plpl l2 l3) = infix_plpl (infix_plpl l1 l2) l3)
+
+axiom Append_l_nil : forall l:list 'a. (infix_plpl l (Nil:list 'a) = l)
+
+function zero : int = 0
+
+function one : int = 1
+
+predicate infix_ls int int
+
+predicate infix_gt (x:int) (y:int) = infix_ls y x
+
+predicate infix_lseq (x:int) (y:int) = infix_ls x y \/ (x = y)
+
+function infix_pl int int : int
+
+function prefix_mn int : int
+
+function infix_as int int : int
+
+axiom Assoc : forall x:int, y:int, z:int. (infix_pl (infix_pl x y)
+  z = infix_pl x (infix_pl y z))
+
+(* clone algebra.Assoc with type t = int, function op = infix_pl,
+  prop Assoc1 = Assoc *)
+
+axiom Unit_def_l : forall x:int. (infix_pl zero x = x)
+
+axiom Unit_def_r : forall x:int. (infix_pl x zero = x)
+
+(* clone algebra.Monoid with type t1 = int, function unit = zero,
+  function op1 = infix_pl, prop Unit_def_r1 = Unit_def_r,
+  prop Unit_def_l1 = Unit_def_l, prop Assoc2 = Assoc *)
+
+axiom Inv_def_l : forall x:int. (infix_pl (prefix_mn x) x = zero)
+
+axiom Inv_def_r : forall x:int. (infix_pl x (prefix_mn x) = zero)
+
+(* clone algebra.Group with type t2 = int, function inv = prefix_mn,
+  function unit1 = zero, function op2 = infix_pl,
+  prop Inv_def_r1 = Inv_def_r, prop Inv_def_l1 = Inv_def_l,
+  prop Unit_def_r2 = Unit_def_r, prop Unit_def_l2 = Unit_def_l,
+  prop Assoc3 = Assoc *)
+
+axiom Comm : forall x:int, y:int. (infix_pl x y = infix_pl y x)
+
+(* clone algebra.Comm with type t3 = int, function op3 = infix_pl,
+  prop Comm1 = Comm *)
+
+(* meta AC function infix_pl *)
+
+(* clone algebra.CommutativeGroup with type t4 = int,
+  function inv1 = prefix_mn, function unit2 = zero, function op4 = infix_pl,
+  prop Comm2 = Comm, prop Inv_def_r2 = Inv_def_r,
+  prop Inv_def_l2 = Inv_def_l, prop Unit_def_r3 = Unit_def_r,
+  prop Unit_def_l3 = Unit_def_l, prop Assoc4 = Assoc *)
+
+axiom Assoc5 : forall x:int, y:int, z:int. (infix_as (infix_as x y)
+  z = infix_as x (infix_as y z))
+
+(* clone algebra.Assoc with type t = int, function op = infix_as,
+  prop Assoc1 = Assoc5 *)
+
+axiom Mul_distr_l : forall x:int, y:int, z:int. (infix_as x (infix_pl y
+  z) = infix_pl (infix_as x y) (infix_as x z))
+
+axiom Mul_distr_r : forall x:int, y:int, z:int. (infix_as (infix_pl y z)
+  x = infix_pl (infix_as y x) (infix_as z x))
+
+function infix_mn (x:int) (y:int) : int = infix_pl x (prefix_mn y)
+
+(* clone algebra.Ring with type t5 = int, function infix_mn1 = infix_mn,
+  function infix_as1 = infix_as, function prefix_mn1 = prefix_mn,
+  function infix_pl1 = infix_pl, function zero1 = zero,
+  prop Mul_distr_r1 = Mul_distr_r, prop Mul_distr_l1 = Mul_distr_l,
+  prop Assoc6 = Assoc5, prop Comm3 = Comm, prop Inv_def_r3 = Inv_def_r,
+  prop Inv_def_l3 = Inv_def_l, prop Unit_def_r4 = Unit_def_r,
+  prop Unit_def_l4 = Unit_def_l, prop Assoc7 = Assoc *)
+
+axiom Comm4 : forall x:int, y:int. (infix_as x y = infix_as y x)
+
+(* clone algebra.Comm with type t3 = int, function op3 = infix_as,
+  prop Comm1 = Comm4 *)
+
+(* meta AC function infix_as *)
+
+(* clone algebra.CommutativeRing with type t6 = int,
+  function infix_mn2 = infix_mn, function infix_as2 = infix_as,
+  function prefix_mn2 = prefix_mn, function infix_pl2 = infix_pl,
+  function zero2 = zero, prop Comm5 = Comm4, prop Mul_distr_r2 = Mul_distr_r,
+  prop Mul_distr_l2 = Mul_distr_l, prop Assoc8 = Assoc5, prop Comm6 = Comm,
+  prop Inv_def_r4 = Inv_def_r, prop Inv_def_l4 = Inv_def_l,
+  prop Unit_def_r5 = Unit_def_r, prop Unit_def_l5 = Unit_def_l,
+  prop Assoc9 = Assoc *)
+
+axiom Unitary : forall x:int. (infix_as one x = x)
+
+axiom NonTrivialRing : not (zero = one)
+
+(* clone algebra.UnitaryCommutativeRing with type t7 = int,
+  function one1 = one, function infix_mn3 = infix_mn,
+  function infix_as3 = infix_as, function prefix_mn3 = prefix_mn,
+  function infix_pl3 = infix_pl, function zero3 = zero,
+  prop NonTrivialRing1 = NonTrivialRing, prop Unitary1 = Unitary,
+  prop Comm7 = Comm4, prop Mul_distr_r3 = Mul_distr_r,
+  prop Mul_distr_l3 = Mul_distr_l, prop Assoc10 = Assoc5, prop Comm8 = Comm,
+  prop Inv_def_r5 = Inv_def_r, prop Inv_def_l5 = Inv_def_l,
+  prop Unit_def_r6 = Unit_def_r, prop Unit_def_l6 = Unit_def_l,
+  prop Assoc11 = Assoc *)
+
+predicate infix_gteq (x:int) (y:int) = infix_lseq y x
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Refl : forall x:int. infix_lseq x x
+
+(* clone relations.Reflexive with type t9 = int, predicate rel1 = infix_lseq,
+  prop Refl1 = Refl *)
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Trans : forall x:int, y:int, z:int. infix_lseq x y -> infix_lseq y z ->
+  infix_lseq x z
+
+(* clone relations.Transitive with type t10 = int,
+  predicate rel2 = infix_lseq, prop Trans1 = Trans *)
+
+(* clone relations.PreOrder with type t11 = int, predicate rel3 = infix_lseq,
+  prop Trans2 = Trans, prop Refl2 = Refl *)
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Antisymm : forall x:int, y:int. infix_lseq x y -> infix_lseq y x ->
+  (x = y)
+
+(* clone relations.Antisymmetric with type t12 = int,
+  predicate rel4 = infix_lseq, prop Antisymm1 = Antisymm *)
+
+(* clone relations.PartialOrder with type t13 = int,
+  predicate rel5 = infix_lseq, prop Antisymm2 = Antisymm,
+  prop Trans3 = Trans, prop Refl3 = Refl *)
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Total : forall x:int, y:int. infix_lseq x y \/ infix_lseq y x
+
+(* clone relations.Total with type t14 = int, predicate rel6 = infix_lseq,
+  prop Total1 = Total *)
+
+(* clone relations.TotalOrder with type t15 = int,
+  predicate rel7 = infix_lseq, prop Total2 = Total,
+  prop Antisymm3 = Antisymm, prop Trans4 = Trans, prop Refl4 = Refl *)
+
+axiom ZeroLessOne : infix_lseq zero one
+
+axiom CompatOrderAdd : forall x:int, y:int, z:int. infix_lseq x y ->
+  infix_lseq (infix_pl x z) (infix_pl y z)
+
+axiom CompatOrderMult : forall x:int, y:int, z:int. infix_lseq x y ->
+  infix_lseq zero z -> infix_lseq (infix_as x z) (infix_as y z)
+
+(* clone algebra.OrderedUnitaryCommutativeRing with type t16 = int,
+  predicate infix_gteq1 = infix_gteq, predicate infix_lseq1 = infix_lseq,
+  function one2 = one, function infix_mn4 = infix_mn,
+  function infix_as4 = infix_as, function prefix_mn4 = prefix_mn,
+  function infix_pl4 = infix_pl, function zero4 = zero,
+  prop CompatOrderMult1 = CompatOrderMult,
+  prop CompatOrderAdd1 = CompatOrderAdd, prop ZeroLessOne1 = ZeroLessOne,
+  prop Total3 = Total, prop Antisymm4 = Antisymm, prop Trans5 = Trans,
+  prop Refl5 = Refl, prop NonTrivialRing2 = NonTrivialRing,
+  prop Unitary2 = Unitary, prop Comm9 = Comm4,
+  prop Mul_distr_r4 = Mul_distr_r, prop Mul_distr_l4 = Mul_distr_l,
+  prop Assoc12 = Assoc5, prop Comm10 = Comm, prop Inv_def_r6 = Inv_def_r,
+  prop Inv_def_l6 = Inv_def_l, prop Unit_def_r7 = Unit_def_r,
+  prop Unit_def_l7 = Unit_def_l, prop Assoc13 = Assoc *)
+
+(* use int.Int *)
+
+function length (l:list 'a) : int =
+  match l with
+  | Nil -> 0
+  | Cons _ r -> infix_pl 1 (length r)
+  end
+
+axiom Length_nonnegative : forall l:list 'a. infix_gteq (length l) 0
+
+axiom Length_nil : forall l:list 'a. (length l = 0) <-> (l = Nil:list 'a)
+
+(* use list.Length *)
+
+axiom Append_length : forall l1:list 'a, l2:list 'a. (length (infix_plpl l1
+  l2) = infix_pl (length l1) (length l2))
+
+predicate mem (x:'a) (l:list 'a) =
+  match l with
+  | Nil -> false
+  | Cons y r -> (x = y) \/ mem x r
+  end
+
+(* use list.Mem *)
+
+axiom mem_append : forall x:'a, l1:list 'a, l2:list 'a. mem x (infix_plpl l1
+  l2) <-> mem x l1 \/ mem x l2
+
+axiom mem_decomp : forall x:'a, l:list 'a. mem x l -> (exists l1:list 'a, l2:
+  list 'a. (l = infix_plpl l1 (Cons x l2)))
+
+(* use list.Append *)
+
+type set 'a
+
+(* meta material_type_arg type set, 0 *)
+
+predicate mem1 'a (set 'a)
+
+predicate infix_eqeq (s1:set 'a) (s2:set 'a) = forall x:'a. mem1 x s1 <->
+  mem1 x s2
+
+axiom extensionality : forall s1:set 'a, s2:set 'a. infix_eqeq s1 s2 ->
+  (s1 = s2)
+
+predicate subset (s1:set 'a) (s2:set 'a) = forall x:'a. mem1 x s1 -> mem1 x
+  s2
+
+axiom subset_refl : forall s1:set 'a. subset s1 s1
+
+axiom subset_trans : forall s1:set 'a, s2:set 'a, s3:set 'a. subset s1 s2 ->
+  subset s2 s3 -> subset s1 s3
+
+function empty : set 'a
+
+predicate is_empty (s1:set 'a) = forall x:'a. not mem1 x s1
+
+axiom empty_def1 : is_empty (empty:set 'a)
+
+axiom mem_empty : forall x:'a. mem1 x (empty:set 'a) <-> false
+
+function add 'a (set 'a) : set 'a
+
+axiom add_def1 : forall x:'a, y:'a. forall s1:set 'a. mem1 x (add y s1) <->
+  (x = y) \/ mem1 x s1
+
+function singleton (x:'a) : set 'a = add x (empty:set 'a)
+
+function remove 'a (set 'a) : set 'a
+
+axiom remove_def1 : forall x:'a, y:'a, s1:set 'a. mem1 x (remove y s1) <->
+  not (x = y) /\ mem1 x s1
+
+axiom add_remove : forall x:'a, s1:set 'a. mem1 x s1 -> (add x (remove x
+  s1) = s1)
+
+axiom remove_add : forall x:'a, s1:set 'a. (remove x (add x s1) = remove x
+  s1)
+
+axiom subset_remove : forall x:'a, s1:set 'a. subset (remove x s1) s1
+
+function union (set 'a) (set 'a) : set 'a
+
+axiom union_def1 : forall s1:set 'a, s2:set 'a, x:'a. mem1 x (union s1
+  s2) <-> mem1 x s1 \/ mem1 x s2
+
+function inter (set 'a) (set 'a) : set 'a
+
+axiom inter_def1 : forall s1:set 'a, s2:set 'a, x:'a. mem1 x (inter s1
+  s2) <-> mem1 x s1 /\ mem1 x s2
+
+function diff (set 'a) (set 'a) : set 'a
+
+axiom diff_def1 : forall s1:set 'a, s2:set 'a, x:'a. mem1 x (diff s1 s2) <->
+  mem1 x s1 /\ not mem1 x s2
+
+axiom subset_diff : forall s1:set 'a, s2:set 'a. subset (diff s1 s2) s1
+
+function choose (set 'a) : 'a
+
+axiom choose_def : forall s1:set 'a. not is_empty s1 -> mem1 (choose s1) s1
+
+(* clone set.SetGen with type set1 = set, function choose1 = choose,
+  function diff1 = diff, function inter1 = inter, function union1 = union,
+  function remove1 = remove, function singleton1 = singleton,
+  function add1 = add, predicate is_empty1 = is_empty,
+  function empty1 = empty, predicate subset1 = subset,
+  predicate infix_eqeq1 = infix_eqeq, predicate mem2 = mem1,
+  prop choose_def1 = choose_def, prop subset_diff1 = subset_diff,
+  prop diff_def11 = diff_def1, prop inter_def11 = inter_def1,
+  prop union_def11 = union_def1, prop subset_remove1 = subset_remove,
+  prop remove_add1 = remove_add, prop add_remove1 = add_remove,
+  prop remove_def11 = remove_def1, prop add_def11 = add_def1,
+  prop mem_empty1 = mem_empty, prop empty_def11 = empty_def1,
+  prop subset_trans1 = subset_trans, prop subset_refl1 = subset_refl,
+  prop extensionality1 = extensionality *)
+
+function cardinal (set 'a) : int
+
+axiom cardinal_nonneg : forall s1:set 'a. infix_gteq (cardinal s1) 0
+
+axiom cardinal_empty : forall s1:set 'a. (cardinal s1 = 0) <-> is_empty s1
+
+axiom cardinal_add : forall x:'a. forall s1:set 'a. not mem1 x s1 ->
+  (cardinal (add x s1) = infix_pl 1 (cardinal s1))
+
+axiom cardinal_remove : forall x:'a. forall s1:set 'a. mem1 x s1 -> (cardinal
+  s1 = infix_pl 1 (cardinal (remove x s1)))
+
+axiom cardinal_subset : forall s1:set 'a, s2:set 'a. subset s1 s2 ->
+  infix_lseq (cardinal s1) (cardinal s2)
+
+axiom subset_eq : forall s1:set 'a, s2:set 'a. subset s1 s2 -> (cardinal
+  s1 = cardinal s2) -> infix_eqeq s1 s2
+
+axiom cardinal1 : forall s1:set 'a. (cardinal s1 = 1) -> (forall x:'a. mem1 x
+  s1 -> (x = choose s1))
+
+(* use set.Fset *)
+
+type vertex
+
+function vertices : set vertex
+
+type tuple2 'a 'a1 =
+  | Tuple2 'a 'a1
+
+(* use why3.Tuple2.Tuple21 *)
+
+function edges : set (tuple2 vertex vertex)
+
+predicate edge (x:vertex) (y:vertex) = mem1 (Tuple2 x y) edges
+
+axiom edges_def : forall x:vertex, y:vertex. mem1 (Tuple2 x y) edges -> mem1
+  x vertices /\ mem1 y vertices
+
+function s : vertex
+
+axiom s_in_graph : mem1 s vertices
+
+axiom vertices_cardinal_pos : infix_gt (cardinal vertices) 0
+
+inductive path vertex (list vertex) vertex =
+  | Path_empty : forall x:vertex. path x (Nil:list vertex) x
+  | Path_cons : forall x:vertex, y:vertex, z:vertex, l:list vertex. edge x
+      y -> path y l z -> path x (Cons x l) z
+
+axiom path_right_extension : forall x:vertex, y:vertex, z:vertex, l:list
+  vertex. path x l y -> edge y z -> path x (infix_plpl l (Cons y (Nil:list
+  vertex))) z
+
+axiom path_right_inversion : forall x:vertex, z:vertex, l:list vertex. path x
+  l z -> (x = z) /\ (l = Nil:list vertex) \/ (exists y:vertex, lqt:list
+  vertex. path x lqt y /\ edge y z /\ (l = infix_plpl lqt (Cons y (Nil:list
+  vertex))))
+
+axiom path_trans : forall x:vertex, y:vertex, z:vertex, l1:list vertex, l2:
+  list vertex. path x l1 y -> path y l2 z -> path x (infix_plpl l1 l2) z
+
+axiom empty_path : forall x:vertex, y:vertex. path x (Nil:list vertex) y ->
+  (x = y)
+
+axiom path_decomposition : forall x:vertex, y:vertex, z:vertex, l1:list
+  vertex, l2:list vertex. path x (infix_plpl l1 (Cons y l2)) z -> path x l1
+  y /\ path y (Cons y l2) z
+
+(* clone graph.Path with type vertex1 = vertex, predicate path1 = path,
+  predicate edge1 = edge, prop path_decomposition1 = path_decomposition,
+  prop empty_path1 = empty_path, prop path_trans1 = path_trans,
+  prop path_right_inversion1 = path_right_inversion,
+  prop path_right_extension1 = path_right_extension,
+  prop Path_cons1 = Path_cons, prop Path_empty1 = Path_empty *)
+
+function weight vertex vertex : int
+
+function path_weight (l:list vertex) (dst:vertex) : int =
+  match l with
+  | Nil -> 0
+  | Cons x Nil -> weight x dst
+  | Cons x (Cons y _ as r) -> infix_pl (weight x y) (path_weight r dst)
+  end
+
+axiom path_weight_right_extension : forall x:vertex, y:vertex, l:list vertex.
+  (path_weight (infix_plpl l (Cons x (Nil:list vertex))) y = infix_pl
+  (path_weight l x) (weight x y))
+
+axiom path_weight_decomposition : forall y:vertex, z:vertex, l1:list vertex,
+  l2:list vertex. (path_weight (infix_plpl l1 (Cons y l2)) z = infix_pl
+  (path_weight l1 y) (path_weight (Cons y l2) z))
+
+(* clone graph.IntPathWeight with type vertex2 = vertex,
+  function path_weight1 = path_weight, function weight1 = weight,
+  predicate path2 = path, predicate edge2 = edge,
+  prop path_weight_decomposition1 = path_weight_decomposition,
+  prop path_weight_right_extension1 = path_weight_right_extension,
+  prop path_decomposition2 = path_decomposition,
+  prop empty_path2 = empty_path, prop path_trans2 = path_trans,
+  prop path_right_inversion2 = path_right_inversion,
+  prop path_right_extension2 = path_right_extension,
+  prop Path_cons2 = Path_cons, prop Path_empty2 = Path_empty *)
+
+axiom path_in_vertices : forall v1:vertex, v2:vertex, l:list vertex. mem1 v1
+  vertices -> path v1 l v2 -> mem1 v2 vertices
+
+predicate pigeon_set (s1:set vertex) = forall l:list vertex. (forall e:
+  vertex. mem e l -> mem1 e s1) -> infix_gt (length l) (cardinal s1) ->
+  (exists e:vertex, l1:list vertex, l2:list vertex, l3:list vertex.
+  (l = infix_plpl l1 (Cons e (infix_plpl l2 (Cons e l3)))))
+
+axiom Induction : (forall s1:set vertex. is_empty s1 -> pigeon_set s1) ->
+  (forall s1:set vertex. pigeon_set s1 -> (forall t:vertex. not mem1 t s1 ->
+  pigeon_set (add t s1))) -> (forall s1:set vertex. pigeon_set s1)
+
+(* clone set.FsetInduction with type t17 = vertex, predicate p = pigeon_set,
+  prop Induction1 = Induction *)
+
+axiom corner : forall s1:set vertex, l:list vertex. (length l = cardinal
+  s1) -> (forall e:vertex. mem e l -> mem1 e s1) -> (exists e:vertex, l1:list
+  vertex, l2:list vertex, l3:list vertex. (l = infix_plpl l1 (Cons e
+  (infix_plpl l2 (Cons e l3))))) \/ (forall e:vertex. mem1 e s1 -> mem e l)
+
+axiom pigeon_0 : pigeon_set (empty:set vertex)
+
+axiom pigeon_1 : forall s1:set vertex. pigeon_set s1 -> (forall t:vertex.
+  pigeon_set (add t s1))
+
+axiom pigeon_2 : forall s1:set vertex. pigeon_set s1
+
+axiom pigeonhole : forall s1:set vertex, l:list vertex. (forall e:vertex. mem
+  e l -> mem1 e s1) -> infix_gt (length l) (cardinal s1) -> (exists e:vertex,
+  l1:list vertex, l2:list vertex, l3:list vertex. (l = infix_plpl l1 (Cons e
+  (infix_plpl l2 (Cons e l3)))))
+
+(* clone pigeon.Pigeonhole with type t18 = vertex,
+  predicate pigeon_set1 = pigeon_set, prop pigeonhole1 = pigeonhole,
+  prop pigeon_21 = pigeon_2, prop pigeon_11 = pigeon_1,
+  prop pigeon_01 = pigeon_0, prop corner1 = corner,
+  prop Induction2 = Induction *)
+
+axiom long_path_decomposition_pigeon1 : forall l:list vertex, v:vertex. path
+  s l v -> not (l = Nil:list vertex) -> (forall v1:vertex. mem v1 (Cons v
+  l) -> mem1 v1 vertices)
+
+axiom long_path_decomposition_pigeon2 : forall l:list vertex, v:vertex.
+  (forall v1:vertex. mem v1 (Cons v l) -> mem1 v1 vertices) -> infix_gt
+  (length (Cons v l)) (cardinal vertices) -> (exists e:vertex, l1:list
+  vertex, l2:list vertex, l3:list vertex. (Cons v l = infix_plpl l1 (Cons e
+  (infix_plpl l2 (Cons e l3)))))
+
+axiom long_path_decomposition_pigeon3 : forall l:list vertex, v:vertex.
+  (exists e:vertex, l1:list vertex, l2:list vertex, l3:list vertex. (Cons v
+  l = infix_plpl l1 (Cons e (infix_plpl l2 (Cons e l3))))) -> (exists l1:list
+  vertex, l2:list vertex. (l = infix_plpl l1 (Cons v l2))) \/ (exists n:
+  vertex, l1:list vertex, l2:list vertex, l3:list vertex. (l = infix_plpl l1
+  (Cons n (infix_plpl l2 (Cons n l3)))))
+
+axiom long_path_decomposition : forall l:list vertex, v:vertex. path s l v ->
+  infix_gteq (length l) (cardinal vertices) -> (exists l1:list vertex, l2:
+  list vertex. (l = infix_plpl l1 (Cons v l2))) \/ (exists n:vertex, l1:list
+  vertex, l2:list vertex, l3:list vertex. (l = infix_plpl l1 (Cons n
+  (infix_plpl l2 (Cons n l3)))))
+
+axiom simple_path : forall v:vertex, l:list vertex. path s l v ->
+  (exists lqt:list vertex. path s lqt v /\ infix_ls (length lqt) (cardinal
+  vertices))
+
+predicate negative_cycle (v:vertex) = mem1 v vertices /\ (exists l1:list
+  vertex. path s l1 v) /\ (exists l2:list vertex. path v l2 v /\ infix_ls
+  (path_weight l2 v) 0)
+
+axiom key_lemma_1 : forall v:vertex, n:int. (forall l:list vertex. path s l
+  v -> infix_ls (length l) (cardinal vertices) -> infix_gteq (path_weight l
+  v) n) -> (exists l:list vertex. path s l v /\ infix_ls (path_weight l v)
+  n) -> (exists u:vertex. negative_cycle u)
+
+(* use Graph *)
+
+type t19 =
+  | Finite int
+  | Infinite
+
+function add2 (x:t19) (y:t19) : t19 =
+  match x with
+  | Infinite -> Infinite
+  | Finite x1 ->
+      match y with
+      | Infinite -> Infinite
+      | Finite y1 -> Finite (infix_pl x1 y1)
+      end
+  end
+
+predicate lt (x:t19) (y:t19) =
+  match x with
+  | Infinite -> false
+  | Finite x1 ->
+      match y with
+      | Infinite -> true
+      | Finite y1 -> infix_ls x1 y1
+      end
+  end
+
+predicate le (x:t19) (y:t19) = lt x y \/ (x = y)
+
+(* clone relations.EndoRelation with type t8 = t19, predicate rel = le,  *)
+
+axiom Refl6 : forall x:t19. le x x
+
+(* clone relations.Reflexive with type t9 = t19, predicate rel1 = le,
+  prop Refl1 = Refl6 *)
+
+(* clone relations.EndoRelation with type t8 = t19, predicate rel = le,  *)
+
+axiom Trans6 : forall x:t19, y:t19, z:t19. le x y -> le y z -> le x z
+
+(* clone relations.Transitive with type t10 = t19, predicate rel2 = le,
+  prop Trans1 = Trans6 *)
+
+(* clone relations.PreOrder with type t11 = t19, predicate rel3 = le,
+  prop Trans2 = Trans6, prop Refl2 = Refl6 *)
+
+(* clone relations.EndoRelation with type t8 = t19, predicate rel = le,  *)
+
+axiom Antisymm5 : forall x:t19, y:t19. le x y -> le y x -> (x = y)
+
+(* clone relations.Antisymmetric with type t12 = t19, predicate rel4 = le,
+  prop Antisymm1 = Antisymm5 *)
+
+(* clone relations.PartialOrder with type t13 = t19, predicate rel5 = le,
+  prop Antisymm2 = Antisymm5, prop Trans3 = Trans6, prop Refl3 = Refl6 *)
+
+(* clone relations.EndoRelation with type t8 = t19, predicate rel = le,  *)
+
+axiom Total4 : forall x:t19, y:t19. le x y \/ le y x
+
+(* clone relations.Total with type t14 = t19, predicate rel6 = le,
+  prop Total1 = Total4 *)
+
+(* clone relations.TotalOrder with type t15 = t19, predicate rel7 = le,
+  prop Total2 = Total4, prop Antisymm3 = Antisymm5, prop Trans4 = Trans6,
+  prop Refl4 = Refl6 *)
+
+(* use int.IntInf *)
+
+type ref 'a =
+  | Mk_ref (contents:'a)
+
+function prefix_ex (x:ref 'a) : 'a = contents x
+
+(* use ref.Ref *)
+
+type t20 'a = ref (set 'a)
+
+(* use impset.Impset *)
+
+type distmap = map vertex t19
+
+function initialize_single_source (s1:vertex) : map vertex t19 =
+  mixfix_lblsmnrb (const Infinite:map vertex t19) s1 (Finite 0)
+
+predicate inv11 (m:map vertex t19) (pass:int) (via:set (tuple2 vertex
+  vertex)) = forall v:vertex. mem1 v vertices ->
+  match mixfix_lbrb m v with
+  | Finite n -> (exists l:list vertex. path s l v /\ (path_weight l
+      v = n)) /\ (forall l:list vertex. path s l v -> infix_ls (length l)
+      pass -> infix_gteq (path_weight l v) n) /\ (forall u:vertex, l:list
+      vertex. path s l u -> infix_ls (length l) pass -> mem1 (Tuple2 u v)
+      via -> infix_gteq (infix_pl (path_weight l u) (weight u v)) n)
+  | Infinite -> (forall l:list vertex. path s l v -> infix_gteq (length l)
+      pass) /\ (forall u:vertex. mem1 (Tuple2 u v) via -> (forall lu:list
+      vertex. path s lu u -> infix_gteq (length lu) pass))
+  end
+
+predicate inv2 (m:map vertex t19) (via:set (tuple2 vertex vertex)) =
+  forall u:vertex, v:vertex. mem1 (Tuple2 u v) via -> le (mixfix_lbrb m v)
+  (add2 (mixfix_lbrb m u) (Finite (weight u v)))
+
+axiom key_lemma_2 : forall m:map vertex t19. inv11 m (cardinal vertices)
+  (empty:set (tuple2 vertex vertex)) -> inv2 m edges -> (forall v:vertex.
+  not negative_cycle v)
+
+(* meta syntax_type type int, "int", 0 *)
+
+(* meta syntax_type type real, "real", 0 *)
+
+(* meta syntax_logic predicate infix_eq, "(%1 = %2)", 0 *)
+
+goal WP_parameter_bellman_ford
+  "expl:VC for bellman_ford" : let o = infix_mn (cardinal vertices) 1 in
+  infix_lseq 1 o -> (forall m:map vertex t19. ("stop_split" inv11 m (infix_pl
+  o 1) (empty:set (tuple2 vertex vertex))) -> ("asym_split" "stop_split"
+  "expl:assertion" inv11 m (cardinal vertices) (empty:set (tuple2 vertex
+  vertex))) -> (forall es:set (tuple2 vertex vertex).
+  ("stop_split" (es = edges)) -> (forall es1:set (tuple2 vertex vertex).
+  ("stop_split" subset es1 edges /\ inv2 m (diff edges es1)) -> (forall o1:
+  bool. ("stop_split" (o1 = True) <-> is_empty es1) -> not (o1 = True) ->
+  ("asym_split" "stop_split" "expl:precondition" not is_empty es1) ->
+  (forall es2:set (tuple2 vertex vertex). forall result:vertex, result1:
+  vertex. let result2 = Tuple2 result result1 in ("stop_split" mem1 result2
+  es1) /\ ("stop_split" (es2 = remove result2 es1)) ->
+  not match get m result with
+  | Infinite -> false
+  | Finite x ->
+      "split_goal: compiled match" match get m result1 with
+      | Infinite -> true
+      | Finite x1 -> infix_ls (infix_pl x (weight result result1)) x1
+      end
+  end -> ("expl:loop invariant preservation" subset es2 edges /\ inv2 m (diff
+  edges es2)))))))
+
+end

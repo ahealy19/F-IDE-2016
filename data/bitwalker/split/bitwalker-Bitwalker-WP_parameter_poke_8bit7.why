@@ -1,0 +1,1437 @@
+theory Task
+(* use why3.BuiltIn.BuiltIn *)
+
+type bool =
+  | True
+  | False
+
+(* use why3.Bool.Bool *)
+
+type tuple0 =
+  | Tuple0
+
+(* use why3.Tuple0.Tuple01 *)
+
+type unit = tuple0
+
+(* use why3.Unit.Unit *)
+
+(* use why3.Prelude.Prelude *)
+
+function zero : int = 0
+
+function one : int = 1
+
+predicate infix_ls int int
+
+predicate infix_gt (x:int) (y:int) = infix_ls y x
+
+predicate infix_lseq (x:int) (y:int) = infix_ls x y \/ (x = y)
+
+function infix_pl int int : int
+
+function prefix_mn int : int
+
+function infix_as int int : int
+
+axiom Assoc : forall x:int, y:int, z:int. (infix_pl (infix_pl x y)
+  z = infix_pl x (infix_pl y z))
+
+(* clone algebra.Assoc with type t = int, function op = infix_pl,
+  prop Assoc1 = Assoc *)
+
+axiom Unit_def_l : forall x:int. (infix_pl zero x = x)
+
+axiom Unit_def_r : forall x:int. (infix_pl x zero = x)
+
+(* clone algebra.Monoid with type t1 = int, function unit = zero,
+  function op1 = infix_pl, prop Unit_def_r1 = Unit_def_r,
+  prop Unit_def_l1 = Unit_def_l, prop Assoc2 = Assoc *)
+
+axiom Inv_def_l : forall x:int. (infix_pl (prefix_mn x) x = zero)
+
+axiom Inv_def_r : forall x:int. (infix_pl x (prefix_mn x) = zero)
+
+(* clone algebra.Group with type t2 = int, function inv = prefix_mn,
+  function unit1 = zero, function op2 = infix_pl,
+  prop Inv_def_r1 = Inv_def_r, prop Inv_def_l1 = Inv_def_l,
+  prop Unit_def_r2 = Unit_def_r, prop Unit_def_l2 = Unit_def_l,
+  prop Assoc3 = Assoc *)
+
+axiom Comm : forall x:int, y:int. (infix_pl x y = infix_pl y x)
+
+(* clone algebra.Comm with type t3 = int, function op3 = infix_pl,
+  prop Comm1 = Comm *)
+
+(* meta AC function infix_pl *)
+
+(* clone algebra.CommutativeGroup with type t4 = int,
+  function inv1 = prefix_mn, function unit2 = zero, function op4 = infix_pl,
+  prop Comm2 = Comm, prop Inv_def_r2 = Inv_def_r,
+  prop Inv_def_l2 = Inv_def_l, prop Unit_def_r3 = Unit_def_r,
+  prop Unit_def_l3 = Unit_def_l, prop Assoc4 = Assoc *)
+
+axiom Assoc5 : forall x:int, y:int, z:int. (infix_as (infix_as x y)
+  z = infix_as x (infix_as y z))
+
+(* clone algebra.Assoc with type t = int, function op = infix_as,
+  prop Assoc1 = Assoc5 *)
+
+axiom Mul_distr_l : forall x:int, y:int, z:int. (infix_as x (infix_pl y
+  z) = infix_pl (infix_as x y) (infix_as x z))
+
+axiom Mul_distr_r : forall x:int, y:int, z:int. (infix_as (infix_pl y z)
+  x = infix_pl (infix_as y x) (infix_as z x))
+
+function infix_mn (x:int) (y:int) : int = infix_pl x (prefix_mn y)
+
+(* clone algebra.Ring with type t5 = int, function infix_mn1 = infix_mn,
+  function infix_as1 = infix_as, function prefix_mn1 = prefix_mn,
+  function infix_pl1 = infix_pl, function zero1 = zero,
+  prop Mul_distr_r1 = Mul_distr_r, prop Mul_distr_l1 = Mul_distr_l,
+  prop Assoc6 = Assoc5, prop Comm3 = Comm, prop Inv_def_r3 = Inv_def_r,
+  prop Inv_def_l3 = Inv_def_l, prop Unit_def_r4 = Unit_def_r,
+  prop Unit_def_l4 = Unit_def_l, prop Assoc7 = Assoc *)
+
+axiom Comm4 : forall x:int, y:int. (infix_as x y = infix_as y x)
+
+(* clone algebra.Comm with type t3 = int, function op3 = infix_as,
+  prop Comm1 = Comm4 *)
+
+(* meta AC function infix_as *)
+
+(* clone algebra.CommutativeRing with type t6 = int,
+  function infix_mn2 = infix_mn, function infix_as2 = infix_as,
+  function prefix_mn2 = prefix_mn, function infix_pl2 = infix_pl,
+  function zero2 = zero, prop Comm5 = Comm4, prop Mul_distr_r2 = Mul_distr_r,
+  prop Mul_distr_l2 = Mul_distr_l, prop Assoc8 = Assoc5, prop Comm6 = Comm,
+  prop Inv_def_r4 = Inv_def_r, prop Inv_def_l4 = Inv_def_l,
+  prop Unit_def_r5 = Unit_def_r, prop Unit_def_l5 = Unit_def_l,
+  prop Assoc9 = Assoc *)
+
+axiom Unitary : forall x:int. (infix_as one x = x)
+
+axiom NonTrivialRing : not (zero = one)
+
+(* clone algebra.UnitaryCommutativeRing with type t7 = int,
+  function one1 = one, function infix_mn3 = infix_mn,
+  function infix_as3 = infix_as, function prefix_mn3 = prefix_mn,
+  function infix_pl3 = infix_pl, function zero3 = zero,
+  prop NonTrivialRing1 = NonTrivialRing, prop Unitary1 = Unitary,
+  prop Comm7 = Comm4, prop Mul_distr_r3 = Mul_distr_r,
+  prop Mul_distr_l3 = Mul_distr_l, prop Assoc10 = Assoc5, prop Comm8 = Comm,
+  prop Inv_def_r5 = Inv_def_r, prop Inv_def_l5 = Inv_def_l,
+  prop Unit_def_r6 = Unit_def_r, prop Unit_def_l6 = Unit_def_l,
+  prop Assoc11 = Assoc *)
+
+predicate infix_gteq (x:int) (y:int) = infix_lseq y x
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Refl : forall x:int. infix_lseq x x
+
+(* clone relations.Reflexive with type t9 = int, predicate rel1 = infix_lseq,
+  prop Refl1 = Refl *)
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Trans : forall x:int, y:int, z:int. infix_lseq x y -> infix_lseq y z ->
+  infix_lseq x z
+
+(* clone relations.Transitive with type t10 = int,
+  predicate rel2 = infix_lseq, prop Trans1 = Trans *)
+
+(* clone relations.PreOrder with type t11 = int, predicate rel3 = infix_lseq,
+  prop Trans2 = Trans, prop Refl2 = Refl *)
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Antisymm : forall x:int, y:int. infix_lseq x y -> infix_lseq y x ->
+  (x = y)
+
+(* clone relations.Antisymmetric with type t12 = int,
+  predicate rel4 = infix_lseq, prop Antisymm1 = Antisymm *)
+
+(* clone relations.PartialOrder with type t13 = int,
+  predicate rel5 = infix_lseq, prop Antisymm2 = Antisymm,
+  prop Trans3 = Trans, prop Refl3 = Refl *)
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Total : forall x:int, y:int. infix_lseq x y \/ infix_lseq y x
+
+(* clone relations.Total with type t14 = int, predicate rel6 = infix_lseq,
+  prop Total1 = Total *)
+
+(* clone relations.TotalOrder with type t15 = int,
+  predicate rel7 = infix_lseq, prop Total2 = Total,
+  prop Antisymm3 = Antisymm, prop Trans4 = Trans, prop Refl4 = Refl *)
+
+axiom ZeroLessOne : infix_lseq zero one
+
+axiom CompatOrderAdd : forall x:int, y:int, z:int. infix_lseq x y ->
+  infix_lseq (infix_pl x z) (infix_pl y z)
+
+axiom CompatOrderMult : forall x:int, y:int, z:int. infix_lseq x y ->
+  infix_lseq zero z -> infix_lseq (infix_as x z) (infix_as y z)
+
+(* clone algebra.OrderedUnitaryCommutativeRing with type t16 = int,
+  predicate infix_gteq1 = infix_gteq, predicate infix_lseq1 = infix_lseq,
+  function one2 = one, function infix_mn4 = infix_mn,
+  function infix_as4 = infix_as, function prefix_mn4 = prefix_mn,
+  function infix_pl4 = infix_pl, function zero4 = zero,
+  prop CompatOrderMult1 = CompatOrderMult,
+  prop CompatOrderAdd1 = CompatOrderAdd, prop ZeroLessOne1 = ZeroLessOne,
+  prop Total3 = Total, prop Antisymm4 = Antisymm, prop Trans5 = Trans,
+  prop Refl5 = Refl, prop NonTrivialRing2 = NonTrivialRing,
+  prop Unitary2 = Unitary, prop Comm9 = Comm4,
+  prop Mul_distr_r4 = Mul_distr_r, prop Mul_distr_l4 = Mul_distr_l,
+  prop Assoc12 = Assoc5, prop Comm10 = Comm, prop Inv_def_r6 = Inv_def_r,
+  prop Inv_def_l6 = Inv_def_l, prop Unit_def_r7 = Unit_def_r,
+  prop Unit_def_l7 = Unit_def_l, prop Assoc13 = Assoc *)
+
+(* use int.Int *)
+
+function abs (x:int) : int = if infix_gteq x 0 then x else prefix_mn x
+
+axiom Abs_le : forall x:int, y:int. infix_lseq (abs x) y <-> infix_lseq
+  (prefix_mn y) x /\ infix_lseq x y
+
+axiom Abs_pos : forall x:int. infix_gteq (abs x) 0
+
+(* use int.Abs *)
+
+function div int int : int
+
+function mod int int : int
+
+axiom Div_mod : forall x:int, y:int. not (y = 0) -> (x = infix_pl (infix_as y
+  (div x y)) (mod x y))
+
+axiom Mod_bound : forall x:int, y:int. not (y = 0) -> infix_lseq 0 (mod x
+  y) /\ infix_ls (mod x y) (abs y)
+
+axiom Div_unique : forall x:int, y:int, q:int. infix_gt y 0 -> infix_lseq
+  (infix_as q y) x /\ infix_ls x (infix_pl (infix_as q y) y) -> (div x y = q)
+
+axiom Div_bound : forall x:int, y:int. infix_gteq x 0 /\ infix_gt y 0 ->
+  infix_lseq 0 (div x y) /\ infix_lseq (div x y) x
+
+axiom Mod_1 : forall x:int. (mod x 1 = 0)
+
+axiom Div_1 : forall x:int. (div x 1 = x)
+
+axiom Div_inf : forall x:int, y:int. infix_lseq 0 x /\ infix_ls x y -> (div x
+  y = 0)
+
+axiom Div_inf_neg : forall x:int, y:int. infix_ls 0 x /\ infix_lseq x y ->
+  (div (prefix_mn x) y = prefix_mn 1)
+
+axiom Mod_0 : forall y:int. not (y = 0) -> (mod 0 y = 0)
+
+axiom Div_1_left : forall y:int. infix_gt y 1 -> (div 1 y = 0)
+
+axiom Div_minus1_left : forall y:int. infix_gt y 1 -> (div (prefix_mn 1)
+  y = prefix_mn 1)
+
+axiom Mod_1_left : forall y:int. infix_gt y 1 -> (mod 1 y = 1)
+
+axiom Mod_minus1_left : forall y:int. infix_gt y 1 -> (mod (prefix_mn 1)
+  y = infix_mn y 1)
+
+axiom Div_mult : forall x:int, y:int, z:int [div (infix_pl (infix_as x y) z)
+  x]. infix_gt x 0 -> (div (infix_pl (infix_as x y) z) x = infix_pl y (div z
+  x))
+
+axiom Mod_mult : forall x:int, y:int, z:int [mod (infix_pl (infix_as x y) z)
+  x]. infix_gt x 0 -> (mod (infix_pl (infix_as x y) z) x = mod z x)
+
+(* use int.EuclideanDivision *)
+
+type map 'a 'b
+
+(* meta material_type_arg type map, 1 *)
+
+function get (map 'a 'b) 'a : 'b
+
+function set (map 'a 'b) 'a 'b : map 'a 'b
+
+function mixfix_lbrb (a:map 'a 'b) (i:'a) : 'b = get a i
+
+function mixfix_lblsmnrb (a:map 'a 'b) (i:'a) (v:'b) : map 'a 'b = set a i v
+
+axiom Select_eq : forall m:map 'a 'b. forall a1:'a, a2:'a. forall b:'b
+  [mixfix_lbrb (mixfix_lblsmnrb m a1 b) a2]. (a1 = a2) -> (mixfix_lbrb
+  (mixfix_lblsmnrb m a1 b) a2 = b)
+
+axiom Select_neq : forall m:map 'a 'b. forall a1:'a, a2:'a. forall b:'b
+  [mixfix_lbrb (mixfix_lblsmnrb m a1 b) a2]. not (a1 = a2) -> (mixfix_lbrb
+  (mixfix_lblsmnrb m a1 b) a2 = mixfix_lbrb m a2)
+
+(* use map.Map *)
+
+type array 'a =
+  | Mk_array (length:int) (elts:map int 'a)
+
+function get1 (a:array 'a) (i:int) : 'a = get (elts a) i
+
+function set1 (a:array 'a) (i:int) (v:'a) : array 'a = Mk_array (length a)
+  (set (elts a) i v)
+
+function mixfix_lbrb1 (a:array 'a) (i:int) : 'a = get1 a i
+
+function mixfix_lblsmnrb1 (a:array 'a) (i:int) (v:'a) : array 'a = set1 a i v
+
+(* use array.Array *)
+
+type ref 'a =
+  | Mk_ref (contents:'a)
+
+function prefix_ex (x:ref 'a) : 'a = contents x
+
+(* use ref.Ref *)
+
+function size : int = 8
+
+function two_power_size : int = 0x100
+
+function max_int : int = 0xFF
+
+function andb (x:bool) (y:bool) : bool =
+  match x with
+  | True -> y
+  | False -> False
+  end
+
+function orb (x:bool) (y:bool) : bool =
+  match x with
+  | False -> y
+  | True -> True
+  end
+
+function notb (x:bool) : bool = match x with
+  | False -> True
+  | True -> False
+  end
+
+function xorb (x:bool) (y:bool) : bool =
+  match x with
+  | False -> y
+  | True -> notb y
+  end
+
+function implb (x:bool) (y:bool) : bool =
+  match x with
+  | False -> True
+  | True -> y
+  end
+
+(* use bool.Bool1 *)
+
+type t17
+
+function nth t17 int : bool
+
+axiom nth_out_of_bound : forall x:t17, n:int. infix_ls n 0 \/ infix_gteq n
+  size -> (nth x n = False)
+
+function zeros : t17
+
+axiom Nth_zeros : forall n:int. (nth zeros n = False)
+
+function ones : t17
+
+axiom Nth_ones : forall n:int. infix_lseq 0 n /\ infix_ls n size -> (nth ones
+  n = True)
+
+function bw_and t17 t17 : t17
+
+axiom Nth_bw_and : forall v1:t17, v2:t17, n:int. infix_lseq 0 n /\ infix_ls n
+  size -> (nth (bw_and v1 v2) n = andb (nth v1 n) (nth v2 n))
+
+function bw_or t17 t17 : t17
+
+axiom Nth_bw_or : forall v1:t17, v2:t17, n:int. infix_lseq 0 n /\ infix_ls n
+  size -> (nth (bw_or v1 v2) n = orb (nth v1 n) (nth v2 n))
+
+function bw_xor t17 t17 : t17
+
+axiom Nth_bw_xor : forall v1:t17, v2:t17, n:int. infix_lseq 0 n /\ infix_ls n
+  size -> (nth (bw_xor v1 v2) n = xorb (nth v1 n) (nth v2 n))
+
+function bw_not t17 : t17
+
+axiom Nth_bw_not : forall v:t17, n:int. infix_lseq 0 n /\ infix_ls n size ->
+  (nth (bw_not v) n = notb (nth v n))
+
+function lsr t17 int : t17
+
+axiom Lsr_nth_low : forall b:t17, n:int, s:int. infix_lseq 0 s -> infix_lseq
+  0 n -> infix_ls (infix_pl n s) size -> (nth (lsr b s) n = nth b (infix_pl n
+  s))
+
+axiom Lsr_nth_high : forall b:t17, n:int, s:int. infix_lseq 0 s -> infix_lseq
+  0 n -> infix_gteq (infix_pl n s) size -> (nth (lsr b s) n = False)
+
+axiom lsr_zeros : forall x:t17. (lsr x 0 = x)
+
+function asr t17 int : t17
+
+axiom Asr_nth_low : forall b:t17, n:int, s:int. infix_lseq 0 s -> infix_lseq
+  0 n /\ infix_ls n size -> infix_ls (infix_pl n s) size -> (nth (asr b s)
+  n = nth b (infix_pl n s))
+
+axiom Asr_nth_high : forall b:t17, n:int, s:int. infix_lseq 0 s -> infix_lseq
+  0 n /\ infix_ls n size -> infix_gteq (infix_pl n s) size -> (nth (asr b s)
+  n = nth b (infix_mn size 1))
+
+axiom asr_zeros : forall x:t17. (asr x 0 = x)
+
+function lsl t17 int : t17
+
+axiom Lsl_nth_high : forall b:t17, n:int, s:int. infix_lseq 0 s /\ infix_lseq
+  s n /\ infix_ls n size -> (nth (lsl b s) n = nth b (infix_mn n s))
+
+axiom Lsl_nth_low : forall b:t17, n:int, s:int. infix_lseq 0 n /\ infix_ls n
+  s -> (nth (lsl b s) n = False)
+
+axiom lsl_zeros : forall x:t17. (lsl x 0 = x)
+
+function rotate_right t17 int : t17
+
+axiom Nth_rotate_right : forall v:t17, n:int, i:int. infix_lseq 0 i /\
+  infix_ls i size -> infix_lseq 0 n -> (nth (rotate_right v n) i = nth v (mod
+  (infix_pl i n) size))
+
+function rotate_left t17 int : t17
+
+axiom Nth_rotate_left : forall v:t17, n:int, i:int. infix_lseq 0 i /\
+  infix_ls i size -> infix_lseq 0 n -> (nth (rotate_left v n) i = nth v (mod
+  (infix_mn i n) size))
+
+function pow2 int : int
+
+axiom Power_0 : (pow2 0 = 1)
+
+axiom Power_s : forall n:int. infix_gteq n 0 -> (pow2 (infix_pl n
+  1) = infix_as 2 (pow2 n))
+
+axiom Power_1 : (pow2 1 = 2)
+
+axiom Power_sum : forall n:int, m:int. infix_gteq n 0 /\ infix_gteq m 0 ->
+  (pow2 (infix_pl n m) = infix_as (pow2 n) (pow2 m))
+
+axiom pow2pos : forall i:int. infix_gteq i 0 -> infix_gt (pow2 i) 0
+
+axiom pow2_0 : (pow2 0 = 0x1)
+
+axiom pow2_1 : (pow2 1 = 0x2)
+
+axiom pow2_2 : (pow2 2 = 0x4)
+
+axiom pow2_3 : (pow2 3 = 0x8)
+
+axiom pow2_4 : (pow2 4 = 0x10)
+
+axiom pow2_5 : (pow2 5 = 0x20)
+
+axiom pow2_6 : (pow2 6 = 0x40)
+
+axiom pow2_7 : (pow2 7 = 0x80)
+
+axiom pow2_8 : (pow2 8 = 0x100)
+
+axiom pow2_9 : (pow2 9 = 0x200)
+
+axiom pow2_10 : (pow2 10 = 0x400)
+
+axiom pow2_11 : (pow2 11 = 0x800)
+
+axiom pow2_12 : (pow2 12 = 0x1000)
+
+axiom pow2_13 : (pow2 13 = 0x2000)
+
+axiom pow2_14 : (pow2 14 = 0x4000)
+
+axiom pow2_15 : (pow2 15 = 0x8000)
+
+axiom pow2_16 : (pow2 16 = 0x10000)
+
+axiom pow2_17 : (pow2 17 = 0x20000)
+
+axiom pow2_18 : (pow2 18 = 0x40000)
+
+axiom pow2_19 : (pow2 19 = 0x80000)
+
+axiom pow2_20 : (pow2 20 = 0x100000)
+
+axiom pow2_21 : (pow2 21 = 0x200000)
+
+axiom pow2_22 : (pow2 22 = 0x400000)
+
+axiom pow2_23 : (pow2 23 = 0x800000)
+
+axiom pow2_24 : (pow2 24 = 0x1000000)
+
+axiom pow2_25 : (pow2 25 = 0x2000000)
+
+axiom pow2_26 : (pow2 26 = 0x4000000)
+
+axiom pow2_27 : (pow2 27 = 0x8000000)
+
+axiom pow2_28 : (pow2 28 = 0x10000000)
+
+axiom pow2_29 : (pow2 29 = 0x20000000)
+
+axiom pow2_30 : (pow2 30 = 0x40000000)
+
+axiom pow2_31 : (pow2 31 = 0x80000000)
+
+axiom pow2_32 : (pow2 32 = 0x100000000)
+
+axiom pow2_33 : (pow2 33 = 0x200000000)
+
+axiom pow2_34 : (pow2 34 = 0x400000000)
+
+axiom pow2_35 : (pow2 35 = 0x800000000)
+
+axiom pow2_36 : (pow2 36 = 0x1000000000)
+
+axiom pow2_37 : (pow2 37 = 0x2000000000)
+
+axiom pow2_38 : (pow2 38 = 0x4000000000)
+
+axiom pow2_39 : (pow2 39 = 0x8000000000)
+
+axiom pow2_40 : (pow2 40 = 0x10000000000)
+
+axiom pow2_41 : (pow2 41 = 0x20000000000)
+
+axiom pow2_42 : (pow2 42 = 0x40000000000)
+
+axiom pow2_43 : (pow2 43 = 0x80000000000)
+
+axiom pow2_44 : (pow2 44 = 0x100000000000)
+
+axiom pow2_45 : (pow2 45 = 0x200000000000)
+
+axiom pow2_46 : (pow2 46 = 0x400000000000)
+
+axiom pow2_47 : (pow2 47 = 0x800000000000)
+
+axiom pow2_48 : (pow2 48 = 0x1000000000000)
+
+axiom pow2_49 : (pow2 49 = 0x2000000000000)
+
+axiom pow2_50 : (pow2 50 = 0x4000000000000)
+
+axiom pow2_51 : (pow2 51 = 0x8000000000000)
+
+axiom pow2_52 : (pow2 52 = 0x10000000000000)
+
+axiom pow2_53 : (pow2 53 = 0x20000000000000)
+
+axiom pow2_54 : (pow2 54 = 0x40000000000000)
+
+axiom pow2_55 : (pow2 55 = 0x80000000000000)
+
+axiom pow2_56 : (pow2 56 = 0x100000000000000)
+
+axiom pow2_57 : (pow2 57 = 0x200000000000000)
+
+axiom pow2_58 : (pow2 58 = 0x400000000000000)
+
+axiom pow2_59 : (pow2 59 = 0x800000000000000)
+
+axiom pow2_60 : (pow2 60 = 0x1000000000000000)
+
+axiom pow2_61 : (pow2 61 = 0x2000000000000000)
+
+axiom pow2_62 : (pow2 62 = 0x4000000000000000)
+
+axiom pow2_63 : (pow2 63 = 0x8000000000000000)
+
+axiom pow2_64 : (pow2 64 = 0x10000000000000000)
+
+(* use bv.Pow2int *)
+
+function to_int t17 : int
+
+function to_uint t17 : int
+
+function of_int int : t17
+
+axiom to_uint_extensionality : forall v:t17, vqt:t17. (to_uint v = to_uint
+  vqt) -> (v = vqt)
+
+axiom to_int_extensionality : forall v:t17, vqt:t17. (to_int v = to_int
+  vqt) -> (v = vqt)
+
+predicate uint_in_range (i:int) = infix_lseq 0 i /\ infix_lseq i max_int
+
+axiom to_uint_bounds : forall v:t17. infix_lseq 0 (to_uint v) /\ infix_ls
+  (to_uint v) two_power_size
+
+axiom to_uint_of_int : forall i:int. infix_lseq 0 i /\ infix_ls i
+  two_power_size -> (to_uint (of_int i) = i)
+
+function size_bv : t17 = of_int size
+
+axiom Of_int_zeros : (zeros = of_int 0)
+
+axiom Of_int_ones : (ones = of_int max_int)
+
+predicate ult (x:t17) (y:t17) = infix_ls (to_uint x) (to_uint y)
+
+predicate ule (x:t17) (y:t17) = infix_lseq (to_uint x) (to_uint y)
+
+predicate ugt (x:t17) (y:t17) = infix_gt (to_uint x) (to_uint y)
+
+predicate uge (x:t17) (y:t17) = infix_gteq (to_uint x) (to_uint y)
+
+predicate slt (v1:t17) (v2:t17) = infix_ls (to_int v1) (to_int v2)
+
+predicate sle (v1:t17) (v2:t17) = infix_lseq (to_int v1) (to_int v2)
+
+predicate sgt (v1:t17) (v2:t17) = infix_gt (to_int v1) (to_int v2)
+
+predicate sge (v1:t17) (v2:t17) = infix_gteq (to_int v1) (to_int v2)
+
+function add t17 t17 : t17
+
+axiom to_uint_add : forall v1:t17, v2:t17. (to_uint (add v1 v2) = mod
+  (infix_pl (to_uint v1) (to_uint v2)) two_power_size)
+
+axiom to_uint_add_bounded : forall v1:t17, v2:t17. infix_ls (infix_pl
+  (to_uint v1) (to_uint v2)) two_power_size -> (to_uint (add v1
+  v2) = infix_pl (to_uint v1) (to_uint v2))
+
+function sub t17 t17 : t17
+
+axiom to_uint_sub : forall v1:t17, v2:t17. (to_uint (sub v1 v2) = mod
+  (infix_mn (to_uint v1) (to_uint v2)) two_power_size)
+
+axiom to_uint_sub_bounded : forall v1:t17, v2:t17. infix_lseq 0 (infix_mn
+  (to_uint v1) (to_uint v2)) /\ infix_ls (infix_mn (to_uint v1) (to_uint v2))
+  two_power_size -> (to_uint (sub v1 v2) = infix_mn (to_uint v1) (to_uint
+  v2))
+
+function neg t17 : t17
+
+axiom to_uint_neg : forall v:t17. (to_uint (neg v) = mod (prefix_mn (to_uint
+  v)) two_power_size)
+
+function mul t17 t17 : t17
+
+axiom to_uint_mul : forall v1:t17, v2:t17. (to_uint (mul v1 v2) = mod
+  (infix_as (to_uint v1) (to_uint v2)) two_power_size)
+
+axiom to_uint_mul_bounded : forall v1:t17, v2:t17. infix_ls (infix_as
+  (to_uint v1) (to_uint v2)) two_power_size -> (to_uint (mul v1
+  v2) = infix_as (to_uint v1) (to_uint v2))
+
+function udiv t17 t17 : t17
+
+axiom to_uint_udiv : forall v1:t17, v2:t17. (to_uint (udiv v1 v2) = div
+  (to_uint v1) (to_uint v2))
+
+function urem t17 t17 : t17
+
+axiom to_uint_urem : forall v1:t17, v2:t17. (to_uint (urem v1 v2) = mod
+  (to_uint v1) (to_uint v2))
+
+function lsr_bv t17 t17 : t17
+
+axiom lsr_bv_is_lsr : forall x:t17, n:t17. (lsr_bv x n = lsr x (to_uint n))
+
+axiom to_uint_lsr : forall v:t17, n:t17. (to_uint (lsr_bv v n) = div (to_uint
+  v) (pow2 (to_uint n)))
+
+function asr_bv t17 t17 : t17
+
+axiom asr_bv_is_asr : forall x:t17, n:t17. (asr_bv x n = asr x (to_uint n))
+
+function lsl_bv t17 t17 : t17
+
+axiom lsl_bv_is_lsl : forall x:t17, n:t17. (lsl_bv x n = lsl x (to_uint n))
+
+axiom to_uint_lsl : forall v:t17, n:t17. (to_uint (lsl_bv v n) = mod
+  (infix_as (to_uint v) (pow2 (to_uint n))) two_power_size)
+
+function rotate_right_bv t17 t17 : t17
+
+function rotate_left_bv t17 t17 : t17
+
+axiom rotate_left_bv_is_rotate_left : forall v:t17, n:t17. (rotate_left_bv v
+  n = rotate_left v (to_uint n))
+
+axiom rotate_right_bv_is_rotate_right : forall v:t17, n:t17. (rotate_right_bv
+  v n = rotate_right v (to_uint n))
+
+function nth_bv t17 t17 : bool
+
+axiom nth_bv_def : forall x:t17, i:t17. (nth_bv x i = True) <-> not (bw_and
+  (lsr_bv x i) (of_int 1) = zeros)
+
+axiom Nth_bv_is_nth : forall x:t17, i:t17. (nth x (to_uint i) = nth_bv x i)
+
+axiom Nth_bv_is_nth2 : forall x:t17, i:int. infix_lseq 0 i /\ infix_ls i
+  two_power_size -> (nth_bv x (of_int i) = nth x i)
+
+predicate eq_sub_bv t17 t17 t17 t17
+
+axiom eq_sub_bv_def : forall a:t17, b:t17, i:t17, n:t17.
+  let mask = lsl_bv (sub (lsl_bv (of_int 1) n) (of_int 1)) i in eq_sub_bv a b
+  i n <-> (bw_and b mask = bw_and a mask)
+
+predicate eq_sub (a:t17) (b:t17) (i:int) (n:int) = forall j:int. infix_lseq i
+  j /\ infix_ls j (infix_pl i n) -> (nth a j = nth b j)
+
+axiom eq_sub_equiv : forall a:t17, b:t17, i:t17, n:t17. eq_sub a b (to_uint
+  i) (to_uint n) <-> eq_sub_bv a b i n
+
+predicate eq (v1:t17) (v2:t17) = eq_sub v1 v2 0 size
+
+axiom Extensionality : forall x:t17, y:t17 [eq x y]. eq x y -> (x = y)
+
+(* clone bv.BV_Gen with type t18 = t17, predicate eq1 = eq,
+  predicate eq_sub1 = eq_sub, predicate eq_sub_bv1 = eq_sub_bv,
+  function nth_bv1 = nth_bv, function rotate_left_bv1 = rotate_left_bv,
+  function rotate_right_bv1 = rotate_right_bv, function lsl_bv1 = lsl_bv,
+  function asr_bv1 = asr_bv, function lsr_bv1 = lsr_bv,
+  function urem1 = urem, function udiv1 = udiv, function mul1 = mul,
+  function neg1 = neg, function sub1 = sub, function add1 = add,
+  predicate sge1 = sge, predicate sgt1 = sgt, predicate sle1 = sle,
+  predicate slt1 = slt, predicate uge1 = uge, predicate ugt1 = ugt,
+  predicate ule1 = ule, predicate ult1 = ult, function size_bv1 = size_bv,
+  predicate uint_in_range1 = uint_in_range, function of_int1 = of_int,
+  function to_uint1 = to_uint, function to_int1 = to_int,
+  function max_int1 = max_int, function two_power_size1 = two_power_size,
+  function rotate_left1 = rotate_left, function rotate_right1 = rotate_right,
+  function lsl1 = lsl, function asr1 = asr, function lsr1 = lsr,
+  function bw_not1 = bw_not, function bw_xor1 = bw_xor,
+  function bw_or1 = bw_or, function bw_and1 = bw_and, function ones1 = ones,
+  function zeros1 = zeros, function nth1 = nth, function size1 = size,
+  prop Extensionality1 = Extensionality, prop eq_sub_equiv1 = eq_sub_equiv,
+  prop eq_sub_bv_def1 = eq_sub_bv_def, prop Nth_bv_is_nth21 = Nth_bv_is_nth2,
+  prop Nth_bv_is_nth1 = Nth_bv_is_nth, prop nth_bv_def1 = nth_bv_def,
+  prop rotate_right_bv_is_rotate_right1 = rotate_right_bv_is_rotate_right,
+  prop rotate_left_bv_is_rotate_left1 = rotate_left_bv_is_rotate_left,
+  prop to_uint_lsl1 = to_uint_lsl, prop lsl_bv_is_lsl1 = lsl_bv_is_lsl,
+  prop asr_bv_is_asr1 = asr_bv_is_asr, prop to_uint_lsr1 = to_uint_lsr,
+  prop lsr_bv_is_lsr1 = lsr_bv_is_lsr, prop to_uint_urem1 = to_uint_urem,
+  prop to_uint_udiv1 = to_uint_udiv,
+  prop to_uint_mul_bounded1 = to_uint_mul_bounded,
+  prop to_uint_mul1 = to_uint_mul, prop to_uint_neg1 = to_uint_neg,
+  prop to_uint_sub_bounded1 = to_uint_sub_bounded,
+  prop to_uint_sub1 = to_uint_sub,
+  prop to_uint_add_bounded1 = to_uint_add_bounded,
+  prop to_uint_add1 = to_uint_add, prop Of_int_ones1 = Of_int_ones,
+  prop Of_int_zeros1 = Of_int_zeros, prop to_uint_of_int1 = to_uint_of_int,
+  prop to_uint_bounds1 = to_uint_bounds,
+  prop to_int_extensionality1 = to_int_extensionality,
+  prop to_uint_extensionality1 = to_uint_extensionality,
+  prop max_int_val = max_int_val1,
+  prop two_power_size_val = two_power_size_val1,
+  prop Nth_rotate_left1 = Nth_rotate_left,
+  prop Nth_rotate_right1 = Nth_rotate_right, prop lsl_zeros1 = lsl_zeros,
+  prop Lsl_nth_low1 = Lsl_nth_low, prop Lsl_nth_high1 = Lsl_nth_high,
+  prop asr_zeros1 = asr_zeros, prop Asr_nth_high1 = Asr_nth_high,
+  prop Asr_nth_low1 = Asr_nth_low, prop lsr_zeros1 = lsr_zeros,
+  prop Lsr_nth_high1 = Lsr_nth_high, prop Lsr_nth_low1 = Lsr_nth_low,
+  prop Nth_bw_not1 = Nth_bw_not, prop Nth_bw_xor1 = Nth_bw_xor,
+  prop Nth_bw_or1 = Nth_bw_or, prop Nth_bw_and1 = Nth_bw_and,
+  prop Nth_ones1 = Nth_ones, prop Nth_zeros1 = Nth_zeros,
+  prop nth_out_of_bound1 = nth_out_of_bound, prop size_pos = size_pos1 *)
+
+(* use bv.BV8 *)
+
+(* clone mach.bv.BVCheck_Gen with type t19 = t17, predicate ugt2 = ugt,
+  predicate uge2 = uge, predicate ult2 = ult, predicate ule2 = ule,
+  predicate eq2 = eq, function asr_bv2 = asr_bv, function asr2 = asr,
+  function lsr_bv2 = lsr_bv, function lsr2 = lsr, function lsl_bv2 = lsl_bv,
+  function lsl2 = lsl, function urem2 = urem, function udiv2 = udiv,
+  function mul2 = mul, function sub2 = sub, function add2 = add,
+  function of_int2 = of_int, function to_uint2 = to_uint,
+  function zeros2 = zeros, function two_power_size2 = two_power_size,
+  function size2 = size,  *)
+
+(* use mach.bv.BVCheck8 *)
+
+function size3 : int = 32
+
+function two_power_size3 : int = 0x100000000
+
+function max_int2 : int = 0xFFFFFFFF
+
+type t20
+
+function nth2 t20 int : bool
+
+axiom nth_out_of_bound2 : forall x:t20, n:int. infix_ls n 0 \/ infix_gteq n
+  size3 -> (nth2 x n = False)
+
+function zeros3 : t20
+
+axiom Nth_zeros2 : forall n:int. (nth2 zeros3 n = False)
+
+function ones2 : t20
+
+axiom Nth_ones2 : forall n:int. infix_lseq 0 n /\ infix_ls n size3 -> (nth2
+  ones2 n = True)
+
+function bw_and2 t20 t20 : t20
+
+axiom Nth_bw_and2 : forall v1:t20, v2:t20, n:int. infix_lseq 0 n /\ infix_ls
+  n size3 -> (nth2 (bw_and2 v1 v2) n = andb (nth2 v1 n) (nth2 v2 n))
+
+function bw_or2 t20 t20 : t20
+
+axiom Nth_bw_or2 : forall v1:t20, v2:t20, n:int. infix_lseq 0 n /\ infix_ls n
+  size3 -> (nth2 (bw_or2 v1 v2) n = orb (nth2 v1 n) (nth2 v2 n))
+
+function bw_xor2 t20 t20 : t20
+
+axiom Nth_bw_xor2 : forall v1:t20, v2:t20, n:int. infix_lseq 0 n /\ infix_ls
+  n size3 -> (nth2 (bw_xor2 v1 v2) n = xorb (nth2 v1 n) (nth2 v2 n))
+
+function bw_not2 t20 : t20
+
+axiom Nth_bw_not2 : forall v:t20, n:int. infix_lseq 0 n /\ infix_ls n
+  size3 -> (nth2 (bw_not2 v) n = notb (nth2 v n))
+
+function lsr3 t20 int : t20
+
+axiom Lsr_nth_low2 : forall b:t20, n:int, s:int. infix_lseq 0 s -> infix_lseq
+  0 n -> infix_ls (infix_pl n s) size3 -> (nth2 (lsr3 b s) n = nth2 b
+  (infix_pl n s))
+
+axiom Lsr_nth_high2 : forall b:t20, n:int, s:int. infix_lseq 0 s ->
+  infix_lseq 0 n -> infix_gteq (infix_pl n s) size3 -> (nth2 (lsr3 b s)
+  n = False)
+
+axiom lsr_zeros2 : forall x:t20. (lsr3 x 0 = x)
+
+function asr3 t20 int : t20
+
+axiom Asr_nth_low2 : forall b:t20, n:int, s:int. infix_lseq 0 s -> infix_lseq
+  0 n /\ infix_ls n size3 -> infix_ls (infix_pl n s) size3 -> (nth2 (asr3 b
+  s) n = nth2 b (infix_pl n s))
+
+axiom Asr_nth_high2 : forall b:t20, n:int, s:int. infix_lseq 0 s ->
+  infix_lseq 0 n /\ infix_ls n size3 -> infix_gteq (infix_pl n s) size3 ->
+  (nth2 (asr3 b s) n = nth2 b (infix_mn size3 1))
+
+axiom asr_zeros2 : forall x:t20. (asr3 x 0 = x)
+
+function lsl3 t20 int : t20
+
+axiom Lsl_nth_high2 : forall b:t20, n:int, s:int. infix_lseq 0 s /\
+  infix_lseq s n /\ infix_ls n size3 -> (nth2 (lsl3 b s) n = nth2 b (infix_mn
+  n s))
+
+axiom Lsl_nth_low2 : forall b:t20, n:int, s:int. infix_lseq 0 n /\ infix_ls n
+  s -> (nth2 (lsl3 b s) n = False)
+
+axiom lsl_zeros2 : forall x:t20. (lsl3 x 0 = x)
+
+function rotate_right2 t20 int : t20
+
+axiom Nth_rotate_right2 : forall v:t20, n:int, i:int. infix_lseq 0 i /\
+  infix_ls i size3 -> infix_lseq 0 n -> (nth2 (rotate_right2 v n) i = nth2 v
+  (mod (infix_pl i n) size3))
+
+function rotate_left2 t20 int : t20
+
+axiom Nth_rotate_left2 : forall v:t20, n:int, i:int. infix_lseq 0 i /\
+  infix_ls i size3 -> infix_lseq 0 n -> (nth2 (rotate_left2 v n) i = nth2 v
+  (mod (infix_mn i n) size3))
+
+function to_int2 t20 : int
+
+function to_uint3 t20 : int
+
+function of_int3 int : t20
+
+axiom to_uint_extensionality2 : forall v:t20, vqt:t20. (to_uint3 v = to_uint3
+  vqt) -> (v = vqt)
+
+axiom to_int_extensionality2 : forall v:t20, vqt:t20. (to_int2 v = to_int2
+  vqt) -> (v = vqt)
+
+predicate uint_in_range2 (i:int) = infix_lseq 0 i /\ infix_lseq i max_int2
+
+axiom to_uint_bounds2 : forall v:t20. infix_lseq 0 (to_uint3 v) /\ infix_ls
+  (to_uint3 v) two_power_size3
+
+axiom to_uint_of_int2 : forall i:int. infix_lseq 0 i /\ infix_ls i
+  two_power_size3 -> (to_uint3 (of_int3 i) = i)
+
+function size_bv2 : t20 = of_int3 size3
+
+axiom Of_int_zeros2 : (zeros3 = of_int3 0)
+
+axiom Of_int_ones2 : (ones2 = of_int3 max_int2)
+
+predicate ult3 (x:t20) (y:t20) = infix_ls (to_uint3 x) (to_uint3 y)
+
+predicate ule3 (x:t20) (y:t20) = infix_lseq (to_uint3 x) (to_uint3 y)
+
+predicate ugt3 (x:t20) (y:t20) = infix_gt (to_uint3 x) (to_uint3 y)
+
+predicate uge3 (x:t20) (y:t20) = infix_gteq (to_uint3 x) (to_uint3 y)
+
+predicate slt2 (v1:t20) (v2:t20) = infix_ls (to_int2 v1) (to_int2 v2)
+
+predicate sle2 (v1:t20) (v2:t20) = infix_lseq (to_int2 v1) (to_int2 v2)
+
+predicate sgt2 (v1:t20) (v2:t20) = infix_gt (to_int2 v1) (to_int2 v2)
+
+predicate sge2 (v1:t20) (v2:t20) = infix_gteq (to_int2 v1) (to_int2 v2)
+
+function add3 t20 t20 : t20
+
+axiom to_uint_add2 : forall v1:t20, v2:t20. (to_uint3 (add3 v1 v2) = mod
+  (infix_pl (to_uint3 v1) (to_uint3 v2)) two_power_size3)
+
+axiom to_uint_add_bounded2 : forall v1:t20, v2:t20. infix_ls (infix_pl
+  (to_uint3 v1) (to_uint3 v2)) two_power_size3 -> (to_uint3 (add3 v1
+  v2) = infix_pl (to_uint3 v1) (to_uint3 v2))
+
+function sub3 t20 t20 : t20
+
+axiom to_uint_sub2 : forall v1:t20, v2:t20. (to_uint3 (sub3 v1 v2) = mod
+  (infix_mn (to_uint3 v1) (to_uint3 v2)) two_power_size3)
+
+axiom to_uint_sub_bounded2 : forall v1:t20, v2:t20. infix_lseq 0 (infix_mn
+  (to_uint3 v1) (to_uint3 v2)) /\ infix_ls (infix_mn (to_uint3 v1) (to_uint3
+  v2)) two_power_size3 -> (to_uint3 (sub3 v1 v2) = infix_mn (to_uint3 v1)
+  (to_uint3 v2))
+
+function neg2 t20 : t20
+
+axiom to_uint_neg2 : forall v:t20. (to_uint3 (neg2 v) = mod (prefix_mn
+  (to_uint3 v)) two_power_size3)
+
+function mul3 t20 t20 : t20
+
+axiom to_uint_mul2 : forall v1:t20, v2:t20. (to_uint3 (mul3 v1 v2) = mod
+  (infix_as (to_uint3 v1) (to_uint3 v2)) two_power_size3)
+
+axiom to_uint_mul_bounded2 : forall v1:t20, v2:t20. infix_ls (infix_as
+  (to_uint3 v1) (to_uint3 v2)) two_power_size3 -> (to_uint3 (mul3 v1
+  v2) = infix_as (to_uint3 v1) (to_uint3 v2))
+
+function udiv3 t20 t20 : t20
+
+axiom to_uint_udiv2 : forall v1:t20, v2:t20. (to_uint3 (udiv3 v1 v2) = div
+  (to_uint3 v1) (to_uint3 v2))
+
+function urem3 t20 t20 : t20
+
+axiom to_uint_urem2 : forall v1:t20, v2:t20. (to_uint3 (urem3 v1 v2) = mod
+  (to_uint3 v1) (to_uint3 v2))
+
+function lsr_bv3 t20 t20 : t20
+
+axiom lsr_bv_is_lsr2 : forall x:t20, n:t20. (lsr_bv3 x n = lsr3 x (to_uint3
+  n))
+
+axiom to_uint_lsr2 : forall v:t20, n:t20. (to_uint3 (lsr_bv3 v n) = div
+  (to_uint3 v) (pow2 (to_uint3 n)))
+
+function asr_bv3 t20 t20 : t20
+
+axiom asr_bv_is_asr2 : forall x:t20, n:t20. (asr_bv3 x n = asr3 x (to_uint3
+  n))
+
+function lsl_bv3 t20 t20 : t20
+
+axiom lsl_bv_is_lsl2 : forall x:t20, n:t20. (lsl_bv3 x n = lsl3 x (to_uint3
+  n))
+
+axiom to_uint_lsl2 : forall v:t20, n:t20. (to_uint3 (lsl_bv3 v n) = mod
+  (infix_as (to_uint3 v) (pow2 (to_uint3 n))) two_power_size3)
+
+function rotate_right_bv2 t20 t20 : t20
+
+function rotate_left_bv2 t20 t20 : t20
+
+axiom rotate_left_bv_is_rotate_left2 : forall v:t20, n:t20. (rotate_left_bv2
+  v n = rotate_left2 v (to_uint3 n))
+
+axiom rotate_right_bv_is_rotate_right2 : forall v:t20, n:t20.
+  (rotate_right_bv2 v n = rotate_right2 v (to_uint3 n))
+
+function nth_bv2 t20 t20 : bool
+
+axiom nth_bv_def2 : forall x:t20, i:t20. (nth_bv2 x i = True) <->
+  not (bw_and2 (lsr_bv3 x i) (of_int3 1) = zeros3)
+
+axiom Nth_bv_is_nth3 : forall x:t20, i:t20. (nth2 x (to_uint3 i) = nth_bv2 x
+  i)
+
+axiom Nth_bv_is_nth22 : forall x:t20, i:int. infix_lseq 0 i /\ infix_ls i
+  two_power_size3 -> (nth_bv2 x (of_int3 i) = nth2 x i)
+
+predicate eq_sub_bv2 t20 t20 t20 t20
+
+axiom eq_sub_bv_def2 : forall a:t20, b:t20, i:t20, n:t20.
+  let mask = lsl_bv3 (sub3 (lsl_bv3 (of_int3 1) n) (of_int3 1)) i in
+  eq_sub_bv2 a b i n <-> (bw_and2 b mask = bw_and2 a mask)
+
+predicate eq_sub2 (a:t20) (b:t20) (i:int) (n:int) = forall j:int. infix_lseq
+  i j /\ infix_ls j (infix_pl i n) -> (nth2 a j = nth2 b j)
+
+axiom eq_sub_equiv2 : forall a:t20, b:t20, i:t20, n:t20. eq_sub2 a b
+  (to_uint3 i) (to_uint3 n) <-> eq_sub_bv2 a b i n
+
+predicate eq3 (v1:t20) (v2:t20) = eq_sub2 v1 v2 0 size3
+
+axiom Extensionality2 : forall x:t20, y:t20 [eq3 x y]. eq3 x y -> (x = y)
+
+(* clone bv.BV_Gen with type t18 = t20, predicate eq1 = eq3,
+  predicate eq_sub1 = eq_sub2, predicate eq_sub_bv1 = eq_sub_bv2,
+  function nth_bv1 = nth_bv2, function rotate_left_bv1 = rotate_left_bv2,
+  function rotate_right_bv1 = rotate_right_bv2, function lsl_bv1 = lsl_bv3,
+  function asr_bv1 = asr_bv3, function lsr_bv1 = lsr_bv3,
+  function urem1 = urem3, function udiv1 = udiv3, function mul1 = mul3,
+  function neg1 = neg2, function sub1 = sub3, function add1 = add3,
+  predicate sge1 = sge2, predicate sgt1 = sgt2, predicate sle1 = sle2,
+  predicate slt1 = slt2, predicate uge1 = uge3, predicate ugt1 = ugt3,
+  predicate ule1 = ule3, predicate ult1 = ult3, function size_bv1 = size_bv2,
+  predicate uint_in_range1 = uint_in_range2, function of_int1 = of_int3,
+  function to_uint1 = to_uint3, function to_int1 = to_int2,
+  function max_int1 = max_int2, function two_power_size1 = two_power_size3,
+  function rotate_left1 = rotate_left2,
+  function rotate_right1 = rotate_right2, function lsl1 = lsl3,
+  function asr1 = asr3, function lsr1 = lsr3, function bw_not1 = bw_not2,
+  function bw_xor1 = bw_xor2, function bw_or1 = bw_or2,
+  function bw_and1 = bw_and2, function ones1 = ones2,
+  function zeros1 = zeros3, function nth1 = nth2, function size1 = size3,
+  prop Extensionality1 = Extensionality2, prop eq_sub_equiv1 = eq_sub_equiv2,
+  prop eq_sub_bv_def1 = eq_sub_bv_def2,
+  prop Nth_bv_is_nth21 = Nth_bv_is_nth22,
+  prop Nth_bv_is_nth1 = Nth_bv_is_nth3, prop nth_bv_def1 = nth_bv_def2,
+  prop rotate_right_bv_is_rotate_right1 = rotate_right_bv_is_rotate_right2,
+  prop rotate_left_bv_is_rotate_left1 = rotate_left_bv_is_rotate_left2,
+  prop to_uint_lsl1 = to_uint_lsl2, prop lsl_bv_is_lsl1 = lsl_bv_is_lsl2,
+  prop asr_bv_is_asr1 = asr_bv_is_asr2, prop to_uint_lsr1 = to_uint_lsr2,
+  prop lsr_bv_is_lsr1 = lsr_bv_is_lsr2, prop to_uint_urem1 = to_uint_urem2,
+  prop to_uint_udiv1 = to_uint_udiv2,
+  prop to_uint_mul_bounded1 = to_uint_mul_bounded2,
+  prop to_uint_mul1 = to_uint_mul2, prop to_uint_neg1 = to_uint_neg2,
+  prop to_uint_sub_bounded1 = to_uint_sub_bounded2,
+  prop to_uint_sub1 = to_uint_sub2,
+  prop to_uint_add_bounded1 = to_uint_add_bounded2,
+  prop to_uint_add1 = to_uint_add2, prop Of_int_ones1 = Of_int_ones2,
+  prop Of_int_zeros1 = Of_int_zeros2, prop to_uint_of_int1 = to_uint_of_int2,
+  prop to_uint_bounds1 = to_uint_bounds2,
+  prop to_int_extensionality1 = to_int_extensionality2,
+  prop to_uint_extensionality1 = to_uint_extensionality2,
+  prop max_int_val = max_int_val2,
+  prop two_power_size_val = two_power_size_val2,
+  prop Nth_rotate_left1 = Nth_rotate_left2,
+  prop Nth_rotate_right1 = Nth_rotate_right2, prop lsl_zeros1 = lsl_zeros2,
+  prop Lsl_nth_low1 = Lsl_nth_low2, prop Lsl_nth_high1 = Lsl_nth_high2,
+  prop asr_zeros1 = asr_zeros2, prop Asr_nth_high1 = Asr_nth_high2,
+  prop Asr_nth_low1 = Asr_nth_low2, prop lsr_zeros1 = lsr_zeros2,
+  prop Lsr_nth_high1 = Lsr_nth_high2, prop Lsr_nth_low1 = Lsr_nth_low2,
+  prop Nth_bw_not1 = Nth_bw_not2, prop Nth_bw_xor1 = Nth_bw_xor2,
+  prop Nth_bw_or1 = Nth_bw_or2, prop Nth_bw_and1 = Nth_bw_and2,
+  prop Nth_ones1 = Nth_ones2, prop Nth_zeros1 = Nth_zeros2,
+  prop nth_out_of_bound1 = nth_out_of_bound2, prop size_pos = size_pos2 *)
+
+(* use bv.BV32 *)
+
+(* clone mach.bv.BVCheck_Gen with type t19 = t20, predicate ugt2 = ugt3,
+  predicate uge2 = uge3, predicate ult2 = ult3, predicate ule2 = ule3,
+  predicate eq2 = eq3, function asr_bv2 = asr_bv3, function asr2 = asr3,
+  function lsr_bv2 = lsr_bv3, function lsr2 = lsr3,
+  function lsl_bv2 = lsl_bv3, function lsl2 = lsl3, function urem2 = urem3,
+  function udiv2 = udiv3, function mul2 = mul3, function sub2 = sub3,
+  function add2 = add3, function of_int2 = of_int3,
+  function to_uint2 = to_uint3, function zeros2 = zeros3,
+  function two_power_size2 = two_power_size3, function size2 = size3,  *)
+
+(* use mach.bv.BVCheck32 *)
+
+function size4 : int = 64
+
+function two_power_size4 : int = 0x10000000000000000
+
+function max_int3 : int = 0xFFFFFFFFFFFFFFFF
+
+type t21
+
+function nth3 t21 int : bool
+
+axiom nth_out_of_bound3 : forall x:t21, n:int. infix_ls n 0 \/ infix_gteq n
+  size4 -> (nth3 x n = False)
+
+function zeros4 : t21
+
+axiom Nth_zeros3 : forall n:int. (nth3 zeros4 n = False)
+
+function ones3 : t21
+
+axiom Nth_ones3 : forall n:int. infix_lseq 0 n /\ infix_ls n size4 -> (nth3
+  ones3 n = True)
+
+function bw_and3 t21 t21 : t21
+
+axiom Nth_bw_and3 : forall v1:t21, v2:t21, n:int. infix_lseq 0 n /\ infix_ls
+  n size4 -> (nth3 (bw_and3 v1 v2) n = andb (nth3 v1 n) (nth3 v2 n))
+
+function bw_or3 t21 t21 : t21
+
+axiom Nth_bw_or3 : forall v1:t21, v2:t21, n:int. infix_lseq 0 n /\ infix_ls n
+  size4 -> (nth3 (bw_or3 v1 v2) n = orb (nth3 v1 n) (nth3 v2 n))
+
+function bw_xor3 t21 t21 : t21
+
+axiom Nth_bw_xor3 : forall v1:t21, v2:t21, n:int. infix_lseq 0 n /\ infix_ls
+  n size4 -> (nth3 (bw_xor3 v1 v2) n = xorb (nth3 v1 n) (nth3 v2 n))
+
+function bw_not3 t21 : t21
+
+axiom Nth_bw_not3 : forall v:t21, n:int. infix_lseq 0 n /\ infix_ls n
+  size4 -> (nth3 (bw_not3 v) n = notb (nth3 v n))
+
+function lsr4 t21 int : t21
+
+axiom Lsr_nth_low3 : forall b:t21, n:int, s:int. infix_lseq 0 s -> infix_lseq
+  0 n -> infix_ls (infix_pl n s) size4 -> (nth3 (lsr4 b s) n = nth3 b
+  (infix_pl n s))
+
+axiom Lsr_nth_high3 : forall b:t21, n:int, s:int. infix_lseq 0 s ->
+  infix_lseq 0 n -> infix_gteq (infix_pl n s) size4 -> (nth3 (lsr4 b s)
+  n = False)
+
+axiom lsr_zeros3 : forall x:t21. (lsr4 x 0 = x)
+
+function asr4 t21 int : t21
+
+axiom Asr_nth_low3 : forall b:t21, n:int, s:int. infix_lseq 0 s -> infix_lseq
+  0 n /\ infix_ls n size4 -> infix_ls (infix_pl n s) size4 -> (nth3 (asr4 b
+  s) n = nth3 b (infix_pl n s))
+
+axiom Asr_nth_high3 : forall b:t21, n:int, s:int. infix_lseq 0 s ->
+  infix_lseq 0 n /\ infix_ls n size4 -> infix_gteq (infix_pl n s) size4 ->
+  (nth3 (asr4 b s) n = nth3 b (infix_mn size4 1))
+
+axiom asr_zeros3 : forall x:t21. (asr4 x 0 = x)
+
+function lsl4 t21 int : t21
+
+axiom Lsl_nth_high3 : forall b:t21, n:int, s:int. infix_lseq 0 s /\
+  infix_lseq s n /\ infix_ls n size4 -> (nth3 (lsl4 b s) n = nth3 b (infix_mn
+  n s))
+
+axiom Lsl_nth_low3 : forall b:t21, n:int, s:int. infix_lseq 0 n /\ infix_ls n
+  s -> (nth3 (lsl4 b s) n = False)
+
+axiom lsl_zeros3 : forall x:t21. (lsl4 x 0 = x)
+
+function rotate_right3 t21 int : t21
+
+axiom Nth_rotate_right3 : forall v:t21, n:int, i:int. infix_lseq 0 i /\
+  infix_ls i size4 -> infix_lseq 0 n -> (nth3 (rotate_right3 v n) i = nth3 v
+  (mod (infix_pl i n) size4))
+
+function rotate_left3 t21 int : t21
+
+axiom Nth_rotate_left3 : forall v:t21, n:int, i:int. infix_lseq 0 i /\
+  infix_ls i size4 -> infix_lseq 0 n -> (nth3 (rotate_left3 v n) i = nth3 v
+  (mod (infix_mn i n) size4))
+
+function to_int3 t21 : int
+
+function to_uint4 t21 : int
+
+function of_int4 int : t21
+
+axiom to_uint_extensionality3 : forall v:t21, vqt:t21. (to_uint4 v = to_uint4
+  vqt) -> (v = vqt)
+
+axiom to_int_extensionality3 : forall v:t21, vqt:t21. (to_int3 v = to_int3
+  vqt) -> (v = vqt)
+
+predicate uint_in_range3 (i:int) = infix_lseq 0 i /\ infix_lseq i max_int3
+
+axiom to_uint_bounds3 : forall v:t21. infix_lseq 0 (to_uint4 v) /\ infix_ls
+  (to_uint4 v) two_power_size4
+
+axiom to_uint_of_int3 : forall i:int. infix_lseq 0 i /\ infix_ls i
+  two_power_size4 -> (to_uint4 (of_int4 i) = i)
+
+function size_bv3 : t21 = of_int4 size4
+
+axiom Of_int_zeros3 : (zeros4 = of_int4 0)
+
+axiom Of_int_ones3 : (ones3 = of_int4 max_int3)
+
+predicate ult4 (x:t21) (y:t21) = infix_ls (to_uint4 x) (to_uint4 y)
+
+predicate ule4 (x:t21) (y:t21) = infix_lseq (to_uint4 x) (to_uint4 y)
+
+predicate ugt4 (x:t21) (y:t21) = infix_gt (to_uint4 x) (to_uint4 y)
+
+predicate uge4 (x:t21) (y:t21) = infix_gteq (to_uint4 x) (to_uint4 y)
+
+predicate slt3 (v1:t21) (v2:t21) = infix_ls (to_int3 v1) (to_int3 v2)
+
+predicate sle3 (v1:t21) (v2:t21) = infix_lseq (to_int3 v1) (to_int3 v2)
+
+predicate sgt3 (v1:t21) (v2:t21) = infix_gt (to_int3 v1) (to_int3 v2)
+
+predicate sge3 (v1:t21) (v2:t21) = infix_gteq (to_int3 v1) (to_int3 v2)
+
+function add4 t21 t21 : t21
+
+axiom to_uint_add3 : forall v1:t21, v2:t21. (to_uint4 (add4 v1 v2) = mod
+  (infix_pl (to_uint4 v1) (to_uint4 v2)) two_power_size4)
+
+axiom to_uint_add_bounded3 : forall v1:t21, v2:t21. infix_ls (infix_pl
+  (to_uint4 v1) (to_uint4 v2)) two_power_size4 -> (to_uint4 (add4 v1
+  v2) = infix_pl (to_uint4 v1) (to_uint4 v2))
+
+function sub4 t21 t21 : t21
+
+axiom to_uint_sub3 : forall v1:t21, v2:t21. (to_uint4 (sub4 v1 v2) = mod
+  (infix_mn (to_uint4 v1) (to_uint4 v2)) two_power_size4)
+
+axiom to_uint_sub_bounded3 : forall v1:t21, v2:t21. infix_lseq 0 (infix_mn
+  (to_uint4 v1) (to_uint4 v2)) /\ infix_ls (infix_mn (to_uint4 v1) (to_uint4
+  v2)) two_power_size4 -> (to_uint4 (sub4 v1 v2) = infix_mn (to_uint4 v1)
+  (to_uint4 v2))
+
+function neg3 t21 : t21
+
+axiom to_uint_neg3 : forall v:t21. (to_uint4 (neg3 v) = mod (prefix_mn
+  (to_uint4 v)) two_power_size4)
+
+function mul4 t21 t21 : t21
+
+axiom to_uint_mul3 : forall v1:t21, v2:t21. (to_uint4 (mul4 v1 v2) = mod
+  (infix_as (to_uint4 v1) (to_uint4 v2)) two_power_size4)
+
+axiom to_uint_mul_bounded3 : forall v1:t21, v2:t21. infix_ls (infix_as
+  (to_uint4 v1) (to_uint4 v2)) two_power_size4 -> (to_uint4 (mul4 v1
+  v2) = infix_as (to_uint4 v1) (to_uint4 v2))
+
+function udiv4 t21 t21 : t21
+
+axiom to_uint_udiv3 : forall v1:t21, v2:t21. (to_uint4 (udiv4 v1 v2) = div
+  (to_uint4 v1) (to_uint4 v2))
+
+function urem4 t21 t21 : t21
+
+axiom to_uint_urem3 : forall v1:t21, v2:t21. (to_uint4 (urem4 v1 v2) = mod
+  (to_uint4 v1) (to_uint4 v2))
+
+function lsr_bv4 t21 t21 : t21
+
+axiom lsr_bv_is_lsr3 : forall x:t21, n:t21. (lsr_bv4 x n = lsr4 x (to_uint4
+  n))
+
+axiom to_uint_lsr3 : forall v:t21, n:t21. (to_uint4 (lsr_bv4 v n) = div
+  (to_uint4 v) (pow2 (to_uint4 n)))
+
+function asr_bv4 t21 t21 : t21
+
+axiom asr_bv_is_asr3 : forall x:t21, n:t21. (asr_bv4 x n = asr4 x (to_uint4
+  n))
+
+function lsl_bv4 t21 t21 : t21
+
+axiom lsl_bv_is_lsl3 : forall x:t21, n:t21. (lsl_bv4 x n = lsl4 x (to_uint4
+  n))
+
+axiom to_uint_lsl3 : forall v:t21, n:t21. (to_uint4 (lsl_bv4 v n) = mod
+  (infix_as (to_uint4 v) (pow2 (to_uint4 n))) two_power_size4)
+
+function rotate_right_bv3 t21 t21 : t21
+
+function rotate_left_bv3 t21 t21 : t21
+
+axiom rotate_left_bv_is_rotate_left3 : forall v:t21, n:t21. (rotate_left_bv3
+  v n = rotate_left3 v (to_uint4 n))
+
+axiom rotate_right_bv_is_rotate_right3 : forall v:t21, n:t21.
+  (rotate_right_bv3 v n = rotate_right3 v (to_uint4 n))
+
+function nth_bv3 t21 t21 : bool
+
+axiom nth_bv_def3 : forall x:t21, i:t21. (nth_bv3 x i = True) <->
+  not (bw_and3 (lsr_bv4 x i) (of_int4 1) = zeros4)
+
+axiom Nth_bv_is_nth4 : forall x:t21, i:t21. (nth3 x (to_uint4 i) = nth_bv3 x
+  i)
+
+axiom Nth_bv_is_nth23 : forall x:t21, i:int. infix_lseq 0 i /\ infix_ls i
+  two_power_size4 -> (nth_bv3 x (of_int4 i) = nth3 x i)
+
+predicate eq_sub_bv3 t21 t21 t21 t21
+
+axiom eq_sub_bv_def3 : forall a:t21, b:t21, i:t21, n:t21.
+  let mask = lsl_bv4 (sub4 (lsl_bv4 (of_int4 1) n) (of_int4 1)) i in
+  eq_sub_bv3 a b i n <-> (bw_and3 b mask = bw_and3 a mask)
+
+predicate eq_sub3 (a:t21) (b:t21) (i:int) (n:int) = forall j:int. infix_lseq
+  i j /\ infix_ls j (infix_pl i n) -> (nth3 a j = nth3 b j)
+
+axiom eq_sub_equiv3 : forall a:t21, b:t21, i:t21, n:t21. eq_sub3 a b
+  (to_uint4 i) (to_uint4 n) <-> eq_sub_bv3 a b i n
+
+predicate eq4 (v1:t21) (v2:t21) = eq_sub3 v1 v2 0 size4
+
+axiom Extensionality3 : forall x:t21, y:t21 [eq4 x y]. eq4 x y -> (x = y)
+
+(* clone bv.BV_Gen with type t18 = t21, predicate eq1 = eq4,
+  predicate eq_sub1 = eq_sub3, predicate eq_sub_bv1 = eq_sub_bv3,
+  function nth_bv1 = nth_bv3, function rotate_left_bv1 = rotate_left_bv3,
+  function rotate_right_bv1 = rotate_right_bv3, function lsl_bv1 = lsl_bv4,
+  function asr_bv1 = asr_bv4, function lsr_bv1 = lsr_bv4,
+  function urem1 = urem4, function udiv1 = udiv4, function mul1 = mul4,
+  function neg1 = neg3, function sub1 = sub4, function add1 = add4,
+  predicate sge1 = sge3, predicate sgt1 = sgt3, predicate sle1 = sle3,
+  predicate slt1 = slt3, predicate uge1 = uge4, predicate ugt1 = ugt4,
+  predicate ule1 = ule4, predicate ult1 = ult4, function size_bv1 = size_bv3,
+  predicate uint_in_range1 = uint_in_range3, function of_int1 = of_int4,
+  function to_uint1 = to_uint4, function to_int1 = to_int3,
+  function max_int1 = max_int3, function two_power_size1 = two_power_size4,
+  function rotate_left1 = rotate_left3,
+  function rotate_right1 = rotate_right3, function lsl1 = lsl4,
+  function asr1 = asr4, function lsr1 = lsr4, function bw_not1 = bw_not3,
+  function bw_xor1 = bw_xor3, function bw_or1 = bw_or3,
+  function bw_and1 = bw_and3, function ones1 = ones3,
+  function zeros1 = zeros4, function nth1 = nth3, function size1 = size4,
+  prop Extensionality1 = Extensionality3, prop eq_sub_equiv1 = eq_sub_equiv3,
+  prop eq_sub_bv_def1 = eq_sub_bv_def3,
+  prop Nth_bv_is_nth21 = Nth_bv_is_nth23,
+  prop Nth_bv_is_nth1 = Nth_bv_is_nth4, prop nth_bv_def1 = nth_bv_def3,
+  prop rotate_right_bv_is_rotate_right1 = rotate_right_bv_is_rotate_right3,
+  prop rotate_left_bv_is_rotate_left1 = rotate_left_bv_is_rotate_left3,
+  prop to_uint_lsl1 = to_uint_lsl3, prop lsl_bv_is_lsl1 = lsl_bv_is_lsl3,
+  prop asr_bv_is_asr1 = asr_bv_is_asr3, prop to_uint_lsr1 = to_uint_lsr3,
+  prop lsr_bv_is_lsr1 = lsr_bv_is_lsr3, prop to_uint_urem1 = to_uint_urem3,
+  prop to_uint_udiv1 = to_uint_udiv3,
+  prop to_uint_mul_bounded1 = to_uint_mul_bounded3,
+  prop to_uint_mul1 = to_uint_mul3, prop to_uint_neg1 = to_uint_neg3,
+  prop to_uint_sub_bounded1 = to_uint_sub_bounded3,
+  prop to_uint_sub1 = to_uint_sub3,
+  prop to_uint_add_bounded1 = to_uint_add_bounded3,
+  prop to_uint_add1 = to_uint_add3, prop Of_int_ones1 = Of_int_ones3,
+  prop Of_int_zeros1 = Of_int_zeros3, prop to_uint_of_int1 = to_uint_of_int3,
+  prop to_uint_bounds1 = to_uint_bounds3,
+  prop to_int_extensionality1 = to_int_extensionality3,
+  prop to_uint_extensionality1 = to_uint_extensionality3,
+  prop max_int_val = max_int_val3,
+  prop two_power_size_val = two_power_size_val3,
+  prop Nth_rotate_left1 = Nth_rotate_left3,
+  prop Nth_rotate_right1 = Nth_rotate_right3, prop lsl_zeros1 = lsl_zeros3,
+  prop Lsl_nth_low1 = Lsl_nth_low3, prop Lsl_nth_high1 = Lsl_nth_high3,
+  prop asr_zeros1 = asr_zeros3, prop Asr_nth_high1 = Asr_nth_high3,
+  prop Asr_nth_low1 = Asr_nth_low3, prop lsr_zeros1 = lsr_zeros3,
+  prop Lsr_nth_high1 = Lsr_nth_high3, prop Lsr_nth_low1 = Lsr_nth_low3,
+  prop Nth_bw_not1 = Nth_bw_not3, prop Nth_bw_xor1 = Nth_bw_xor3,
+  prop Nth_bw_or1 = Nth_bw_or3, prop Nth_bw_and1 = Nth_bw_and3,
+  prop Nth_ones1 = Nth_ones3, prop Nth_zeros1 = Nth_zeros3,
+  prop nth_out_of_bound1 = nth_out_of_bound3, prop size_pos = size_pos3 *)
+
+(* use bv.BV64 *)
+
+(* clone mach.bv.BVCheck_Gen with type t19 = t21, predicate ugt2 = ugt4,
+  predicate uge2 = uge4, predicate ult2 = ult4, predicate ule2 = ule4,
+  predicate eq2 = eq4, function asr_bv2 = asr_bv4, function asr2 = asr4,
+  function lsr_bv2 = lsr_bv4, function lsr2 = lsr4,
+  function lsl_bv2 = lsl_bv4, function lsl2 = lsl4, function urem2 = urem4,
+  function udiv2 = udiv4, function mul2 = mul4, function sub2 = sub4,
+  function add2 = add4, function of_int2 = of_int4,
+  function to_uint2 = to_uint4, function zeros2 = zeros4,
+  function two_power_size2 = two_power_size4, function size2 = size4,  *)
+
+(* use mach.bv.BVCheck64 *)
+
+predicate in_range (b:t21) = ule4 b (of_int4 max_int2)
+
+function toBig t20 : t21
+
+function toSmall t21 : t20
+
+axiom toSmall_to_uint : forall x:t21. in_range x -> (to_uint4 x = to_uint3
+  (toSmall x))
+
+axiom toBig_to_uint : forall x:t20. (to_uint3 x = to_uint4 (toBig x))
+
+(* clone bv.BVConverter_Gen with type smallBV = t20, type bigBV = t21,
+  function toSmall1 = toSmall, function toBig1 = toBig,
+  function to_uint_big = to_uint4, function to_uint_small = to_uint3,
+  predicate in_small_range = in_range, prop toBig_to_uint1 = toBig_to_uint,
+  prop toSmall_to_uint1 = toSmall_to_uint *)
+
+(* use bv.BVConverter_32_64 *)
+
+predicate in_range1 (b:t20) = ule3 b (of_int3 max_int)
+
+function toBig2 t17 : t20
+
+function toSmall2 t20 : t17
+
+axiom toSmall_to_uint2 : forall x:t20. in_range1 x -> (to_uint3 x = to_uint
+  (toSmall2 x))
+
+axiom toBig_to_uint2 : forall x:t17. (to_uint x = to_uint3 (toBig2 x))
+
+(* clone bv.BVConverter_Gen with type smallBV = t17, type bigBV = t20,
+  function toSmall1 = toSmall2, function toBig1 = toBig2,
+  function to_uint_big = to_uint3, function to_uint_small = to_uint,
+  predicate in_small_range = in_range1, prop toBig_to_uint1 = toBig_to_uint2,
+  prop toSmall_to_uint1 = toSmall_to_uint2 *)
+
+(* use bv.BVConverter_8_32 *)
+
+function nth8_stream (stream:array t17) (pos:int) : bool = nth (mixfix_lbrb1
+  stream (div pos 8)) (infix_mn 7 (mod pos 8))
+
+axiom nth64 : forall value:t21, i:int. infix_lseq 0 i /\ infix_ls i 64 ->
+  (nth3 value i = nth_bv3 value (toBig (of_int3 i)))
+
+axiom nth8 : forall value:t17, i:int. infix_lseq 0 i /\ infix_ls i 8 -> (nth
+  value i = nth_bv value (toSmall2 (of_int3 i)))
+
+function maxvalue (len:t20) : t21 = lsl_bv4 (of_int4 1) (toBig len)
+
+axiom nth_ultpre0 "why3:lemma" : forall x:t21, len:t20.
+  ("stop_split" infix_ls (to_uint3 len) 64) -> ("stop_split" eq_sub3 x zeros4
+  (to_uint3 len) (infix_mn 64 (to_uint3 len)) <-> infix_ls (to_uint4 x)
+  (to_uint4 (maxvalue len)))
+
+(* meta syntax_type type int, "int", 0 *)
+
+(* meta syntax_type type real, "real", 0 *)
+
+(* meta syntax_logic predicate infix_eq, "(%1 = %2)", 0 *)
+
+goal WP_parameter_poke_8bit "expl:VC for poke_8bit" : forall byte:t17, left:
+  t20, flag:bool. ("stop_split" infix_ls (to_uint3 left) 8) -> ("asym_split"
+  "stop_split" "expl:assertion" ult3 left (of_int3 8)) ->
+  (let o = toSmall2 left in ("asym_split" "stop_split"
+  "expl:precondition" infix_lseq 0 7 /\ infix_ls 7 two_power_size) ->
+  (let o1 = of_int 7 in ("stop_split" (to_uint o1 = 7)) -> ("asym_split"
+  "stop_split" "expl:precondition" infix_lseq 0 (infix_mn (to_uint o1)
+  (to_uint o)) /\ infix_ls (infix_mn (to_uint o1) (to_uint o))
+  two_power_size) -> (let o2 = sub o1 o in ("stop_split" (to_uint
+  o2 = infix_mn (to_uint o1) (to_uint o))) -> ("asym_split" "stop_split"
+  "expl:precondition" infix_lseq 0 1 /\ infix_ls 1 two_power_size) ->
+  (let o3 = of_int 1 in ("stop_split" (to_uint o3 = 1)) ->
+  (let mask = lsl_bv o3 o2 in (flag = False) ->
+  (let result = bw_and byte (bw_not mask) in (nth_bv result (sub (of_int 7)
+  (toSmall2 left)) = flag)))))))
+
+end

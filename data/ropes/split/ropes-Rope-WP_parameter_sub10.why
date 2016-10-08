@@ -1,0 +1,318 @@
+theory Task
+(* use why3.BuiltIn.BuiltIn *)
+
+type bool =
+  | True
+  | False
+
+(* use why3.Bool.Bool *)
+
+type tuple0 =
+  | Tuple0
+
+(* use why3.Tuple0.Tuple01 *)
+
+type unit = tuple0
+
+(* use why3.Unit.Unit *)
+
+(* use why3.Prelude.Prelude *)
+
+function zero : int = 0
+
+function one : int = 1
+
+predicate infix_ls int int
+
+predicate infix_gt (x:int) (y:int) = infix_ls y x
+
+predicate infix_lseq (x:int) (y:int) = infix_ls x y \/ (x = y)
+
+function infix_pl int int : int
+
+function prefix_mn int : int
+
+function infix_as int int : int
+
+axiom Assoc : forall x:int, y:int, z:int. (infix_pl (infix_pl x y)
+  z = infix_pl x (infix_pl y z))
+
+(* clone algebra.Assoc with type t = int, function op = infix_pl,
+  prop Assoc1 = Assoc *)
+
+axiom Unit_def_l : forall x:int. (infix_pl zero x = x)
+
+axiom Unit_def_r : forall x:int. (infix_pl x zero = x)
+
+(* clone algebra.Monoid with type t1 = int, function unit = zero,
+  function op1 = infix_pl, prop Unit_def_r1 = Unit_def_r,
+  prop Unit_def_l1 = Unit_def_l, prop Assoc2 = Assoc *)
+
+axiom Inv_def_l : forall x:int. (infix_pl (prefix_mn x) x = zero)
+
+axiom Inv_def_r : forall x:int. (infix_pl x (prefix_mn x) = zero)
+
+(* clone algebra.Group with type t2 = int, function inv = prefix_mn,
+  function unit1 = zero, function op2 = infix_pl,
+  prop Inv_def_r1 = Inv_def_r, prop Inv_def_l1 = Inv_def_l,
+  prop Unit_def_r2 = Unit_def_r, prop Unit_def_l2 = Unit_def_l,
+  prop Assoc3 = Assoc *)
+
+axiom Comm : forall x:int, y:int. (infix_pl x y = infix_pl y x)
+
+(* clone algebra.Comm with type t3 = int, function op3 = infix_pl,
+  prop Comm1 = Comm *)
+
+(* meta AC function infix_pl *)
+
+(* clone algebra.CommutativeGroup with type t4 = int,
+  function inv1 = prefix_mn, function unit2 = zero, function op4 = infix_pl,
+  prop Comm2 = Comm, prop Inv_def_r2 = Inv_def_r,
+  prop Inv_def_l2 = Inv_def_l, prop Unit_def_r3 = Unit_def_r,
+  prop Unit_def_l3 = Unit_def_l, prop Assoc4 = Assoc *)
+
+axiom Assoc5 : forall x:int, y:int, z:int. (infix_as (infix_as x y)
+  z = infix_as x (infix_as y z))
+
+(* clone algebra.Assoc with type t = int, function op = infix_as,
+  prop Assoc1 = Assoc5 *)
+
+axiom Mul_distr_l : forall x:int, y:int, z:int. (infix_as x (infix_pl y
+  z) = infix_pl (infix_as x y) (infix_as x z))
+
+axiom Mul_distr_r : forall x:int, y:int, z:int. (infix_as (infix_pl y z)
+  x = infix_pl (infix_as y x) (infix_as z x))
+
+function infix_mn (x:int) (y:int) : int = infix_pl x (prefix_mn y)
+
+(* clone algebra.Ring with type t5 = int, function infix_mn1 = infix_mn,
+  function infix_as1 = infix_as, function prefix_mn1 = prefix_mn,
+  function infix_pl1 = infix_pl, function zero1 = zero,
+  prop Mul_distr_r1 = Mul_distr_r, prop Mul_distr_l1 = Mul_distr_l,
+  prop Assoc6 = Assoc5, prop Comm3 = Comm, prop Inv_def_r3 = Inv_def_r,
+  prop Inv_def_l3 = Inv_def_l, prop Unit_def_r4 = Unit_def_r,
+  prop Unit_def_l4 = Unit_def_l, prop Assoc7 = Assoc *)
+
+axiom Comm4 : forall x:int, y:int. (infix_as x y = infix_as y x)
+
+(* clone algebra.Comm with type t3 = int, function op3 = infix_as,
+  prop Comm1 = Comm4 *)
+
+(* meta AC function infix_as *)
+
+(* clone algebra.CommutativeRing with type t6 = int,
+  function infix_mn2 = infix_mn, function infix_as2 = infix_as,
+  function prefix_mn2 = prefix_mn, function infix_pl2 = infix_pl,
+  function zero2 = zero, prop Comm5 = Comm4, prop Mul_distr_r2 = Mul_distr_r,
+  prop Mul_distr_l2 = Mul_distr_l, prop Assoc8 = Assoc5, prop Comm6 = Comm,
+  prop Inv_def_r4 = Inv_def_r, prop Inv_def_l4 = Inv_def_l,
+  prop Unit_def_r5 = Unit_def_r, prop Unit_def_l5 = Unit_def_l,
+  prop Assoc9 = Assoc *)
+
+axiom Unitary : forall x:int. (infix_as one x = x)
+
+axiom NonTrivialRing : not (zero = one)
+
+(* clone algebra.UnitaryCommutativeRing with type t7 = int,
+  function one1 = one, function infix_mn3 = infix_mn,
+  function infix_as3 = infix_as, function prefix_mn3 = prefix_mn,
+  function infix_pl3 = infix_pl, function zero3 = zero,
+  prop NonTrivialRing1 = NonTrivialRing, prop Unitary1 = Unitary,
+  prop Comm7 = Comm4, prop Mul_distr_r3 = Mul_distr_r,
+  prop Mul_distr_l3 = Mul_distr_l, prop Assoc10 = Assoc5, prop Comm8 = Comm,
+  prop Inv_def_r5 = Inv_def_r, prop Inv_def_l5 = Inv_def_l,
+  prop Unit_def_r6 = Unit_def_r, prop Unit_def_l6 = Unit_def_l,
+  prop Assoc11 = Assoc *)
+
+predicate infix_gteq (x:int) (y:int) = infix_lseq y x
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Refl : forall x:int. infix_lseq x x
+
+(* clone relations.Reflexive with type t9 = int, predicate rel1 = infix_lseq,
+  prop Refl1 = Refl *)
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Trans : forall x:int, y:int, z:int. infix_lseq x y -> infix_lseq y z ->
+  infix_lseq x z
+
+(* clone relations.Transitive with type t10 = int,
+  predicate rel2 = infix_lseq, prop Trans1 = Trans *)
+
+(* clone relations.PreOrder with type t11 = int, predicate rel3 = infix_lseq,
+  prop Trans2 = Trans, prop Refl2 = Refl *)
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Antisymm : forall x:int, y:int. infix_lseq x y -> infix_lseq y x ->
+  (x = y)
+
+(* clone relations.Antisymmetric with type t12 = int,
+  predicate rel4 = infix_lseq, prop Antisymm1 = Antisymm *)
+
+(* clone relations.PartialOrder with type t13 = int,
+  predicate rel5 = infix_lseq, prop Antisymm2 = Antisymm,
+  prop Trans3 = Trans, prop Refl3 = Refl *)
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Total : forall x:int, y:int. infix_lseq x y \/ infix_lseq y x
+
+(* clone relations.Total with type t14 = int, predicate rel6 = infix_lseq,
+  prop Total1 = Total *)
+
+(* clone relations.TotalOrder with type t15 = int,
+  predicate rel7 = infix_lseq, prop Total2 = Total,
+  prop Antisymm3 = Antisymm, prop Trans4 = Trans, prop Refl4 = Refl *)
+
+axiom ZeroLessOne : infix_lseq zero one
+
+axiom CompatOrderAdd : forall x:int, y:int, z:int. infix_lseq x y ->
+  infix_lseq (infix_pl x z) (infix_pl y z)
+
+axiom CompatOrderMult : forall x:int, y:int, z:int. infix_lseq x y ->
+  infix_lseq zero z -> infix_lseq (infix_as x z) (infix_as y z)
+
+(* clone algebra.OrderedUnitaryCommutativeRing with type t16 = int,
+  predicate infix_gteq1 = infix_gteq, predicate infix_lseq1 = infix_lseq,
+  function one2 = one, function infix_mn4 = infix_mn,
+  function infix_as4 = infix_as, function prefix_mn4 = prefix_mn,
+  function infix_pl4 = infix_pl, function zero4 = zero,
+  prop CompatOrderMult1 = CompatOrderMult,
+  prop CompatOrderAdd1 = CompatOrderAdd, prop ZeroLessOne1 = ZeroLessOne,
+  prop Total3 = Total, prop Antisymm4 = Antisymm, prop Trans5 = Trans,
+  prop Refl5 = Refl, prop NonTrivialRing2 = NonTrivialRing,
+  prop Unitary2 = Unitary, prop Comm9 = Comm4,
+  prop Mul_distr_r4 = Mul_distr_r, prop Mul_distr_l4 = Mul_distr_l,
+  prop Assoc12 = Assoc5, prop Comm10 = Comm, prop Inv_def_r6 = Inv_def_r,
+  prop Inv_def_l6 = Inv_def_l, prop Unit_def_r7 = Unit_def_r,
+  prop Unit_def_l7 = Unit_def_l, prop Assoc13 = Assoc *)
+
+(* use int.Int *)
+
+type char
+
+function dummy_char : char
+
+type string
+
+function length string : int
+
+axiom length_nonnegative : forall s:string. infix_gteq (length s) 0
+
+function mixfix_lbrb string int : char
+
+function empty : string
+
+axiom empty_def : (length empty = 0)
+
+predicate infix_eqeq (s1:string) (s2:string) = (length s1 = length s2) /\
+  (forall i:int. infix_lseq 0 i /\ infix_ls i (length s1) -> (mixfix_lbrb s1
+  i = mixfix_lbrb s2 i))
+
+axiom extensionality : forall s1:string, s2:string. infix_eqeq s1 s2 ->
+  (s1 = s2)
+
+function app string string : string
+
+axiom app_def1 : forall s1:string, s2:string. (length (app s1 s2) = infix_pl
+  (length s1) (length s2))
+
+axiom app_def2 : forall s1:string, s2:string, i:int. infix_lseq 0 i /\
+  infix_ls i (length s1) -> (mixfix_lbrb (app s1 s2) i = mixfix_lbrb s1 i)
+
+axiom app_def3 : forall s1:string, s2:string, i:int. infix_lseq (length s1)
+  i /\ infix_ls i (infix_pl (length s1) (length s2)) -> (mixfix_lbrb (app s1
+  s2) i = mixfix_lbrb s2 (infix_mn i (length s1)))
+
+axiom app_assoc : forall s1:string, s2:string, s3:string. infix_eqeq (app s1
+  (app s2 s3)) (app (app s1 s2) s3)
+
+function sub string int int : string
+
+axiom sub_def1 : forall s:string, ofs:int, len:int. infix_lseq 0 len ->
+  infix_lseq 0 ofs /\ infix_lseq ofs (length s) -> infix_lseq (infix_pl ofs
+  len) (length s) -> (length (sub s ofs len) = len)
+
+axiom sub_def2 : forall s:string, ofs:int, len:int. infix_lseq 0 len ->
+  infix_lseq 0 ofs /\ infix_lseq ofs (length s) -> infix_lseq (infix_pl ofs
+  len) (length s) -> (forall i:int. infix_lseq 0 i /\ infix_ls i len ->
+  (mixfix_lbrb (sub s ofs len) i = mixfix_lbrb s (infix_pl ofs i)))
+
+(* use String *)
+
+type rope =
+  | Emp
+  | Str string int int
+  | App rope rope int
+
+function length1 (r:rope) : int =
+  match r with
+  | Emp -> 0
+  | Str _ _ len -> len
+  | App _ _ len -> len
+  end
+
+predicate inv2 (r:rope) =
+  match r with
+  | Emp -> true
+  | Str s ofs len -> infix_ls 0 len /\ (infix_lseq 0 ofs /\ infix_ls ofs
+      (length s)) /\ infix_lseq (infix_pl ofs len) (length s)
+  | App l r1 len -> infix_ls 0 (length1 l) /\ inv2 l /\ infix_ls 0 (length1
+      r1) /\ inv2 r1 /\ (len = infix_pl (length1 l) (length1 r1))
+  end
+
+function string (r:rope) : string =
+  match r with
+  | Emp -> empty
+  | Str s ofs len -> sub s ofs len
+  | App l r1 _ -> app (string l) (string r1)
+  end
+
+axiom rope_length_is_string_length : forall r:rope. inv2 r -> (length (string
+  r) = length1 r)
+
+type tuple2 'a 'a1 =
+  | Tuple2 'a 'a1
+
+(* use why3.Tuple2.Tuple21 *)
+
+(* meta syntax_type type int, "int", 0 *)
+
+(* meta syntax_type type real, "real", 0 *)
+
+(* meta syntax_logic predicate infix_eq, "(%1 = %2)", 0 *)
+
+goal WP_parameter_sub "expl:VC for sub" : forall r:rope, ofs:int, len:int.
+  ("stop_split" inv2 r) /\ ("stop_split" infix_lseq 0 len /\ (infix_lseq 0
+  ofs /\ infix_lseq ofs
+  match r with
+  | Emp -> 0
+  | Str _ _ len1 -> len1
+  | App _ _ len1 -> len1
+  end) /\ infix_lseq (infix_pl ofs len)
+  match r with
+  | Emp -> 0
+  | Str _ _ len1 -> len1
+  | App _ _ len1 -> len1
+  end) -> (forall x:rope, x1:rope, x2:int. (r = App x x1 x2) ->
+  (let left = infix_mn
+              match x with
+              | Emp -> 0
+              | Str _ _ len1 -> len1
+              | App _ _ len1 -> len1
+              end ofs in let right = infix_mn len left in not infix_lseq
+  right 0 -> infix_gteq 0 left -> (let o = prefix_mn left in
+  "expl:variant decrease" match r with
+  | Emp -> false
+  | Str _ _ _ -> false
+  | App f f1 _ -> (f = x1) \/ (f1 = x1)
+  end)))
+
+end

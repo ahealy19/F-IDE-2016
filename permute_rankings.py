@@ -37,14 +37,15 @@ print ('avg MAE: {}'.format(mean_MAE))
 
 for p in common.PROVERS:
 	test[p] = test.apply(lambda x: 
-				common.new_score_func_single(x[p+' result'], x[p+' time'], 10.0), 
+				#common.new_score_func_single(x[p+' result'], x[p+' time'], 10.0), 
+				common.twice_delta_score_func(x[p+' result'], x[p+' time'], 10.0),
 				axis=1)
 
 best_r2_score = metrics.r2_score(test[p], test[p], multioutput='uniform_average')
 print('best r2: {}'.format(best_r2_score) )
 
-avg_time_to valid = test[].apply(lambda ser: 
-	np.mean([common.time_to_valid(rand, ser) for rand in all_orders]), axis=1 )
+#avg_time_to_valid = test.apply(lambda ser: 
+#	np.mean([common.time_to_valid(rand, ser) for rand in all_orders]), axis=1 )
 
 # LONG!
 # the average time for a Valid/Invalid answer to be returned for every ranking

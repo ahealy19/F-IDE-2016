@@ -1,0 +1,49 @@
+theory Task
+(* use why3.BuiltIn.BuiltIn *)
+
+type bool =
+  | True
+  | False
+
+(* use why3.Bool.Bool *)
+
+type tuple0 =
+  | Tuple0
+
+(* use why3.Tuple0.Tuple01 *)
+
+type unit = tuple0
+
+(* use why3.Unit.Unit *)
+
+(* use why3.Prelude.Prelude *)
+
+type key = int
+
+type value = int
+
+type color =
+  | Red
+  | Black
+
+type tree =
+  | Leaf
+  | Node color tree int int tree
+
+predicate memt (t:tree) (k:int) (v:int) =
+  match t with
+  | Leaf -> false
+  | Node _ l kqt vqt r -> (k = kqt) /\ (v = vqt) \/ memt l k v \/ memt r k v
+  end
+
+(* meta syntax_type type int, "int", 0 *)
+
+(* meta syntax_type type real, "real", 0 *)
+
+(* meta syntax_logic predicate infix_eq, "(%1 = %2)", 0 *)
+
+goal memt_color : forall l:tree, r:tree, k:int, kqt:int, v:int, vqt:int, c:
+  color, cqt:color. memt (Node c l k v r) kqt vqt -> memt (Node cqt l k v r)
+  kqt vqt
+
+end

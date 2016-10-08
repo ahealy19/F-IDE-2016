@@ -1,0 +1,410 @@
+theory Task
+(* use why3.BuiltIn.BuiltIn *)
+
+type bool =
+  | True
+  | False
+
+(* use why3.Bool.Bool *)
+
+type tuple0 =
+  | Tuple0
+
+(* use why3.Tuple0.Tuple01 *)
+
+type unit = tuple0
+
+(* use why3.Unit.Unit *)
+
+(* use why3.Prelude.Prelude *)
+
+type func 'a 'b
+
+type pred 'a = func 'a bool
+
+function infix_at (func 'a 'b) 'a : 'b
+
+(* use why3.HighOrd.HighOrd *)
+
+function zero : int = 0
+
+function one : int = 1
+
+predicate infix_ls int int
+
+predicate infix_gt (x:int) (y:int) = infix_ls y x
+
+predicate infix_lseq (x:int) (y:int) = infix_ls x y \/ (x = y)
+
+function infix_pl int int : int
+
+function prefix_mn int : int
+
+function infix_as int int : int
+
+axiom Assoc : forall x:int, y:int, z:int. (infix_pl (infix_pl x y)
+  z = infix_pl x (infix_pl y z))
+
+(* clone algebra.Assoc with type t = int, function op = infix_pl,
+  prop Assoc1 = Assoc *)
+
+axiom Unit_def_l : forall x:int. (infix_pl zero x = x)
+
+axiom Unit_def_r : forall x:int. (infix_pl x zero = x)
+
+(* clone algebra.Monoid with type t1 = int, function unit = zero,
+  function op1 = infix_pl, prop Unit_def_r1 = Unit_def_r,
+  prop Unit_def_l1 = Unit_def_l, prop Assoc2 = Assoc *)
+
+axiom Inv_def_l : forall x:int. (infix_pl (prefix_mn x) x = zero)
+
+axiom Inv_def_r : forall x:int. (infix_pl x (prefix_mn x) = zero)
+
+(* clone algebra.Group with type t2 = int, function inv = prefix_mn,
+  function unit1 = zero, function op2 = infix_pl,
+  prop Inv_def_r1 = Inv_def_r, prop Inv_def_l1 = Inv_def_l,
+  prop Unit_def_r2 = Unit_def_r, prop Unit_def_l2 = Unit_def_l,
+  prop Assoc3 = Assoc *)
+
+axiom Comm : forall x:int, y:int. (infix_pl x y = infix_pl y x)
+
+(* clone algebra.Comm with type t3 = int, function op3 = infix_pl,
+  prop Comm1 = Comm *)
+
+(* meta AC function infix_pl *)
+
+(* clone algebra.CommutativeGroup with type t4 = int,
+  function inv1 = prefix_mn, function unit2 = zero, function op4 = infix_pl,
+  prop Comm2 = Comm, prop Inv_def_r2 = Inv_def_r,
+  prop Inv_def_l2 = Inv_def_l, prop Unit_def_r3 = Unit_def_r,
+  prop Unit_def_l3 = Unit_def_l, prop Assoc4 = Assoc *)
+
+axiom Assoc5 : forall x:int, y:int, z:int. (infix_as (infix_as x y)
+  z = infix_as x (infix_as y z))
+
+(* clone algebra.Assoc with type t = int, function op = infix_as,
+  prop Assoc1 = Assoc5 *)
+
+axiom Mul_distr_l : forall x:int, y:int, z:int. (infix_as x (infix_pl y
+  z) = infix_pl (infix_as x y) (infix_as x z))
+
+axiom Mul_distr_r : forall x:int, y:int, z:int. (infix_as (infix_pl y z)
+  x = infix_pl (infix_as y x) (infix_as z x))
+
+function infix_mn (x:int) (y:int) : int = infix_pl x (prefix_mn y)
+
+(* clone algebra.Ring with type t5 = int, function infix_mn1 = infix_mn,
+  function infix_as1 = infix_as, function prefix_mn1 = prefix_mn,
+  function infix_pl1 = infix_pl, function zero1 = zero,
+  prop Mul_distr_r1 = Mul_distr_r, prop Mul_distr_l1 = Mul_distr_l,
+  prop Assoc6 = Assoc5, prop Comm3 = Comm, prop Inv_def_r3 = Inv_def_r,
+  prop Inv_def_l3 = Inv_def_l, prop Unit_def_r4 = Unit_def_r,
+  prop Unit_def_l4 = Unit_def_l, prop Assoc7 = Assoc *)
+
+axiom Comm4 : forall x:int, y:int. (infix_as x y = infix_as y x)
+
+(* clone algebra.Comm with type t3 = int, function op3 = infix_as,
+  prop Comm1 = Comm4 *)
+
+(* meta AC function infix_as *)
+
+(* clone algebra.CommutativeRing with type t6 = int,
+  function infix_mn2 = infix_mn, function infix_as2 = infix_as,
+  function prefix_mn2 = prefix_mn, function infix_pl2 = infix_pl,
+  function zero2 = zero, prop Comm5 = Comm4, prop Mul_distr_r2 = Mul_distr_r,
+  prop Mul_distr_l2 = Mul_distr_l, prop Assoc8 = Assoc5, prop Comm6 = Comm,
+  prop Inv_def_r4 = Inv_def_r, prop Inv_def_l4 = Inv_def_l,
+  prop Unit_def_r5 = Unit_def_r, prop Unit_def_l5 = Unit_def_l,
+  prop Assoc9 = Assoc *)
+
+axiom Unitary : forall x:int. (infix_as one x = x)
+
+axiom NonTrivialRing : not (zero = one)
+
+(* clone algebra.UnitaryCommutativeRing with type t7 = int,
+  function one1 = one, function infix_mn3 = infix_mn,
+  function infix_as3 = infix_as, function prefix_mn3 = prefix_mn,
+  function infix_pl3 = infix_pl, function zero3 = zero,
+  prop NonTrivialRing1 = NonTrivialRing, prop Unitary1 = Unitary,
+  prop Comm7 = Comm4, prop Mul_distr_r3 = Mul_distr_r,
+  prop Mul_distr_l3 = Mul_distr_l, prop Assoc10 = Assoc5, prop Comm8 = Comm,
+  prop Inv_def_r5 = Inv_def_r, prop Inv_def_l5 = Inv_def_l,
+  prop Unit_def_r6 = Unit_def_r, prop Unit_def_l6 = Unit_def_l,
+  prop Assoc11 = Assoc *)
+
+predicate infix_gteq (x:int) (y:int) = infix_lseq y x
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Refl : forall x:int. infix_lseq x x
+
+(* clone relations.Reflexive with type t9 = int, predicate rel1 = infix_lseq,
+  prop Refl1 = Refl *)
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Trans : forall x:int, y:int, z:int. infix_lseq x y -> infix_lseq y z ->
+  infix_lseq x z
+
+(* clone relations.Transitive with type t10 = int,
+  predicate rel2 = infix_lseq, prop Trans1 = Trans *)
+
+(* clone relations.PreOrder with type t11 = int, predicate rel3 = infix_lseq,
+  prop Trans2 = Trans, prop Refl2 = Refl *)
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Antisymm : forall x:int, y:int. infix_lseq x y -> infix_lseq y x ->
+  (x = y)
+
+(* clone relations.Antisymmetric with type t12 = int,
+  predicate rel4 = infix_lseq, prop Antisymm1 = Antisymm *)
+
+(* clone relations.PartialOrder with type t13 = int,
+  predicate rel5 = infix_lseq, prop Antisymm2 = Antisymm,
+  prop Trans3 = Trans, prop Refl3 = Refl *)
+
+(* clone relations.EndoRelation with type t8 = int,
+  predicate rel = infix_lseq,  *)
+
+axiom Total : forall x:int, y:int. infix_lseq x y \/ infix_lseq y x
+
+(* clone relations.Total with type t14 = int, predicate rel6 = infix_lseq,
+  prop Total1 = Total *)
+
+(* clone relations.TotalOrder with type t15 = int,
+  predicate rel7 = infix_lseq, prop Total2 = Total,
+  prop Antisymm3 = Antisymm, prop Trans4 = Trans, prop Refl4 = Refl *)
+
+axiom ZeroLessOne : infix_lseq zero one
+
+axiom CompatOrderAdd : forall x:int, y:int, z:int. infix_lseq x y ->
+  infix_lseq (infix_pl x z) (infix_pl y z)
+
+axiom CompatOrderMult : forall x:int, y:int, z:int. infix_lseq x y ->
+  infix_lseq zero z -> infix_lseq (infix_as x z) (infix_as y z)
+
+(* clone algebra.OrderedUnitaryCommutativeRing with type t16 = int,
+  predicate infix_gteq1 = infix_gteq, predicate infix_lseq1 = infix_lseq,
+  function one2 = one, function infix_mn4 = infix_mn,
+  function infix_as4 = infix_as, function prefix_mn4 = prefix_mn,
+  function infix_pl4 = infix_pl, function zero4 = zero,
+  prop CompatOrderMult1 = CompatOrderMult,
+  prop CompatOrderAdd1 = CompatOrderAdd, prop ZeroLessOne1 = ZeroLessOne,
+  prop Total3 = Total, prop Antisymm4 = Antisymm, prop Trans5 = Trans,
+  prop Refl5 = Refl, prop NonTrivialRing2 = NonTrivialRing,
+  prop Unitary2 = Unitary, prop Comm9 = Comm4,
+  prop Mul_distr_r4 = Mul_distr_r, prop Mul_distr_l4 = Mul_distr_l,
+  prop Assoc12 = Assoc5, prop Comm10 = Comm, prop Inv_def_r6 = Inv_def_r,
+  prop Inv_def_l6 = Inv_def_l, prop Unit_def_r7 = Unit_def_r,
+  prop Unit_def_l7 = Unit_def_l, prop Assoc13 = Assoc *)
+
+(* use int.Int *)
+
+type list 'a =
+  | Nil
+  | Cons 'a (list 'a)
+
+(* use list.List *)
+
+function infix_plpl (l1:list 'a) (l2:list 'a) : list 'a =
+  match l1 with
+  | Nil -> l2
+  | Cons x1 r1 -> Cons x1 (infix_plpl r1 l2)
+  end
+
+axiom Append_assoc : forall l1:list 'a, l2:list 'a, l3:list 'a. (infix_plpl
+  l1 (infix_plpl l2 l3) = infix_plpl (infix_plpl l1 l2) l3)
+
+axiom Append_l_nil : forall l:list 'a. (infix_plpl l (Nil:list 'a) = l)
+
+function length (l:list 'a) : int =
+  match l with
+  | Nil -> 0
+  | Cons _ r -> infix_pl 1 (length r)
+  end
+
+axiom Length_nonnegative : forall l:list 'a. infix_gteq (length l) 0
+
+axiom Length_nil : forall l:list 'a. (length l = 0) <-> (l = Nil:list 'a)
+
+(* use list.Length *)
+
+axiom Append_length : forall l1:list 'a, l2:list 'a. (length (infix_plpl l1
+  l2) = infix_pl (length l1) (length l2))
+
+predicate mem1 (x:'a) (l:list 'a) =
+  match l with
+  | Nil -> false
+  | Cons y r -> (x = y) \/ mem1 x r
+  end
+
+(* use list.Mem *)
+
+axiom mem_append : forall x:'a, l1:list 'a, l2:list 'a. mem1 x (infix_plpl l1
+  l2) <-> mem1 x l1 \/ mem1 x l2
+
+axiom mem_decomp : forall x:'a, l:list 'a. mem1 x l -> (exists l1:list 'a,
+  l2:list 'a. (l = infix_plpl l1 (Cons x l2)))
+
+(* use list.Append *)
+
+type addr
+
+type expr =
+  | Evar addr
+  | Eneg expr
+  | Eadd expr expr
+
+type memory = func addr int
+
+function eval (m:func addr int) (e:expr) : int =
+  match e with
+  | Evar x -> infix_at m x
+  | Eneg e1 -> prefix_mn (eval m e1)
+  | Eadd e1 e2 -> infix_pl (eval m e1) (eval m e2)
+  end
+
+type register = int
+
+type instr =
+  | Iload addr int
+  | Ineg int
+  | Iadd int int
+  | Ipush int
+  | Ipop int
+
+type registers = func int int
+
+function update (reg1:func int int) (r:int) (v:int) : func int int = \ rqt:
+  int. if (rqt = r) then v else infix_at reg1 rqt
+
+type stack = list int
+
+type state =
+  | Mk_state (mem:func addr int) (reg:func int int) (st:list int)
+
+function exec (i:instr) (s:state) : state =
+  match i with
+  | Iload x r -> Mk_state (mem s) (update (reg s) r (infix_at (mem s) x)) (st
+      s)
+  | Ineg r -> Mk_state (mem s) (update (reg s) r (prefix_mn (infix_at (reg s)
+      r))) (st s)
+  | Iadd r1 r2 -> Mk_state (mem s) (update (reg s) r2 (infix_pl (infix_at
+      (reg s) r1) (infix_at (reg s) r2))) (st s)
+  | Ipush r -> Mk_state (mem s) (reg s) (Cons (infix_at (reg s) r) (st s))
+  | Ipop r ->
+      match st s with
+      | Nil -> s
+      | Cons v st1 -> Mk_state (mem s) (update (reg s) r v) st1
+      end
+  end
+
+(* meta rewrite_def function exec *)
+
+type code = list instr
+
+function exec_list (c:list instr) (s:state) : state =
+  match c with
+  | Nil -> s
+  | Cons i l -> exec_list l (exec i s)
+  end
+
+axiom exec_append "why3:lemma" : forall c1:list instr, c2:list instr, s:
+  state. "stop_split" (exec_list (infix_plpl c1 c2) s = exec_list c2
+  (exec_list c1 s))
+
+function expr_post (e:expr) (r:int) : func state (func state bool) = \ s:
+  state, sqt:state. (mem sqt = mem s) /\ (infix_at (reg sqt) r = eval (mem s)
+  e) /\ (st sqt = st s) /\ (forall rqt:int. infix_ls rqt r -> (infix_at (reg
+  sqt) rqt = infix_at (reg s) rqt))
+
+(* meta rewrite_def function expr_post *)
+
+(* use Spec *)
+
+(* meta compute_max_steps 65536 *)
+
+predicate infix_mnmngt (x:'a) (y:'a) = "rewrite" (x = y)
+
+(* meta rewrite_def predicate infix_mnmngt *)
+
+type post = func state (func state bool)
+
+type hcode =
+  | Mk_hcode (hcode:list instr) (post:func state (func state bool))
+
+predicate hcode_ok (hc:hcode) = forall s:state. (infix_at (infix_at (post hc)
+  s) (exec_list (hcode hc) s) = True)
+
+type trans = func (func state bool) (func state bool)
+
+type wcode =
+  | Mk_wcode (trans:func (func state bool) (func state bool)) (wcode:list
+      instr)
+
+predicate wcode_ok (wc:wcode) = forall q:func state bool, s:state. (infix_at
+  (infix_at (trans wc) q) s = True) -> (infix_at q (exec_list (wcode wc)
+  s) = True)
+
+function to_wp (pst:func state (func state bool)) : func (func state bool)
+  (func state bool) = \ q:func state bool, s1:state. forall s2:state.
+  (infix_at (infix_at pst s1) s2 = True) -> (infix_at q s2 = True)
+
+(* meta rewrite_def function to_wp *)
+
+function rcompose : func (func 'a 'b) (func (func 'b 'c) (func 'a 'c)) = \ f:
+  func 'a 'b, g:func 'b 'c, x:'a. infix_at g (infix_at f x)
+
+(* meta rewrite_def function rcompose *)
+
+function exec_closure (i:instr) : func state state = \ s:state. exec i s
+
+function id : func 'a 'a = \ x:'a. x
+
+(* use DWP *)
+
+function k : int
+
+axiom at_least_two_registers : infix_gteq k 2
+
+(* meta syntax_type type int, "int", 0 *)
+
+(* meta syntax_type type real, "real", 0 *)
+
+(* meta syntax_logic predicate infix_eq, "(%1 = %2)", 0 *)
+
+goal WP_parameter_compile1 "expl:VC for compile" : forall e:expr, r:int.
+  ("stop_split" infix_lseq 0 r /\ infix_ls r k) -> (let o = expr_post e r in
+  forall x:expr. (e = Eneg x) -> (forall o1:func (func state bool) (func
+  state bool), o2:list instr. let o3 = Mk_wcode o1 o2 in
+  ("stop_split" wcode_ok o3) /\ ("stop_split" infix_mnmngt o1 (\ q:func state
+  bool. q)) -> ("asym_split" "stop_split" "expl:precondition" wcode_ok o3) ->
+  (forall o4:func (func state bool) (func state bool), o5:list instr.
+  let o6 = Mk_wcode o4 o5 in ("stop_split" wcode_ok o6) /\
+  ("stop_split" infix_mnmngt o4 (infix_at (infix_at (rcompose:func (func
+  (func state bool) (func state bool)) (func (func (func state bool) (func
+  state bool)) (func (func state bool) (func state bool)))) o1) (infix_at
+  (rcompose:func (func state state) (func (func state bool) (func state
+  bool))) (infix_at (\ y0:instr, y1:state. exec y0 y1) (Ineg r))))) ->
+  ("asym_split" "stop_split" "expl:precondition" infix_lseq 0 r /\ infix_ls r
+  k) -> (forall o7:list instr, o8:func state (func state bool).
+  let o9 = Mk_hcode o7 o8 in ("stop_split" hcode_ok o9) /\
+  ("stop_split" infix_mnmngt o8 (expr_post x r)) -> ("asym_split"
+  "stop_split" "expl:precondition" hcode_ok o9) -> (forall o10:func (func
+  state bool) (func state bool), o11:list instr.
+  let o12 = Mk_wcode o10 o11 in ("stop_split" wcode_ok o12) /\
+  ("stop_split" infix_mnmngt o10 (to_wp o8)) -> ("asym_split" "stop_split"
+  "expl:precondition" wcode_ok o12 /\ wcode_ok o6) -> (forall o13:func (func
+  state bool) (func state bool), o14:list instr.
+  let o15 = Mk_wcode o13 o14 in ("stop_split" wcode_ok o15) /\
+  ("stop_split" infix_mnmngt o13 (infix_at (infix_at (rcompose:func (func
+  (func state bool) (func state bool)) (func (func (func state bool) (func
+  state bool)) (func (func state bool) (func state bool)))) o4) o10)) ->
+  ("expl:precondition" forall x1:state. (infix_at (infix_at o13 (infix_at o
+  x1)) x1 = True))))))))
+
+end

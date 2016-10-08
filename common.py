@@ -41,6 +41,13 @@ def new_score_func_single(result, time, delta):
 	if result in ['Valid','Invalid','Unknown']:
 		return time
 	return euc_distance([time, delta], [0,0])
+
+def twice_delta_score_func(result, time, delta):
+	if result == 'Unknown':
+		return time+delta
+	if result in ['Valid','Invalid','Unknown']:
+		return time
+	return time+(delta*2)	
 	
 
 def new_score_func(results,times,delta):

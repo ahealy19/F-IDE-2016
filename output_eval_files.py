@@ -91,7 +91,8 @@ y_test = {}
 # what is each solver's score on the test data?
 for p in common.PROVERS:
 	y_test[p] = test.apply(lambda x: 
-				common.new_score_func_single(x[p+' result'], x[p+' time'], 10.0), 
+				#common.new_score_func_single(x[p+' result'], x[p+' time'], 10.0), 
+				common.twice_delta_score_func(x[p+' result'], x[p+' time'], 10.0),
 				axis=1)
 	test[p] = y_test[p]
 
