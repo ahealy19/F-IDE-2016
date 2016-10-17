@@ -46,6 +46,13 @@ def forest_from_sklearn(rf, features, outputs):
 	return [ tree_from_sklearn(dt, features, outputs)
 				for dt in rf.estimators_ ]
 
+def take_better(res1, res2):
+	order = ['Valid', 'Invalid', 'Unknown', 'Timeout', 'Failure']
+	for a in order:
+		if a in [res1, res2]:
+			return a
+	return order[-1]
+
 train = DataFrame.from_csv('whygoal_valid_test.csv').fillna(0)
 rf = RandomForestRegressor(n_estimators=100,random_state=42,min_samples_leaf=5)
 X = train.drop(common.IGNORE, axis=1)
@@ -148,8 +155,9 @@ test['rf result'] = test.apply(lambda ser: common.best_result_from_rank_ae( ser[
 			test.ix[ser['key'], common.TIMES+common.RESULTS ] ), axis=1 )
 
 # before counting their results
+#what about the case where Alt-Ergo solves but ser['rf'][0] does not? 
 results['Where4'] = {o : test.apply(lambda ser: 
-	fun( test.ix[ser['key'], common.REV_MAP[ser['rf'][0]]+' result'] ), axis=1).sum()
+	fun(take_better(test.ix[ser['key'], common.REV_MAP[ser['rf'][0]]+' result'], test.ix[ser['key'], 'Alt-Ergo-1.01 result'] )), axis=1).sum()
 	for o, fun in output.iteritems()}
 
 results['Best'] = {o : test.apply(lambda ser: 
