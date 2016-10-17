@@ -417,7 +417,11 @@ Based on the data in Table \ref{table:truncated} we selected random forests as t
 
 \section{Implementing \textsf{Where4} in OCaml}
 
-\textsf{Where4}'s interaction with \textsf{Why3} is inspired by the use of machine learning in the Sledgehammer tool \cite{Sledgehammer} which allows the use of SMT solvers in the interactive theorem prover Isabelle/HOL. We aspired to Sledgehammer's `zero click, zero maintenance, zero overhead' philosophy in this regard: it should not interfere with a \textsf{Why3} user's normal work-flow nor should it penalise those who do not use it.
+\textsf{Where4}'s interaction with \textsf{Why3} is inspired by the use of machine learning in the Sledgehammer tool \cite{Sledgehammer} which allows the use of SMT solvers in the interactive theorem prover Isabelle/HOL. We aspired to Sledgehammer's `zero click, zero maintenance, zero overhead' philosophy in this regard: it should not interfere with a \textsf{Why3} user's normal work-flow nor should it penalise those who do not use it. 
+
+We implement a ``pre-solving'' heuristic commonly used by portfolio solvers \cite{sunny-cp}\cite{Satzilla}: a single solver is called with a short time limit before feature extraction and solver rank prediction takes place. 
+By using a good ``pre-solver'' at this initial stage, easily-proved instances are filtered with a minimum time overhead. We used a ranking of solvers based on the number of goals each could prove, using the data from Table \ref{table:avgtimes}.
+The highest-ranking solver installed locally is chosen as a ``pre-solver''. For the purposes of this paper, which assumes all 8 solvers are installed, this solver corresponds to Alt-Ergo version 1.01.      
 
 The random forest is fitted on the entire training set and encoded as a JSON file for legibility and modularity. This approach allows new trees and forests devised by the user (possibly using new SMT solvers or data) to replace our model.  When the user installs \textsf{Where4} locally, this JSON file is read and printed as an OCaml array. For efficiency, other important configuration information is compiled into OCaml data structures at this stage: e.g. the user's \texttt{why3.conf} file is read to determine the supported SMT solvers. All files are compiled and a native binary is produced. This only needs to be done once (unless the locally installed provers have changed). 
 
@@ -478,39 +482,42 @@ The evaluation of \textsf{Where4} was carried out on a test set of 32 WhyML file
 
 
 \subsubsection*{How does \textsf{Where4} perform in comparison to the 8 SMT solvers under consideration?}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{barcharts2}
+	\caption{The relative amount of Valid/Unknown/Timeout/Failure answers from the eight SMT solvers. Shown on the right are results obtainable by using the top solver (only) with the 3 ranking strategies and the \textsf{Where4} predicted ranking (with Alt-Ergo-1.01 pre-proving).}
+	\label{fig:barchart2}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\linewidth]{thresholds}
+	\caption{The effect of using a cost threshold. (\textit{top}) The average time taken for \textsf{Where4} to return an answer compared to 8 SMT solvers. (\textit{bottom}) The number of Valid/Invalid answers returned by \textsf{Where4} compared to 8 SMT solvers. For the 7 solvers other than Alt-Ergo-1.01, the number of provable goals is indicated by a mark on the y-axis rather than an intersection with \textsf{Where4}'s results.}
+	\label{fig:thresholds}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\linewidth]{line_graph_eval_provers}
+	\caption{The cumulative time each theoretical strategy, and \textsf{Where4} to return all \textit{Valid/Invalid} answers in the test dataset of 263 goals}
+	\label{fig:line_graph_eval_provers}
+\end{figure}
+
 When each solver in \textsf{Where4}'s ranking sequence is run on each goal, the maximum amount of files, theories and goals are provable. As Table \ref{table:avgtimes2} shows, the difference between \textsf{Where4} and our set of reference theoretical strategies (\textit{Best, Random}, and \textit{Worst}) is the amount of time taken to return the \textit{Valid/Invalid} result. Compared to the 8 SMT provers, the biggest increase is on individual goals: \textsf{Where4} can prove 203 goals, which is 26 (9.9\%) more goals than the next best single SMT solver, Alt-Ergo-1.01.
 
 Unfortunately, the average time taken to solve each of these goals is high when compared to the 8 SMT provers. This tells us that \textsf{Where4} can perform badly with goals which are not provable by many SMT solvers: expensive \textit{Timeout} results are chosen before the \textit{Valid} result is eventually returned.   In the worst case, \textsf{Where4} may try and time-out for all 8 solvers in sequence, whereas each individual solver does this just once.   Thus, while having access to more solvers allows more goals to be proved, there is also a time penalty to portfolio-based solvers in these circumstances.
 
 At the other extreme, we could limit the portfolio solver to just using the best predicted individual solver, eliminating the multiple time-out overhead.
-Fig. \ref{fig:barchart2} shows that the effect of this is to reduce the number of goals provable by \textsf{Where4}, though this is still one more than the best-performing individual SMT solver, Alt-Ergo-1.01.
+Fig. \ref{fig:barchart2} shows that the effect of this is to reduce the number of goals provable by \textsf{Where4}, though this is still more than the best-performing individual SMT solver, Alt-Ergo-1.01.
 
-To calibrate this cost of \textsf{Where4} against the individual SMT solvers, we introduce the notion of a \textit{cost threshold}: using this strategy, solvers with a predicted cost above this threshold are not called. If no solver's cost is predicted below the threshold, an \textit{Unknown} answer is returned instantly.  
+To calibrate this cost of \textsf{Where4} against the individual SMT solvers, we introduce the notion of a \textit{cost threshold}: using this strategy, after pre-proving, solvers with a predicted cost above this threshold are not called. If no solver's cost is predicted below the threshold, the pre-prover's result is returned.  
 
 Fig. \ref{fig:thresholds} shows the effect of varying this threshold, expressed in terms of the average execution time (top graph) and the number of goals solved (bottom graph).  As we can see from both graphs in Fig. \ref{fig:thresholds}, for the goals in the test set a threshold of 7 for the cost function allows \textsf{Where4} to prove more goals than any single solver, in a time approximately equal to the four slower solvers (CVC4, veriT and both versions of Z3). 
 
 
-\begin{figure}
-\centering
-\includegraphics[width=0.9\linewidth]{barcharts2}
-\caption{The relative amount of Valid/Unknown/Timeout/Failure answers from the eight SMT solvers. Shown on the right are results obtainable by using the top solver (only) with the 3 ranking strategies and the \textsf{Where4} predicted ranking.}
-\label{fig:barchart2}
-\end{figure}
 
-\begin{figure}
-\centering
-\includegraphics[width=0.8\linewidth]{thresholds}
-\caption{The effect of using a cost threshold. (\textit{top}) The average time taken for \textsf{Where4} to return an answer compared to 8 SMT solvers. (\textit{bottom}) The number of Valid/Invalid answers returned by \textsf{Where4} compared to 8 SMT solvers.}
-\label{fig:thresholds}
-\end{figure}
-
-
-\begin{figure}
-\centering
-\includegraphics[width=0.8\linewidth]{line_graph_eval_provers}
-\caption{The cumulative time each theoretical strategy, and \textsf{Where4} to return all \textit{Valid/Invalid} answers in the test dataset of 263 goals}
-\label{fig:line_graph_eval_provers}
-\end{figure}
 
 \subsubsection*{How does \textsf{Where4} perform in comparison to the 3 theoretical ranking strategies?}
 Fig. \ref{fig:line_graph_eval_provers} compares the cumulative time taken for \textsf{Where4} and the 3 ranking strategies to return the 203 valid answers in the test set. Although both \textsf{Where4} and \textit{Random} finish at approximately the same time, \textsf{Where4} is significantly faster for returning \textit{Valid/Invalid} answers. \textsf{Where4}'s solid line is more closely correlated to \textit{Best}'s rate of success than the erratic rate of the \textit{Random} strategy. \textit{Best}'s time result shows the capability of a perfect-scoring learning strategy. It is motivation to further improve \textsf{Where4} in the future.   
@@ -549,7 +556,7 @@ A ``typical'' software development scenario might involve a user verifying a sin
 \label{sec:related}
 \textit{Comparing verification systems:} The need for a standard set of benchmarks for the diverse range of software systems is a recurring issue in the literature \cite{Dagstuhl}. The benefits of such a benchmark suite are identified by the SMTLIB \cite{SMTLIB} project. The performance of SMT solvers has significantly improved in recent years due in part to the standardisation of an input language and the use of standard benchmark programs in  competitions \cite{SMTEVAL2013}\cite{SVCOMP}. The TPTP (Thousands of Problems for Theorem Provers) project \cite{TPTP} has similar aims but a wider scope: targeting theorem provers which specialise in numerical problems as well as general-purpose SAT and SMT solvers. The TPTP library is specifically designed for the rigorous experimental comparison of solvers \cite{Sutcliffe200139}.           
 
-\textit{Portfolio solvers:} Portfolio-solving approaches have been implemented successfully in the SAT domain by SATzilla \cite{Satzilla} and numerous studies \cite{MUX}\cite{DPVZ15:CAV} have used the SVCOMP \cite{SVCOMP} benchmark suite of C programs for model checkers. These particular studies have been predicated on the use of Support Vector Machines (SVM) with only a cursory use of linear regression \cite{MUX}. In this respect, our project represents a more wide-ranging treatment of the various prediction models available for portfolio solving. The need for a strategy to delegate \textsf{Why3} goals to appropriate SMT solvers is stated in recent work looking at verification systems on cloud infrastructures \cite{rodinplugin}.
+\textit{Portfolio solvers:} Portfolio-solving approaches have been implemented successfully in the SAT domain by SATzilla \cite{Satzilla} and the constraint satisfaction / optimisation community by tools such as CPHydra \cite{CPHydra} and sunny-cp \cite{sunny-cp}. Numerous studies have used the SVCOMP \cite{SVCOMP} benchmark suite of C programs for model checkers to train portfolio solvers \cite{MUX}\cite{DPVZ15:CAV}. These particular studies have been predicated on the use of Support Vector Machines (SVM) with only a cursory use of linear regression \cite{MUX}. In this respect, our project represents a more wide-ranging treatment of the various prediction models available for portfolio solving. The need for a strategy to delegate \textsf{Why3} goals to appropriate SMT solvers is stated in recent work looking at verification systems on cloud infrastructures \cite{rodinplugin}.
 
 \textit{Machine Learning in Formal Methods:} 
 The FlySpec \cite{Flyspec} corpus of proofs has been the basis for a growing number of tools integrating interactive theorem provers with machine-learning based fact-selection. The MaSh engine in Sledgehammer \cite{Sledgehammer} is a related example. It uses a Naive Bayes algorithm and clustering to select facts based on syntactic similarity. 
