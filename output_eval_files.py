@@ -135,12 +135,17 @@ test['best'] = actual
 test['worst'] = worst
 
 # add results and times for strategies and where4
-for x in ['rf', 'best', 'worst']:
+for x in ['best', 'worst']:
 
 	test[x+' time'] = test.apply(lambda ser: common.time_to_valid( ser[x], 
 				test.ix[ser['key'], common.TIMES+common.RESULTS ] ), axis=1 )
 	test[x+' result'] = test.apply(lambda ser: common.best_result_from_rank( ser[x], 
 				test.ix[ser['key'], common.RESULTS ] ), axis=1 )
+
+test['rf time'] = test.apply(lambda ser: common.time_to_valid_ae( ser['rf'], 
+			test.ix[ser['key'], common.TIMES+common.RESULTS ] ), axis=1 )
+test['rf result'] = test.apply(lambda ser: common.best_result_from_rank_ae( ser['rf'], 
+			test.ix[ser['key'], common.TIMES+common.RESULTS ] ), axis=1 )
 
 # before counting their results
 results['Where4'] = {o : test.apply(lambda ser: 
@@ -181,4 +186,16 @@ all_orders = [''.join(rand) for rand in itertools.permutations(s, r=N)]
 
 
 # Be careful! don't want to overwrite the csv file below mistakenly
-#test.to_csv('data_for_second_linegraph.csv')
+
+# add results and times for strategies and where4
+
+
+#DO THIS JUST ONCE
+get_time = DataFrame.from_csv('data_for_second_linegraph.csv')
+
+test['rand time'] = get_time['rand time']
+
+
+
+
+test.to_csv('data_for_second_linegraph.csv')

@@ -18,15 +18,15 @@ def make_triple(ser, thresh):
 	rank = ''.join([ j for j in ser['rf']
 		if ser['Predicted '+common.REV_MAP[j]] <= thresh])
 	return (rank, 
-		common.best_result_from_rank(rank, ser), 
-		common.time_to_valid(rank, ser))
+		common.best_result_from_rank_ae(rank, ser), 
+		common.time_to_valid_ae(rank, ser))
 
 def find_intersection(val, arr):
 	"""	The x locations for the horizontal line segments"""
 	lower, upper = -1, 0
 	for a in arr:
 		if a > val:
-			return lower, upper
+			return lower-0.5, upper+0.5
 		lower += 1
 		upper += 1
 	return lower, upper
@@ -46,17 +46,21 @@ ranks = DataFrame({'ranks '+str(i): test.apply(lambda ser:
 test = pd.concat([test, ranks], axis=1)
 
 
-styles = {p : ['lightpink','orchid','lightsteelblue','cyan','springgreen',
-				'olive','orange','red'][i] for i, p in enumerate(common.PROVERS)}
+#styles = {p : ['lightpink','orchid','lightsteelblue','cyan','springgreen',
+#				'olive','orange','red'][i] for i, p in enumerate(common.PROVERS)}
+
+
+styles = {p : [('lightpink', 'o'),('orchid','^'),('lightsteelblue','s'),('cyan','x'),('springgreen','+'),
+				('olive','h'),('orange','D'),('red','*')][i] for i, p in enumerate(common.PROVERS)}
 
 # what are the results at each threshold?
 results = DataFrame({'results '+str(i): test.apply(lambda ser:
-		common.best_result_from_rank(ser['ranks '+str(i)], ser), axis=1)
+		common.best_result_from_rank_ae(ser['ranks '+str(i)], ser), axis=1)
 		for i in xrange(21) })
 
 # and how long does each take?
 times = DataFrame({'times '+str(i): test.apply(lambda ser:
-		common.time_to_valid(ser['ranks '+str(i)], ser), axis=1)
+		common.time_to_valid_ae(ser['ranks '+str(i)], ser), axis=1)
 		for i in xrange(21)})
 
 # add all these to the dataframe
@@ -75,9 +79,9 @@ for p in common.PROVERS:
 	# the time that each prover took on average
 	t = test[p+' time'].mean()
 	# draw line segment
-	ax.plot(find_intersection(t, [test['times '+str(i)].mean() for i in range(21)]) ,(t,t) , styles[p], label=p)
+	ax.plot(find_intersection(t, [test['times '+str(i)].mean() for i in range(21)]) ,(t,t) , alpha = 0.5 , color=styles[p][0], marker=styles[p][1], mec=styles[p][0], label=p)
 
-ax.set_ylabel('Time for Valid/Invalid\n response (secs)')
+ax.set_ylabel('Time for any\n response (secs)')
 
 # bottom plot is number proved
 ax = axes[1]
@@ -94,9 +98,15 @@ for p in common.PROVERS:
 	# take the proved ones
 	actual_times = test.loc[good_times]
 	# plot how many there are
-	ax.plot(find_intersection(actual_times.shape[0], [len( test.loc[ 
-		test.apply(lambda ser: ser['results '+str(i)] in ['Valid', 'Invalid'], axis=1) ] ) 
-	for i in range(21) ]), (actual_times.shape[0], actual_times.shape[0]), styles[p] ,label=p )
+	if p == 'Alt-Ergo-1.01':
+		l, r = find_intersection(actual_times.shape[0], [len( test.loc[ 
+			test.apply(lambda ser: ser['results '+str(i)] in ['Valid', 'Invalid'], axis=1) ] ) 
+				for i in range(21) ])
+		t = (l-0.5, r-0.5)
+	else:
+		t = (0,1)
+	
+	ax.plot(t, (actual_times.shape[0], actual_times.shape[0]), alpha = 0.5 , color=styles[p][0], marker=styles[p][1], mec=styles[p][0], label=p)
 
 ax.set_ylabel('Number of Valid/\nInvalid responses')
 ax.set_xlabel('Cost threshold for Where4')

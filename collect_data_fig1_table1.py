@@ -57,6 +57,36 @@ def file_provable(filedict):
     return -1
 
 ########################
+# and these show how many are unique to each prover
+
+def goal_provable_by(goaldict):
+    global provers, res, time, good_result
+
+    results = [p for p in provers
+                if goaldict[p][res] in good_result]
+
+    return set(results)
+
+def theory_provable_by(theorydict):
+    
+    gps = set(provers) # n goals proved
+    for _, goaldict in theorydict.iteritems():
+        gp = goal_provable_by(goaldict)
+        gps = gps.intersection(gp)
+    return gps # may be an empty set
+
+
+def file_provable_by(filedict):
+    
+    tps = set(provers) # n theories proved
+    for _, theorydict in filedict.iteritems():
+        tp = theory_provable_by(theorydict)
+        if tp != -1:
+            tps = tps.intersection(tp)
+    return tps # may be an empty set
+
+
+########################
 here = os.getcwd()
 jsfiles = [ folder_name+'.json' for folder_name in 
                 os.listdir('data') if os.path.isdir(os.path.join(here, 'data')) ]
@@ -71,6 +101,10 @@ file_theory_goals_valid_invalid = {p : { t: [0,0]
                                 for p in provers }
 
 portfolio_can = {t : [0,0] for t in f_t_g}
+only_p_can = {p: {t: 0 for t in f_t_g } for p in provers}
+all_p_can = {t: 0 for t in f_t_g}
+no_p_can = {t: 0 for t in f_t_g}
+some_ps_can = {t: 0 for t in f_t_g}
 n_theories = 0
 
 # iterate through all the json result files
@@ -87,7 +121,18 @@ for fle in jsfiles:
         if fp >= 0:
             portfolio_can['File'][0] += 1
             portfolio_can['File'][1] += fp
-            
+        
+        fp = file_provable_by(fd)
+        
+        n_fp = len(fp)
+        if n_fp == 0:
+            no_p_can['File'] += 1
+        elif n_fp == len(provers):
+            all_p_can['File'] += 1
+        elif n_fp == 1:
+            only_p_can[fp.pop()]['File'] += 1
+        else:
+            some_ps_can['File'] += 1
 
         for t, td in fd.iteritems():
 
@@ -95,6 +140,18 @@ for fle in jsfiles:
             if tp >= 0:
                 portfolio_can['Theory'][0] += 1
                 portfolio_can['Theory'][1] += tp
+
+            tp = theory_provable_by(td)
+            
+            n_tp = len(tp)
+            if n_tp == 0:
+                no_p_can['Theory'] += 1
+            elif n_tp == len(provers):
+                all_p_can['Theory'] += 1
+            elif n_tp == 1:
+                only_p_can[tp.pop()]['Theory'] += 1
+            else:
+                some_ps_can['Theory'] += 1
                 
 
             for g, gd in td.iteritems():
@@ -103,6 +160,20 @@ for fle in jsfiles:
                 if gp >= 0:
                     portfolio_can['Goal'][0] += 1
                     portfolio_can['Goal'][1] += gp
+
+                gp = goal_provable_by(gd)
+               
+                n_gp = len(gp)
+                if n_gp == 0:
+                    no_p_can['Goal'] += 1
+                elif n_gp == len(provers):
+                    all_p_can['Goal'] += 1
+                elif n_gp == 1:
+                    only_p_can[gp.pop()]['Goal'] += 1
+                else:
+                    some_ps_can['Goal'] += 1
+
+
 
     for prover in provers:
         proved_files = 0
@@ -144,6 +215,20 @@ q = {p:
           for t, v in td.iteritems() } 
         for p, td in file_theory_goals_valid_invalid.iteritems() 
     }
+
+print 'only_p_can'
+print DataFrame(only_p_can)
+print 'no_p_can'
+print Series(no_p_can)
+print 'all_p_can'
+print Series(all_p_can)
+print 'at least two can'
+print Series(some_ps_can)
+
+totals = {t : (sum([only_p_can[p][t] for p in provers ])+no_p_can[t]+all_p_can[t]+some_ps_can[t]) for t in f_t_g}
+print 'total'
+print Series(totals)
+
 # add results for theoretical solver
 q['TS'] = { t : (v[0],v[1]/v[0]) for t,v in portfolio_can.iteritems() }
 # save for fig 1 rendering

@@ -160,6 +160,7 @@ def avg_result(results):
 	m = results.mode()
 	return np.random.permutation(m)[0]
 
+
 def best_result_from_rank(y_pred, results):
 	if len(y_pred) == 0:
 		return 'Unknown'
@@ -171,6 +172,14 @@ def best_result_from_rank(y_pred, results):
 			return res
 	return first
 
+def best_result_from_rank_ae(y_pred, results):
+	ae_res = results['Alt-Ergo-1.01 result']
+	ae_time = results['Alt-Ergo-1.01 time']
+	if ae_res in ['Valid', 'Invalid'] and ae_time <= 1.0:
+		return ae_res
+	else:
+		return best_result_from_rank(y_pred, results)
+
 def time_to_valid(y_pred, results):
 	time = 0
 	for p in y_pred:
@@ -179,3 +188,13 @@ def time_to_valid(y_pred, results):
 		if results[prover+' result'] in ['Valid', 'Invalid']:
 			return time
 	return time
+
+def time_to_valid_ae(y_pred, results):
+	ae_res = results['Alt-Ergo-1.01 result']
+	ae_time = results['Alt-Ergo-1.01 time']
+	if ae_res in ['Valid', 'Invalid'] and ae_time <= 1.0:
+		return ae_time
+	elif(ae_time > 1.0):
+		return 1.0+time_to_valid(y_pred, results)
+	else:
+		return ae_time+time_to_valid(y_pred, results)
