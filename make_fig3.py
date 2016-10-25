@@ -87,7 +87,7 @@ ax.set_xscale('log',basex=2)
 ax.set_xlabel('Time (log 2 secs)')
 ax.set_ylabel('Number of Valid/Invalid/Unknown responses')
 ax.legend(loc='best', ncol=2)
-plt.savefig(os.path.join('paper','line_graph.pdf'), bbox_inches='tight')
+plt.savefig(os.path.join('paper','line-graph.pdf'), bbox_inches='tight')
 fig.show()
 
 #DataFrame(total).plot(0)
