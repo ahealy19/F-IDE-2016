@@ -115,7 +115,7 @@ These two aspects of the program are then typically translated into the logical 
 As motivation for our approach, Table \ref{table:avgtimes} presents the results from running the \textsf{Why3} tool over the example programs included in the \textsf{Why3} distribution (version 0.87.1), using eight SMT solvers at the back-end.  
 Each \textsf{Why3} file contains a number of theories requiring proof, and these in turn are  broken down into a number of goals for the SMT solver; for the data in Table \ref{table:avgtimes} we had 128 example programs, generating 289 theories, in turn generating 1048 goals.  In Table \ref{table:avgtimes} each row presents the data for a single SMT solver, and the three main data columns give data totalled on a per-file, per-theory and per-goal basis. Each of these three columns is further broken down to show the number of programs/theories/goals that were successfully solved, their percentage of the total, and the average time taken in seconds for each solver to return such a result. Program verification by modularisation construct is particularly relevant to the use of \textsf{Why3} on the command line as opposed to through the IDE.
 
-Table \ref{table:avgtimes} also has a row for an imaginary ``theoretical'' solver, $\mathcal{TS}$, which corresponds to choosing the best (fastest) solver for each individual program, theory or goal.  This solver performs significantly better than any individual solver, and gives an indication of the maximum improvement that could be achieved \textit{if it was possible to predict in advance which solver was the best for a given program, theory or goal}.  In general, the method of choosing from a range of solvers on an individual goal basis is called \textit{portfolio-solving}. This technique has been successfully implemented in the SAT solver domain by SATzilla \cite{Satzilla} and for model-checkers \cite{DPVZ15:CAV}\cite{MUX}. \textsf{Why3} presents a unique opportunity to use a common input language to develop a portfolio SMT solver specifically designed for software verification.  
+Table \ref{table:avgtimes} also has a row for an imaginary ``theoretical'' solver, \textsf{Choose Single}, which corresponds to choosing the best (fastest) solver for each individual program, theory or goal.  This solver performs significantly better than any individual solver, and gives an indication of the maximum improvement that could be achieved \textit{if it was possible to predict in advance which solver was the best for a given program, theory or goal}.  In general, the method of choosing from a range of solvers on an individual goal basis is called \textit{portfolio-solving}. This technique has been successfully implemented in the SAT solver domain by SATzilla \cite{Satzilla} and for model-checkers \cite{DPVZ15:CAV}\cite{MUX}. \textsf{Why3} presents a unique opportunity to use a common input language to develop a portfolio SMT solver specifically designed for software verification.  
 
 The main contributions of this paper are:
 \begin{enumerate}
@@ -129,13 +129,13 @@ The main contributions of this paper are:
 
 \newcolumntype{Y}{>{\raggedleft\arraybackslash}X} 
 \begin{table}
-\caption{Results of running 8 solvers on the example \textsf{Why3} programs with a timeout value of 10 seconds. In total our dataset contained 128 files, which generated 289 theories, which in turn generated 1048 goals.  Also included is a theoretical solver  $ \mathcal{TS}$, which always returns the best answer in the fastest time.}
+\caption{Results of running 8 solvers on the example \textsf{Why3} programs with a timeout value of 10 seconds. In total our dataset contained 128 files, which generated 289 theories, which in turn generated 1048 goals.  Also included is a theoretical solver  \textsf{Choose Single}, which always returns the best answer in the fastest time.}
 \begin{tabularx}{\textwidth}{@{}l|YYY|YYY|YYY@{}}
 \toprule
 {} & \multicolumn{3}{c|}{\textbf{File}} & \multicolumn{3}{c|}{\textbf{Theory}} & \multicolumn{3}{c}{\textbf{Goal}} \\
 {} & \# proved & \% proved & Avg time & \# proved & \% proved & Avg time & \# proved & \% proved & Avg time \\
 \midrule
-$ \mathcal{TS}$ & \textbf{48} & \textbf{37.5\%} & \textbf{1.90} & \textbf{190} & \textbf{63.8\%} & \textbf{1.03} & \textbf{837} & \textbf{79.9\%} & \textbf{0.42} \\
+\textsf{Choose Single} & \textbf{48} & \textbf{37.5\%} & \textbf{1.90} & \textbf{190} & \textbf{63.8\%} & \textbf{1.03} & \textbf{837} & \textbf{79.9\%} & \textbf{0.42} \\
 \textbf{Alt-Ergo-0.95.2} & 25 & 19.5\% & 1.45 & 118 & 39.6\%& 0.77 & 568 & 54.2\% & 0.54 \\ 
 \textbf{Alt-Ergo-1.01} & 34 & 26.6\% & 1.70 & 142 & 47.7\% & 0.79 & 632 & 60.3\% & 0.48 \\ 
 \textbf{CVC3} & 19 & 14.8\% & 1.06 & 128 & 43.0\% & 0.65 & 597 & 57.0\% & 0.49 \\ 
@@ -161,7 +161,7 @@ We used six current, general-purpose SMT solvers supported by \textsf{Why3}: Alt
 
 \begin{figure}
 \centering
-\includegraphics[width=0.8\linewidth]{barcharts}
+\includegraphics[width=0.7\linewidth]{barcharts}
 \caption{The relative amount of \textit{Valid/Unknown/Timeout/Failure} answers from the eight SMT solvers (with a timeout of 60 seconds). Note that no tool returned an answer of \textit{Invalid} for any of the 1048 proof obligations.}
 \label{fig:barcharts}
 \end{figure}
@@ -280,10 +280,10 @@ From Fig. \ref{fig:line-graph} we can see that the vast majority of useful respo
 By satisfying ourselves with being able to record 99\% of the useful responses which would be returned after 60 seconds, a more reasonable threshold is obtained for each solver. This threshold ranges from 7.35 secs (veriT) to 9.69 secs (Z3-4.3.2). Thus we chose a value of 10 seconds as a representative, realistic time limit that gives each solver a fair opportunity to return decent results.     
 
 \begin{figure}
-\label{fig:line-graph}
 \centering
 \includegraphics[width=0.7\linewidth]{line-graph}
 \caption{The cumulative number of \textit{Valid/Invalid/Unknown} responses for each solver. The plot uses a logarithmic scale on the time axis for increased clarity at the low end of the scale. The chosen timeout limit of 10 secs (\textit{dotted vertical line}) includes 99\% of each solver's useful responses}
+\label{fig:line-graph}
 \end{figure}
 
 \section{Choosing a prediction model}
@@ -296,7 +296,7 @@ Seven regression models were evaluated\footnote{We used the Python Sci-kit Learn
 Table \ref{table:truncated} also shows three theoretical strategies in order to provide bounds for the prediction models. \textit{Best} always chooses the best ranking of solvers and \textit{Worst} always chooses the worst ranking (which is the reverse ordering to \textit{Best}). \textit{Random} is the average result of choosing every permutation of the eight solvers for each instance in the training set.  We use this strategy to represent the user selecting SMT solvers at random without any consideration for goal characterisation or solver capabilities. 
 A comparison to a \textit{fixed} ordering of solvers for each goal is not made as any such ordering would be arbitrarily determined. 
 
-We note that the \textit{Best} theoretical strategy of Table \ref{table:truncated} is not directly comparable with the theoretical solver $\mathcal{TS}$ from Table \ref{table:avgtimes}.  The two tables' average time columns are measuring different results: in contrast to $\mathcal{TS}$, \textit{Best} will call each solver in turn, as will all the other models in Table \ref{table:truncated}, until a \textit{Valid/Invalid} result is recorded (which it may never be).  Thus Table \ref{table:truncated}'s \textit{Time} column shows the average \textit{cumulative} time of each such sequence of calls, rather than the average time taken by the single \textit{best} solver called by $\mathcal{TS}$. 
+We note that the \textit{Best} theoretical strategy of Table \ref{table:truncated} is not directly comparable with the theoretical solver \textsf{Choose Single} from Table \ref{table:avgtimes}.  The two tables' average time columns are measuring different results: in contrast to \textsf{Choose Single}, \textit{Best} will call each solver in turn, as will all the other models in Table \ref{table:truncated}, until a \textit{Valid/Invalid} result is recorded (which it may never be).  Thus Table \ref{table:truncated}'s \textit{Time} column shows the average \textit{cumulative} time of each such sequence of calls, rather than the average time taken by the single \textit{best} solver called by \textsf{Choose Single}. 
 
 \subsection{Evaluating the prediction models}
 
