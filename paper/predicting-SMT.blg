@@ -1,0 +1,53 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: predicting-SMT.aux
+The style file: eptcs.bst
+Database file #1: predicting.bib
+I was expecting a `,' or a `}'---line 401 of file predicting.bib
+ :  
+ :  month=aug,
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--empty pages in Leino10vacid-0:verification
+You've used 37 entries,
+            2701 wiz_defined-function locations,
+            870 strings with 13479 characters,
+and the built_in function-call counts, 24807 in all, are:
+= -- 1785
+> -- 864
+< -- 30
++ -- 361
+- -- 316
+* -- 3112
+:= -- 2901
+add.period$ -- 77
+call.type$ -- 37
+change.case$ -- 272
+chr.to.int$ -- 0
+cite$ -- 75
+duplicate$ -- 1905
+empty$ -- 1863
+format.name$ -- 347
+if$ -- 4886
+int.to.chr$ -- 0
+int.to.str$ -- 37
+missing$ -- 464
+newline$ -- 200
+num.names$ -- 74
+pop$ -- 421
+preamble$ -- 1
+purify$ -- 232
+quote$ -- 0
+skip$ -- 637
+stack$ -- 0
+substring$ -- 1070
+swap$ -- 1977
+text.length$ -- 30
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 181
+warning$ -- 1
+while$ -- 159
+width$ -- 39
+write$ -- 453
+(There was 1 error message)

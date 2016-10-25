@@ -1,0 +1,446 @@
+\begin{thebibliography}{10}
+\providecommand{\bibitemdeclare}[2]{}
+\providecommand{\surnamestart}{}
+\providecommand{\surnameend}{}
+\providecommand{\urlprefix}{Available at }
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\href}[2]{\texttt{#2}}
+\providecommand{\urlalt}[2]{\href{#1}{#2}}
+\providecommand{\doi}[1]{doi:\urlalt{http://dx.doi.org/#1}{#1}}
+\providecommand{\bibinfo}[2]{#2}
+
+\bibitemdeclare{inproceedings}{sunny-cp}
+\bibitem{sunny-cp}
+\bibinfo{author}{Roberto \surnamestart Amadini\surnameend},
+  \bibinfo{author}{Maurizio \surnamestart Gabbrielli\surnameend} \&
+  \bibinfo{author}{Jacopo \surnamestart Mauro\surnameend}
+  (\bibinfo{year}{2015}): \emph{\bibinfo{title}{SUNNY-CP: A Sequential CP
+  Portfolio Solver}}.
+\newblock In: {\sl \bibinfo{booktitle}{ACM Symposium on Applied Computing}},
+  \bibinfo{address}{Salamanca, Spain}, pp. \bibinfo{pages}{1861--1867},
+  \doi{10.1145/2695664.2695741}.
+
+\bibitemdeclare{inproceedings}{Boogie}
+\bibitem{Boogie}
+\bibinfo{author}{Mike \surnamestart Barnett\surnameend},
+  \bibinfo{author}{Bor-Yuh~Evan \surnamestart Chang\surnameend},
+  \bibinfo{author}{Robert \surnamestart DeLine\surnameend},
+  \bibinfo{author}{Bart \surnamestart Jacobs\surnameend} \&
+  \bibinfo{author}{K.~Rustan~M. \surnamestart Leino\surnameend}
+  (\bibinfo{year}{2005}): \emph{\bibinfo{title}{Boogie: A Modular Reusable
+  Verifier for Object-Oriented Programs}}.
+\newblock In: {\sl \bibinfo{booktitle}{Formal Methods for Components and
+  Objects: 4th International Symposium}}, \bibinfo{address}{Amsterdam, The
+  Netherlands}, pp. \bibinfo{pages}{364--387}, \doi{10.1007/11804192\_17}.
+
+\bibitemdeclare{inproceedings}{spec}
+\bibitem{spec}
+\bibinfo{author}{Mike \surnamestart Barnett\surnameend},
+  \bibinfo{author}{K.~Rustan~M. \surnamestart Leino\surnameend} \&
+  \bibinfo{author}{Wolfram \surnamestart Schulte\surnameend}
+  (\bibinfo{year}{2004}): \emph{\bibinfo{title}{The {S}pec\# Programming
+  System: An Overview}}.
+\newblock In: {\sl \bibinfo{booktitle}{Construction and Analysis of Safe,
+  Secure and Interoperable Smart devices}}, \bibinfo{address}{Marseille,
+  France}, pp. \bibinfo{pages}{49--69}, \doi{10.1007/978-3-540-30569-9\_3}.
+
+\bibitemdeclare{inproceedings}{CVC4}
+\bibitem{CVC4}
+\bibinfo{author}{Clark \surnamestart Barrett\surnameend},
+  \bibinfo{author}{Christopher~L. \surnamestart Conway\surnameend},
+  \bibinfo{author}{Morgan \surnamestart Deters\surnameend},
+  \bibinfo{author}{Liana \surnamestart Hadarean\surnameend},
+  \bibinfo{author}{Dejan \surnamestart Jovanovi\'{c}\surnameend},
+  \bibinfo{author}{Tim \surnamestart King\surnameend}, \bibinfo{author}{Andrew
+  \surnamestart Reynolds\surnameend} \& \bibinfo{author}{Cesare \surnamestart
+  Tinelli\surnameend} (\bibinfo{year}{2011}): \emph{\bibinfo{title}{{\scshape
+  CVC4}}}.
+\newblock In: {\sl \bibinfo{booktitle}{Computer Aided Verification}},
+  \bibinfo{address}{Snowbird, UT, USA}, pp. \bibinfo{pages}{171--177},
+  \doi{10.1007/978-3-642-22110-1\_14}.
+
+\bibitemdeclare{misc}{SMTLIB}
+\bibitem{SMTLIB}
+\bibinfo{author}{Clark \surnamestart Barrett\surnameend},
+  \bibinfo{author}{Aaron \surnamestart Stump\surnameend} \&
+  \bibinfo{author}{Cesare \surnamestart Tinelli\surnameend}
+  (\bibinfo{year}{2010}): \emph{\bibinfo{title}{{The Satisfiability Modulo
+  Theories Library (SMT-LIB)}}}.
+\newblock \urlprefix\url{http://www.smt-lib.org}.
+
+\bibitemdeclare{inproceedings}{CVC3}
+\bibitem{CVC3}
+\bibinfo{author}{Clark \surnamestart Barrett\surnameend} \&
+  \bibinfo{author}{Cesare \surnamestart Tinelli\surnameend}
+  (\bibinfo{year}{2007}): \emph{\bibinfo{title}{{CVC3}}}.
+\newblock In: {\sl \bibinfo{booktitle}{Computer Aided Verification}},
+  \bibinfo{address}{Berlin, Germany}, pp. \bibinfo{pages}{298--302},
+  \doi{10.1007/978-3-540-73368-3\_34}.
+
+\bibitemdeclare{inproceedings}{SVCOMP}
+\bibitem{SVCOMP}
+\bibinfo{author}{Dirk \surnamestart Beyer\surnameend} (\bibinfo{year}{2014}):
+  \emph{\bibinfo{title}{Status Report on Software Verification}}.
+\newblock In: {\sl \bibinfo{booktitle}{Tools and Algorithms for the
+  Construction and Analysis of Systems}}, \bibinfo{address}{Grenoble, France},
+  pp. \bibinfo{pages}{373--388}, \doi{10.1007/978-3-642-54862-8\_25}.
+
+\bibitemdeclare{article}{Dagstuhl}
+\bibitem{Dagstuhl}
+\bibinfo{author}{Dirk \surnamestart Beyer\surnameend}, \bibinfo{author}{Marieke
+  \surnamestart Huisman\surnameend}, \bibinfo{author}{Vladimir \surnamestart
+  Klebanov\surnameend} \& \bibinfo{author}{Rosemary \surnamestart
+  Monahan\surnameend} (\bibinfo{year}{2014}): \emph{\bibinfo{title}{{Evaluating
+  Software Verification Systems: Benchmarks and Competitions (Dagstuhl Reports
+  14171)}}}.
+\newblock {\sl \bibinfo{journal}{Dagstuhl Reports}}
+  \bibinfo{volume}{4}(\bibinfo{number}{4}), \doi{10.4230/DagRep.4.4.1}.
+
+\bibitemdeclare{inproceedings}{benchexec}
+\bibitem{benchexec}
+\bibinfo{author}{Dirk \surnamestart Beyer\surnameend}, \bibinfo{author}{Stefan
+  \surnamestart L{\"{o}}we\surnameend} \& \bibinfo{author}{Philipp
+  \surnamestart Wendler\surnameend} (\bibinfo{year}{2015}):
+  \emph{\bibinfo{title}{Benchmarking and Resource Measurement}}.
+\newblock In: {\sl \bibinfo{booktitle}{Model Checking Software - 22nd
+  International Symposium, {SPIN} 2015}}, \bibinfo{address}{Stellenbosch, South
+  Africa}, pp. \bibinfo{pages}{160--178}, \doi{10.1007/978-3-319-23404-5\_12}.
+
+\bibitemdeclare{article}{Sledgehammer}
+\bibitem{Sledgehammer}
+\bibinfo{author}{Jasmin~Christian \surnamestart Blanchette\surnameend},
+  \bibinfo{author}{David \surnamestart Greenaway\surnameend},
+  \bibinfo{author}{Cezary \surnamestart Kaliszyk\surnameend},
+  \bibinfo{author}{Daniel \surnamestart K{\"{u}}hlwein\surnameend} \&
+  \bibinfo{author}{Josef \surnamestart Urban\surnameend}
+  (\bibinfo{year}{2016}): \emph{\bibinfo{title}{A Learning-Based Fact Selector
+  for {I}sabelle/{HOL}}}.
+\newblock {\sl \bibinfo{journal}{Journal of Automated Reasoning}}, pp.
+  \bibinfo{pages}{1--26}, \doi{10.1007/s10817-016-9362-8}.
+
+\bibitemdeclare{inproceedings}{why:preserving}
+\bibitem{why:preserving}
+\bibinfo{author}{Fran{\c{c}}ois \surnamestart Bobot\surnameend},
+  \bibinfo{author}{Jean-Christophe \surnamestart Filli{\^{a}}tre\surnameend},
+  \bibinfo{author}{Claude \surnamestart March{\'{e}}\surnameend},
+  \bibinfo{author}{Guillaume \surnamestart Melquiond\surnameend} \&
+  \bibinfo{author}{Andrei \surnamestart Paskevich\surnameend}
+  (\bibinfo{year}{2013}): \emph{\bibinfo{title}{Preserving User Proofs across
+  Specification Changes}}.
+\newblock In: {\sl \bibinfo{booktitle}{Verified Software: Theories, Tools,
+  Experiments: 5th International Conference}}, \bibinfo{address}{Menlo Park,
+  CA, USA}, pp. \bibinfo{pages}{191--201}, \doi{10.1007/978-3-642-54108-7\_10}.
+
+\bibitemdeclare{article}{verifythis}
+\bibitem{verifythis}
+\bibinfo{author}{Fran{\c{c}}ois \surnamestart Bobot\surnameend},
+  \bibinfo{author}{Jean-Christophe \surnamestart Filli{\^a}tre\surnameend},
+  \bibinfo{author}{Claude \surnamestart March{\'e}\surnameend} \&
+  \bibinfo{author}{Andrei \surnamestart Paskevich\surnameend}
+  (\bibinfo{year}{2015}): \emph{\bibinfo{title}{Let's verify this with
+  {W}hy3}}.
+\newblock {\sl \bibinfo{journal}{International Journal on Software Tools for
+  Technology Transfer}} \bibinfo{volume}{17}(\bibinfo{number}{6}), pp.
+  \bibinfo{pages}{709--727}, \doi{10.1007/s10009-014-0314-5}.
+
+\bibitemdeclare{article}{multisurvey}
+\bibitem{multisurvey}
+\bibinfo{author}{H.~\surnamestart Borchani\surnameend},
+  \bibinfo{author}{G.~\surnamestart Varando\surnameend},
+  \bibinfo{author}{C.~\surnamestart Bielza\surnameend} \&
+  \bibinfo{author}{P.~\surnamestart Larranaga\surnameend}
+  (\bibinfo{year}{2015}): \emph{\bibinfo{title}{A survey on multi-output
+  regression}}.
+\newblock {\sl \bibinfo{journal}{Data Mining And Knowledge Discovery}}
+  \bibinfo{volume}{5}(\bibinfo{number}{5}), pp. \bibinfo{pages}{216--233},
+  \doi{10.1002/widm.1157}.
+
+\bibitemdeclare{inproceedings}{bormer:hal-00789525}
+\bibitem{bormer:hal-00789525}
+\bibinfo{author}{Thorsten \surnamestart Bormer\surnameend},
+  \bibinfo{author}{Marc \surnamestart Brockschmidt\surnameend},
+  \bibinfo{author}{Dino \surnamestart Distefano\surnameend},
+  \bibinfo{author}{Gidon \surnamestart Ernst\surnameend},
+  \bibinfo{author}{Jean-Christophe \surnamestart Filli{\^{a}}tre\surnameend},
+  \bibinfo{author}{Radu \surnamestart Grigore\surnameend},
+  \bibinfo{author}{Marieke \surnamestart Huisman\surnameend},
+  \bibinfo{author}{Vladimir \surnamestart Klebanov\surnameend},
+  \bibinfo{author}{Claude \surnamestart March{\'{e}}\surnameend},
+  \bibinfo{author}{Rosemary \surnamestart Monahan\surnameend},
+  \bibinfo{author}{Wojciech \surnamestart Mostowski\surnameend},
+  \bibinfo{author}{Nadia \surnamestart Polikarpova\surnameend},
+  \bibinfo{author}{Christoph \surnamestart Scheben\surnameend},
+  \bibinfo{author}{Gerhard \surnamestart Schellhorn\surnameend},
+  \bibinfo{author}{Bogdan \surnamestart Tofan\surnameend},
+  \bibinfo{author}{Julian \surnamestart Tschannen\surnameend} \&
+  \bibinfo{author}{Mattias \surnamestart Ulbrich\surnameend}
+  (\bibinfo{year}{2011}): \emph{\bibinfo{title}{{The COST IC0701 Verification
+  Competition 2011}}}.
+\newblock In: {\sl \bibinfo{booktitle}{{Formal Verification of Object-Oriented
+  Software}}}, \bibinfo{address}{Torino, Italy}, pp. \bibinfo{pages}{3--21},
+  \doi{10.1007/978-3-642-31762-0\_2}.
+
+\bibitemdeclare{inproceedings}{veriT}
+\bibitem{veriT}
+\bibinfo{author}{Thomas \surnamestart Bouton\surnameend},
+  \bibinfo{author}{Diego \surnamestart Caminha B.~de Oliveira\surnameend},
+  \bibinfo{author}{David \surnamestart D{\'{e}}harbe\surnameend} \&
+  \bibinfo{author}{Pascal \surnamestart Fontaine\surnameend}
+  (\bibinfo{year}{2009}): \emph{\bibinfo{title}{veri{T}: An Open, Trustable and
+  Efficient {SMT}-Solver}}.
+\newblock In: {\sl \bibinfo{booktitle}{22nd International Conference on
+  Automated Deduction}}, \bibinfo{address}{Montreal, Canada}, pp.
+  \bibinfo{pages}{151--156}, \doi{10.1007/978-3-642-02959-2\_12}.
+
+\bibitemdeclare{article}{RandomForests}
+\bibitem{RandomForests}
+\bibinfo{author}{Leo \surnamestart Breiman\surnameend} (\bibinfo{year}{2001}):
+  \emph{\bibinfo{title}{Random Forests}}.
+\newblock {\sl \bibinfo{journal}{Machine Learning}}
+  \bibinfo{volume}{45}(\bibinfo{number}{1}), pp. \bibinfo{pages}{5--32},
+  \doi{10.1023/A:1010933404324}.
+
+\bibitemdeclare{article}{SMTEVAL2013}
+\bibitem{SMTEVAL2013}
+\bibinfo{author}{David~R. \surnamestart Cok\surnameend}, \bibinfo{author}{Aaron
+  \surnamestart Stump\surnameend} \& \bibinfo{author}{Tjark \surnamestart
+  Weber\surnameend} (\bibinfo{year}{2015}): \emph{\bibinfo{title}{The 2013
+  Evaluation of {SMT-COMP} and {SMT-LIB}}}.
+\newblock {\sl \bibinfo{journal}{Journal of Automated Reasoning}}
+  \bibinfo{volume}{55}(\bibinfo{number}{1}), pp. \bibinfo{pages}{61--90},
+  \doi{10.1007/s10817-015-9328-2}.
+
+\bibitemdeclare{misc}{AltErgo}
+\bibitem{AltErgo}
+\bibinfo{author}{Sylvain \surnamestart Conchon\surnameend} \&
+  \bibinfo{author}{\'{E}van \surnamestart Contejean\surnameend}
+  (\bibinfo{year}{2008}): \emph{\bibinfo{title}{The {A}lt-{E}rgo automatic
+  theorem prover}}.
+\newblock \urlprefix\url{http://alt-ergo.lri.fr/}.
+
+\bibitemdeclare{inproceedings}{Z3}
+\bibitem{Z3}
+\bibinfo{author}{Leonardo \surnamestart De~Moura\surnameend} \&
+  \bibinfo{author}{Nikolaj \surnamestart Bj{\o}rner\surnameend}
+  (\bibinfo{year}{2008}): \emph{\bibinfo{title}{Z3: An Efficient {SMT}
+  Solver}}.
+\newblock In: {\sl \bibinfo{booktitle}{Tools and Algorithms for the
+  Construction and Analysis of Systems}}, \bibinfo{address}{Budapest, Hungary},
+  pp. \bibinfo{pages}{337--340}, \doi{10.1007/978-3-540-78800-3\_24}.
+
+\bibitemdeclare{inproceedings}{DPVZ15:CAV}
+\bibitem{DPVZ15:CAV}
+\bibinfo{author}{Yulia \surnamestart Demyanova\surnameend},
+  \bibinfo{author}{Thomas \surnamestart Pani\surnameend},
+  \bibinfo{author}{Helmut \surnamestart Veith\surnameend} \&
+  \bibinfo{author}{Florian \surnamestart Zuleger\surnameend}
+  (\bibinfo{year}{2015}): \emph{\bibinfo{title}{Empirical Software Metrics for
+  Benchmarking of Verification Tools}}.
+\newblock In: {\sl \bibinfo{booktitle}{Computer Aided Verification}},
+  \bibinfo{address}{San Francisco, CA, USA}, pp. \bibinfo{pages}{561--579},
+  \doi{10.1007/978-3-319-21690-4\_39}.
+
+\bibitemdeclare{misc}{Yices}
+\bibitem{Yices}
+\bibinfo{author}{Bruno \surnamestart Dutertre\surnameend} \&
+  \bibinfo{author}{Leonardo \surnamestart de~Moura\surnameend}
+  (\bibinfo{year}{2006}): \emph{\bibinfo{title}{The {Y}ices {SMT} Solver}}.
+\newblock \urlprefix\url{http://yices.csl.sri.com/papers/tool-paper.pdf}.
+
+\bibitemdeclare{inproceedings}{why:whereprograms}
+\bibitem{why:whereprograms}
+\bibinfo{author}{Jean{-}Christophe \surnamestart Filli{\^{a}}tre\surnameend} \&
+  \bibinfo{author}{Andrei \surnamestart Paskevich\surnameend}
+  (\bibinfo{year}{2013}): \emph{\bibinfo{title}{Why3 - Where Programs Meet
+  Provers}}.
+\newblock In: {\sl \bibinfo{booktitle}{Programming Languages and Systems - 22nd
+  European Symposium on Programming,}}, \bibinfo{address}{Rome, Italy}, pp.
+  \bibinfo{pages}{125--128}, \doi{10.1007/978-3-642-37036-6\_8}.
+
+\bibitemdeclare{inproceedings}{rodinplugin}
+\bibitem{rodinplugin}
+\bibinfo{author}{Alexei \surnamestart Iliasov\surnameend},
+  \bibinfo{author}{Paulius \surnamestart Stankaitis\surnameend},
+  \bibinfo{author}{David \surnamestart Adjepon-Yamoah\surnameend} \&
+  \bibinfo{author}{Alexander \surnamestart Romanovsky\surnameend}
+  (\bibinfo{year}{2016}): \emph{\bibinfo{title}{Rodin Platform {W}hy3
+  Plug-In}}.
+\newblock In: {\sl \bibinfo{booktitle}{ABZ 2016: Abstract State Machines,
+  Alloy, B, TLA, VDM, and Z: 5th International Conference}},
+  \bibinfo{address}{Linz, Austria}, pp. \bibinfo{pages}{275--281},
+  \doi{10.1007/978-3-319-33600-8\_21}.
+
+\bibitemdeclare{article}{NDCG}
+\bibitem{NDCG}
+\bibinfo{author}{Kalervo \surnamestart J\"{a}rvelin\surnameend}
+  (\bibinfo{year}{2012}): \emph{\bibinfo{title}{{IR} Research: Systems,
+  Interaction, Evaluation and Theories}}.
+\newblock {\sl \bibinfo{journal}{SIGIR Forum}}
+  \bibinfo{volume}{45}(\bibinfo{number}{2}), pp. \bibinfo{pages}{17--31},
+  \doi{10.1145/2093346.2093348}.
+
+\bibitemdeclare{article}{Flyspec}
+\bibitem{Flyspec}
+\bibinfo{author}{Cezary \surnamestart Kaliszyk\surnameend} \&
+  \bibinfo{author}{Josef \surnamestart Urban\surnameend}
+  (\bibinfo{year}{2014}): \emph{\bibinfo{title}{Learning-Assisted Automated
+  Reasoning with {F}lyspeck}}.
+\newblock {\sl \bibinfo{journal}{Journal of Automated Reasoning}}
+  \bibinfo{volume}{53}(\bibinfo{number}{2}), pp. \bibinfo{pages}{173--213},
+  \doi{10.1007/s10817-014-9303-3}.
+
+\bibitemdeclare{inproceedings}{Klebanov2011}
+\bibitem{Klebanov2011}
+\bibinfo{author}{Vladimir \surnamestart Klebanov\surnameend},
+  \bibinfo{author}{Peter \surnamestart M{\"{u}}ller\surnameend},
+  \bibinfo{author}{Natarajan \surnamestart Shankar\surnameend},
+  \bibinfo{author}{Gary~T. \surnamestart Leavens\surnameend},
+  \bibinfo{author}{Valentin \surnamestart W{\"{u}}stholz\surnameend},
+  \bibinfo{author}{Eyad \surnamestart Alkassar\surnameend},
+  \bibinfo{author}{Rob \surnamestart Arthan\surnameend}, \bibinfo{author}{Derek
+  \surnamestart Bronish\surnameend}, \bibinfo{author}{Rod \surnamestart
+  Chapman\surnameend}, \bibinfo{author}{Ernie \surnamestart Cohen\surnameend},
+  \bibinfo{author}{Mark \surnamestart Hillebrand\surnameend},
+  \bibinfo{author}{Bart \surnamestart Jacobs\surnameend},
+  \bibinfo{author}{K.~Rustan~M. \surnamestart Leino\surnameend},
+  \bibinfo{author}{Rosemary \surnamestart Monahan\surnameend},
+  \bibinfo{author}{Frank \surnamestart Piessens\surnameend},
+  \bibinfo{author}{Nadia \surnamestart Polikarpova\surnameend},
+  \bibinfo{author}{Tom \surnamestart Ridge\surnameend}, \bibinfo{author}{Jan
+  \surnamestart Smans\surnameend}, \bibinfo{author}{Stephan \surnamestart
+  Tobies\surnameend}, \bibinfo{author}{Thomas \surnamestart Tuerk\surnameend},
+  \bibinfo{author}{Mattias \surnamestart Ulbrich\surnameend} \&
+  \bibinfo{author}{Benjamin \surnamestart Wei{\ss}\surnameend}
+  (\bibinfo{year}{2011}): \emph{\bibinfo{title}{The 1st Verified Software
+  Competition: Experience Report}}.
+\newblock In: {\sl \bibinfo{booktitle}{FM 2011: 17th International Symposium on
+  Formal Methods}}, \bibinfo{address}{Limerick, Ireland}, pp.
+  \bibinfo{pages}{154--168}, \doi{10.1007/978-3-642-21437-0\_14}.
+
+\bibitemdeclare{inproceedings}{ML4PG}
+\bibitem{ML4PG}
+\bibinfo{author}{Ekaterina \surnamestart Komendantskaya\surnameend},
+  \bibinfo{author}{J{\'{o}}nathan \surnamestart Heras\surnameend} \&
+  \bibinfo{author}{Gudmund \surnamestart Grov\surnameend}
+  (\bibinfo{year}{2012}): \emph{\bibinfo{title}{Machine Learning in Proof
+  General: Interfacing Interfaces}}.
+\newblock In: {\sl \bibinfo{booktitle}{10th International Workshop On User
+  Interfaces for Theorem Provers}}, \bibinfo{address}{Bremen, Germany}, pp.
+  \bibinfo{pages}{15--41}, \doi{10.4204/EPTCS.118.2}.
+
+\bibitemdeclare{inproceedings}{Dafny}
+\bibitem{Dafny}
+\bibinfo{author}{K.~Rustan~M. \surnamestart Leino\surnameend}
+  (\bibinfo{year}{2010}): \emph{\bibinfo{title}{Dafny: An Automatic Program
+  Verifier for Functional Correctness}}.
+\newblock In: {\sl \bibinfo{booktitle}{Logic for Programming, Artificial
+  Intelligence, and Reasoning: 16th International Conference}},
+  \bibinfo{address}{Dakar, Senegal}, pp. \bibinfo{pages}{348--370},
+  \doi{10.1007/978-3-642-17511-4\_20}.
+
+\bibitemdeclare{inproceedings}{Leino10vacid-0:verification}
+\bibitem{Leino10vacid-0:verification}
+\bibinfo{author}{K.~Rustan~M. \surnamestart Leino\surnameend} \&
+  \bibinfo{author}{Micha\l{} \surnamestart Moskal\surnameend}
+  (\bibinfo{year}{2010}): \emph{\bibinfo{title}{VACID-0: Verification of Ample
+  Correctness of Invariants of Data-structures, Edition 0}}.
+\newblock In: {\sl \bibinfo{booktitle}{Tools and Experiments Workshop at
+  VSTTE}}.
+\newblock
+  \urlprefix\url{https://www.microsoft.com/en-us/research/wp-content/uploads/2008/12/krml209.pdf}.
+
+\bibitemdeclare{book}{LiljaJ}
+\bibitem{LiljaJ}
+\bibinfo{author}{David~J \surnamestart Lilja\surnameend}
+  (\bibinfo{year}{2000}): \emph{\bibinfo{title}{Measuring computer performance:
+  a practitioner's guide}}.
+\newblock \bibinfo{publisher}{Cambridge Univ. Press},
+  \bibinfo{address}{Cambridge, UK}, \doi{10.1017/CBO9780511612398}.
+
+\bibitemdeclare{book}{Mitchell}
+\bibitem{Mitchell}
+\bibinfo{author}{Tom~M. \surnamestart Mitchell\surnameend}
+  (\bibinfo{year}{1997}): \emph{\bibinfo{title}{Machine Learning}}.
+\newblock \bibinfo{publisher}{McGraw-Hill}, \bibinfo{address}{New York, USA}.
+
+\bibitemdeclare{inproceedings}{CPHydra}
+\bibitem{CPHydra}
+\bibinfo{author}{Eoin \surnamestart O'Mahony\surnameend},
+  \bibinfo{author}{Emmanuel \surnamestart Hebrard\surnameend},
+  \bibinfo{author}{Alan \surnamestart Holland\surnameend},
+  \bibinfo{author}{Conor \surnamestart Nugent\surnameend} \&
+  \bibinfo{author}{Barry \surnamestart O'Sullivan\surnameend}
+  (\bibinfo{year}{2008}): \emph{\bibinfo{title}{Using case-based reasoning in
+  an algorithm portfolio for constraint solving}}.
+\newblock In: {\sl \bibinfo{booktitle}{Irish Conference on Artificial
+  Intelligence and Cognitive Science}}, pp. \bibinfo{pages}{210--216}.
+
+\bibitemdeclare{article}{sklearn}
+\bibitem{sklearn}
+\bibinfo{author}{F.~\surnamestart Pedregosa\surnameend},
+  \bibinfo{author}{G.~\surnamestart Varoquaux\surnameend},
+  \bibinfo{author}{A.~\surnamestart Gramfort\surnameend},
+  \bibinfo{author}{V.~\surnamestart Michel\surnameend},
+  \bibinfo{author}{B.~\surnamestart Thirion\surnameend},
+  \bibinfo{author}{O.~\surnamestart Grisel\surnameend},
+  \bibinfo{author}{M.~\surnamestart Blondel\surnameend},
+  \bibinfo{author}{P.~\surnamestart Prettenhofer\surnameend},
+  \bibinfo{author}{R.~\surnamestart Weiss\surnameend},
+  \bibinfo{author}{V.~\surnamestart Dubourg\surnameend},
+  \bibinfo{author}{J.~\surnamestart Vanderplas\surnameend},
+  \bibinfo{author}{A.~\surnamestart Passos\surnameend},
+  \bibinfo{author}{D.~\surnamestart Cournapeau\surnameend},
+  \bibinfo{author}{M.~\surnamestart Brucher\surnameend},
+  \bibinfo{author}{M.~\surnamestart Perrot\surnameend} \&
+  \bibinfo{author}{E.~\surnamestart Duchesnay\surnameend}
+  (\bibinfo{year}{2011}): \emph{\bibinfo{title}{Scikit-learn: Machine Learning
+  in {P}ython}}.
+\newblock {\sl \bibinfo{journal}{Journal of Machine Learning Research}}
+  \bibinfo{volume}{12}, pp. \bibinfo{pages}{2825--2830}.
+\newblock \urlprefix\url{http://dl.acm.org/citation.cfm?id=1953048.2078195}.
+
+\bibitemdeclare{article}{TPTP}
+\bibitem{TPTP}
+\bibinfo{author}{Geoff \surnamestart Sutcliffe\surnameend} \&
+  \bibinfo{author}{Christian \surnamestart Suttner\surnameend}
+  (\bibinfo{year}{1998}): \emph{\bibinfo{title}{The {TPTP} Problem Library}}.
+\newblock {\sl \bibinfo{journal}{Journal Automated Reasoning}}
+  \bibinfo{volume}{21}(\bibinfo{number}{2}), pp. \bibinfo{pages}{177--203},
+  \doi{10.1023/A:1005806324129}.
+
+\bibitemdeclare{article}{Sutcliffe200139}
+\bibitem{Sutcliffe200139}
+\bibinfo{author}{Geoff \surnamestart Sutcliffe\surnameend} \&
+  \bibinfo{author}{Christian \surnamestart Suttner\surnameend}
+  (\bibinfo{year}{2001}): \emph{\bibinfo{title}{Evaluating general purpose
+  automated theorem proving systems}}.
+\newblock {\sl \bibinfo{journal}{Artificial Intelligence}}
+  \bibinfo{volume}{131}(\bibinfo{number}{1-2}), pp. \bibinfo{pages}{39--54},
+  \doi{10.1016/S0004-3702(01)00113-8}.
+
+\bibitemdeclare{inproceedings}{MUX}
+\bibitem{MUX}
+\bibinfo{author}{Varun \surnamestart Tulsian\surnameend},
+  \bibinfo{author}{Aditya \surnamestart Kanade\surnameend},
+  \bibinfo{author}{Rahul \surnamestart Kumar\surnameend},
+  \bibinfo{author}{Akash \surnamestart Lal\surnameend} \&
+  \bibinfo{author}{Aditya~V. \surnamestart Nori\surnameend}
+  (\bibinfo{year}{2014}): \emph{\bibinfo{title}{{MUX}: algorithm selection for
+  software model checkers}}.
+\newblock In: {\sl \bibinfo{booktitle}{11th Working Conference on Mining
+  Software Repositories}}, \bibinfo{address}{Hydrabad, India}, pp.
+  \bibinfo{pages}{132--141}, \doi{10.1145/2597073.2597080}.
+
+\bibitemdeclare{article}{Satzilla}
+\bibitem{Satzilla}
+\bibinfo{author}{Lin \surnamestart Xu\surnameend}, \bibinfo{author}{Frank
+  \surnamestart Hutter\surnameend}, \bibinfo{author}{Holger~H. \surnamestart
+  Hoos\surnameend} \& \bibinfo{author}{Kevin \surnamestart
+  Leyton-Brown\surnameend} (\bibinfo{year}{2008}):
+  \emph{\bibinfo{title}{{SAT}zilla: Portfolio-based Algorithm Selection for
+  {SAT}}}.
+\newblock {\sl \bibinfo{journal}{Journal of Artificial Intelligence Research}}
+  \bibinfo{volume}{32}(\bibinfo{number}{1}), pp. \bibinfo{pages}{565--606}.
+\newblock \urlprefix\url{http://dl.acm.org/citation.cfm?id=1622673.1622687}.
+
+\end{thebibliography}
