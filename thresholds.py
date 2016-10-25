@@ -67,7 +67,7 @@ times = DataFrame({'times '+str(i): test.apply(lambda ser:
 test = pd.concat([test, results, times], axis=1)
 
 fig, axes = plt.subplots(ncols=1, nrows=2, sharex=True)
-fig.set_size_inches(6,10)
+fig.set_size_inches(5,9)
 #fig.subplots_adjust(hspace=0.4)
 fig.subplots_adjust(hspace=0.25)
 

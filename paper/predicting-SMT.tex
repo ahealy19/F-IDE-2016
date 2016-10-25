@@ -413,7 +413,7 @@ If the user has selected that \textsf{Where4} be available for use through \text
 
 
 
-The evaluation of \textsf{Where4} was carried out on a test set of 32 WhyML files, 77 theories, 263 goals (representing 25\% of the entire dataset). This section is guided by the following three evaluation criteria:
+The evaluation of \textsf{Where4} was carried out on a test set of 32 WhyML files, 77 theories, 263 goals (representing 25\% of the entire dataset). This section is guided by the following three Evaluation Criteria:
 
 \begin{table}
 \caption{Number of files, theories and goals proved by each strategy and individual solver. The percentage this represents of the total 32 files, 77 theories and 263 goals and the average time (in seconds) are also shown.}
@@ -442,7 +442,7 @@ The evaluation of \textsf{Where4} was carried out on a test set of 32 WhyML file
 
 
 
-\subsubsection*{How does \textsf{Where4} perform in comparison to the 8 SMT solvers under consideration?}
+\subsection{EC1: How does \textsf{Where4} perform in comparison to the 8 SMT solvers under consideration?}
 
 \begin{figure}
 	\centering
@@ -477,10 +477,10 @@ To calibrate this cost of \textsf{Where4} against the individual SMT solvers, we
 
 Fig. \ref{fig:thresholds} shows the effect of varying this threshold, expressed in terms of the average execution time (top graph) and the number of goals solved (bottom graph).  As we can see from both graphs in Fig. \ref{fig:thresholds}, for the goals in the test set a threshold of 7 for the cost function allows \textsf{Where4} to prove more goals than any single solver, in a time approximately equal to the four slower solvers (CVC4, veriT and both versions of Z3). 
 
-\subsubsection*{How does \textsf{Where4} perform in comparison to the 3 theoretical ranking strategies?}
+\subsection{EC2: How does \textsf{Where4} perform in comparison to the 3 theoretical ranking strategies?}
 Fig. \ref{fig:line-graph-eval-provers} compares the cumulative time taken for \textsf{Where4} and the 3 ranking strategies to return the 203 valid answers in the test set. Although both \textsf{Where4} and \textit{Random} finish at approximately the same time, \textsf{Where4} is significantly faster for returning \textit{Valid/Invalid} answers. \textsf{Where4}'s solid line is more closely correlated to \textit{Best}'s rate of success than the erratic rate of the \textit{Random} strategy. \textit{Best}'s time result shows the capability of a perfect-scoring learning strategy. It is motivation to further improve \textsf{Where4} in the future.   
 
-\subsubsection*{What is the time overhead of using \textsf{Where4} to prove \textsf{Why3} goals?}The timings for \textsf{Where4} in all plots and tables are based solely on the performance of the constituent solvers (the measurement of which is discussed in Sec. \ref{sec:dependant}). They do not measure the time it takes for the OCaml binary to extract the static metrics, traverse the decision trees and predict the ranking. We have found that this adds (on average) 0.46 seconds to the time \textsf{Where4} takes to return a result for each file. On a per goal basis, this is equivalent to an increase in 0.056 seconds. 
+\subsection{EC3: What is the time overhead of using \textsf{Where4} to prove \textsf{Why3} goals?}The timings for \textsf{Where4} in all plots and tables are based solely on the performance of the constituent solvers (the measurement of which is discussed in Sec. \ref{sec:dependant}). They do not measure the time it takes for the OCaml binary to extract the static metrics, traverse the decision trees and predict the ranking. We have found that this adds (on average) 0.46 seconds to the time \textsf{Where4} takes to return a result for each file. On a per goal basis, this is equivalent to an increase in 0.056 seconds. 
 
 The imitation of an orthodox solver to interact with \textsf{Why3} is more costly: this is due to \textsf{Why3} printing each goal as a temporary file to be read in by the solver individually. Future work will look at bypassing this step for WhyML files while still allowing files to be proved on an individual theory and goal basis.    
 
@@ -504,6 +504,27 @@ Timings of individual goals are likely to vary widely (even across independent e
 It is our assumption that although the actual timed values would be quite different on any other machine, the \textit{ranking} of their timings would stay relatively stable.
 
 A ``typical'' software development scenario might involve a user verifying a single file with a small number of resultant goals: certainly much smaller than the size of our test set (263 goals). In such a setting, the productivity gains associated with using \textsf{Where4} would be minor. \textsf{Where4} is more suited therefore to large-scale software verification.
+
+
+\subsection{Discussion}
+\label{sec:eval-discuss}
+
+By considering the answers to our three Evaluation Criteria, we can make assertions about the success of \textsf{Where4}.
+The answer to \textbf{EC1}, \textsf{Where4}'s performance in comparison to individual SMT solvers, is positive.
+A small improvement in \textit{Valid/Invalid} responses results from using only the top-ranked solver, while a much bigger increase can be seen by making the full ranking of solvers available for use.
+The time penalty associated with calling a number of solvers on an un-provable proof obligation is mitigated by the use of a \textit{cost threshold}.
+Judicious use of this threshold value can balance the time-taken-versus-goals-proved trade-off: in our test set of 263 POs, using a threshold value of 7 results in 192 \textit{Valid} responses -- an increase of 15 over the single best solver -- in a reasonable average time per PO (both \textit{Valid} and otherwise) of 4.59 seconds.
+
+There is also cause for optimism in \textsf{Where4}'s performance as compared to the three theoretical ranking strategies --- the subject of Evaluation Criterion 2. 
+All but the most stubborn of \textit{Valid} answers are returned in a time far better than \textit{Random} theoretical strategy.
+We take this random strategy as representing the behaviour of the non-expert \textsf{Why3} user who does not have a preference amongst the variety of supported SMT solvers.
+For this user, \textsf{Where4} could be a valuable tool in the efficient initial verification of proof obligations through the \textsf{Why3} system.    
+
+In terms of time overhead --- the concern of EC3 --- our results are less favourable, particularly when \textsf{Where4} is used as an integrated part of the \textsf{Why3} toolchain.
+The costly printing and parsing of goals slows \textsf{Where4} beyond the time overhead associated with feature extraction and prediction.
+At present, due to the diversity of languages and input formats used by software verification tools, this is an unavoidable pre-processing step enforced by \textsf{Why3} (and is indeed one of the \textsf{Why3} system's major advantages).
+
+Overall, we believe that the results for two out of three Evaluation Criteria are encouraging and suggest a number of directions for future work to improve \textsf{Where4}.
 
 
 \section{Comparison with Related Work}
