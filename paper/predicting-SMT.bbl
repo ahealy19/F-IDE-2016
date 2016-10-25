@@ -431,6 +431,17 @@
   Software Repositories}}, \bibinfo{address}{Hydrabad, India}, pp.
   \bibinfo{pages}{132--141}, \doi{10.1145/2597073.2597080}.
 
+\bibitemdeclare{book}{experimentation}
+\bibitem{experimentation}
+\bibinfo{author}{Claes \surnamestart Wohlin\surnameend}, \bibinfo{author}{Per
+  \surnamestart Runeson\surnameend}, \bibinfo{author}{Martin \surnamestart
+  H\"{o}st\surnameend}, \bibinfo{author}{Magnus~C. \surnamestart
+  Ohlsson\surnameend}, \bibinfo{author}{Bj\"{o}rn \surnamestart
+  Regnell\surnameend} \& \bibinfo{author}{Anders \surnamestart
+  Wessl\'{e}n\surnameend} (\bibinfo{year}{2012}):
+  \emph{\bibinfo{title}{Experimentation in Software Engineering}}.
+\newblock \bibinfo{publisher}{Springer}, \bibinfo{address}{New York, USA}.
+
 \bibitemdeclare{article}{Satzilla}
 \bibitem{Satzilla}
 \bibinfo{author}{Lin \surnamestart Xu\surnameend}, \bibinfo{author}{Frank

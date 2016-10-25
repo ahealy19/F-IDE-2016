@@ -486,6 +486,10 @@ The imitation of an orthodox solver to interact with \textsf{Why3} is more costl
 
 \subsection{Threats to Validity}
 
+We categorise threats as either \textit{internal} or \textit{external}.
+Internal threats refer to influences that can affect the response variable without the researcher's knowledge and threaten the conclusions reached about the \textit{cause} of the experimental results \cite{experimentation}. 
+Threats to external validity are conditions that limit the generalisability and reproducibility of an experiment. 
+
 \subsubsection{Internal}
 \label{sec:internal}
 
@@ -510,7 +514,7 @@ A ``typical'' software development scenario might involve a user verifying a sin
 \label{sec:eval-discuss}
 
 By considering the answers to our three Evaluation Criteria, we can make assertions about the success of \textsf{Where4}.
-The answer to \textbf{EC1}, \textsf{Where4}'s performance in comparison to individual SMT solvers, is positive.
+The answer to EC1, \textsf{Where4}'s performance in comparison to individual SMT solvers, is positive.
 A small improvement in \textit{Valid/Invalid} responses results from using only the top-ranked solver, while a much bigger increase can be seen by making the full ranking of solvers available for use.
 The time penalty associated with calling a number of solvers on an un-provable proof obligation is mitigated by the use of a \textit{cost threshold}.
 Judicious use of this threshold value can balance the time-taken-versus-goals-proved trade-off: in our test set of 263 POs, using a threshold value of 7 results in 192 \textit{Valid} responses -- an increase of 15 over the single best solver -- in a reasonable average time per PO (both \textit{Valid} and otherwise) of 4.59 seconds.
