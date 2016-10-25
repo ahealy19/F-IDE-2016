@@ -161,7 +161,7 @@ We used six current, general-purpose SMT solvers supported by \textsf{Why3}: Alt
 
 \begin{figure}
 \centering
-\includegraphics[width=0.7\linewidth]{barcharts}
+\includegraphics[width=0.7\linewidth]{barcharts.pdf}
 \caption{The relative amount of \textit{Valid/Unknown/Timeout/Failure} answers from the eight SMT solvers (with a timeout of 60 seconds). Note that no tool returned an answer of \textit{Invalid} for any of the 1048 proof obligations.}
 \label{fig:barcharts}
 \end{figure}
@@ -281,7 +281,7 @@ By satisfying ourselves with being able to record 99\% of the useful responses w
 
 \begin{figure}
 \centering
-\includegraphics[width=0.7\linewidth]{line-graph}
+\includegraphics[width=0.7\linewidth]{line-graph.pdf}
 \caption{The cumulative number of \textit{Valid/Invalid/Unknown} responses for each solver. The plot uses a logarithmic scale on the time axis for increased clarity at the low end of the scale. The chosen timeout limit of 10 secs (\textit{dotted vertical line}) includes 99\% of each solver's useful responses}
 \label{fig:line-graph}
 \end{figure}
@@ -446,14 +446,14 @@ The evaluation of \textsf{Where4} was carried out on a test set of 32 WhyML file
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.9\linewidth]{barcharts2}
+	\includegraphics[width=0.9\linewidth]{barcharts2.pdf}
 	\caption{The relative amount of Valid/Unknown/Timeout/Failure answers from the eight SMT solvers. Shown on the right are results obtainable by using the top solver (only) with the 3 ranking strategies and the \textsf{Where4} predicted ranking (with an Alt-Ergo-1.01 pre-solver).}
 	\label{fig:barchart2}
 \end{figure}
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.8\linewidth]{thresholds}
+	\includegraphics[width=0.8\linewidth]{thresholds.pdf}
 	\caption{The effect of using a cost threshold. (\textit{top}) The average time taken for \textsf{Where4} to return an answer compared to 8 SMT solvers. (\textit{bottom}) The number of Valid/Invalid answers returned by \textsf{Where4} compared to 8 SMT solvers. For the 7 solvers other than Alt-Ergo-1.01, the number of provable goals is indicated by a mark on the y-axis rather than an intersection with \textsf{Where4}'s results.}
 	\label{fig:thresholds}
 \end{figure}
@@ -461,7 +461,7 @@ The evaluation of \textsf{Where4} was carried out on a test set of 32 WhyML file
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.8\linewidth]{line-graph-eval-provers}
+	\includegraphics[width=0.8\linewidth]{line-graph-eval-provers.pdf}
 	\caption{The cumulative time each theoretical strategy, and \textsf{Where4} to return all \textit{Valid/Invalid} answers in the test dataset of 263 goals}
 	\label{fig:line-graph-eval-provers}
 \end{figure}
