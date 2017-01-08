@@ -6,7 +6,7 @@ import sys, common, os
 import itertools
 
 from subprocess import call
-from sklearn import svm, cross_validation, metrics
+from sklearn import svm, cross_validation, metrics, model_selection
 from sklearn.feature_selection import SelectKBest, f_regression
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
@@ -142,7 +142,9 @@ if __name__ == '__main__':
 
 	total = []
 
-	kf = cross_validation.KFold(test.shape[0], n_folds=4, shuffle=True, random_state=42)
+	strat = model_selection.StratifiedKFold(n_splits=4, shuffle=True, random_state=42)
+	bests = y.apply(common.get_strings, axis=1)
+	kf = strat.split(X, bests)
 
 	# each fold
 	for i, (train_index, test_index) in enumerate(kf):
