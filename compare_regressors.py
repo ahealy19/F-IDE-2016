@@ -52,7 +52,7 @@ def get_predict(label, clf, Xtrn, Xtst, ytrn, ytst, use_weights=False, weights=F
 
 	
 	# SVRs need their data to be scaled
-	if label == 'NuSVR':
+	if label in ['NuSVR', 'K-nn Regressor']:
 		Xtrn = DataFrame(scaler.transform(Xtrn), columns=Xtrn.columns, index=Xtrn.index)
 		Xtst = DataFrame(scaler.transform(Xtst), columns=Xtst.columns, index=Xtst.index)
 
